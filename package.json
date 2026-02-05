@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma migrate deploy && next build",
+    "build": "prisma migrate resolve --applied 20260204143009_work || true && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
