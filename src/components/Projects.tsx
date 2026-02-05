@@ -9,7 +9,7 @@ const projects = [
   {
     title: "Programação Web",
     description: "Landing pages, portfólios e sistemas web responsivos.",
-    image: "/placeholder-web.jpg",
+    image: "/web_pro.jpg",
     href: "https://github.com",
     tag: "Web",
     tech: ["React", "Next.js", "Tailwind"],
@@ -25,7 +25,7 @@ const projects = [
   {
     title: "Dashboards em Power BI",
     description: "Painéis para acompanhamento de indicadores, cursos e operações.",
-    image: "/placeholder-bi.jpg",
+    image: "/BI.jpg",
     href: "#",
     tag: "Power BI",
     tech: ["Power BI", "SQL", "DAX"],
