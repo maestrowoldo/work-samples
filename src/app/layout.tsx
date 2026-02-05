@@ -11,6 +11,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://wolkendoarias.com"),
   title: "Wolkendo Arias - Full Stack Developer & Data Analyst",
   description:
     "Portfólio profissional de Wolkendo Arias. Desenvolvedor Full Stack, Analista de Dados e especialista em Power BI. Transformando ideias em realidade digital.",

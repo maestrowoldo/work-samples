@@ -1,6 +1,9 @@
-// src/app/api/contact/route.ts
 import { NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
+import { sendContactEmail } from "@/lib/email";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   try {
@@ -10,21 +13,18 @@ export async function POST(request: Request) {
     const validatedData = contactFormSchema.parse(body);
     const { nome, email, celular, mensagem } = validatedData;
 
-    // TODO: Integrar com Prisma quando o banco estiver configurado
-    // await prisma.contact.create({
-    //   data: { nome, email, celular, mensagem, status: "novo" },
-    // });
+    // Salvar no banco de dados
+    await prisma.contact.create({
+      data: { nome, email, celular: celular || null, mensagem, status: "novo" },
+    });
 
-    // Por enquanto, apenas log
-    console.log("📧 Novo contato recebido:", { nome, email, celular });
+    // Enviar email
+    console.log("📧 Enviando email para:", email);
+    const emailEnviado = await sendContactEmail(nome, email, mensagem);
 
-    // Enviar email (implementação futura com Nodemailer)
-    // await sendEmail({
-    //   to: email,
-    //   subject: "Recebemos sua mensagem",
-    //   template: "contact-confirmation",
-    //   data: { nome },
-    // });
+    if (!emailEnviado) {
+      console.warn("⚠️ Email não foi enviado, mas contato foi salvo no banco");
+    }
 
     return NextResponse.json(
       { message: "Mensagem recebida com sucesso! Em breve entro em contato." },

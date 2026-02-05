@@ -3,10 +3,14 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: parseInt(process.env.EMAIL_PORT || "587"),
-  secure: process.env.EMAIL_PORT === "465",
+  secure: process.env.EMAIL_PORT === "465", // true para porta 465 (SSL), false para 587 e 2525
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
+  },
+  // Configuração para Mailtrap e outros provedores
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
@@ -16,7 +20,7 @@ export async function sendContactEmail(
   mensagem: string
 ) {
   try {
-    // Email para o usuário
+    // Email para o usuário - confirmar recebimento
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: email,
@@ -32,22 +36,30 @@ export async function sendContactEmail(
       `,
     });
 
-    // Email para o administrador
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_USER,
-      subject: `Novo contato de ${nome}`,
-      html: `
-        <div style="font-family: Arial, sans-serif;">
-          <h2>Novo Contato Recebido</h2>
-          <p><strong>Nome:</strong> ${nome}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <hr style="margin: 20px 0;">
-          <p><strong>Mensagem:</strong></p>
-          <p>${mensagem.replace(/\n/g, "<br>")}</p>
-        </div>
-      `,
-    });
+    // Email para o administrador com a mensagem completa
+    const adminEmail = process.env.EMAIL_ADMIN_TO || process.env.EMAIL_FROM;
+    if (adminEmail && adminEmail.includes("@")) {
+      await transporter.sendMail({
+        from: process.env.EMAIL_FROM,
+        to: adminEmail,
+        subject: `📩 Novo contato de ${nome}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+            <h2 style="color: #333;">📬 Novo Contato Recebido</h2>
+            <div style="background: white; padding: 15px; border-radius: 5px;">
+              <p><strong>👤 Nome:</strong> ${nome}</p>
+              <p><strong>📧 Email:</strong> <a href="mailto:${email}">${email}</a></p>
+              <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+              <p><strong>💬 Mensagem:</strong></p>
+              <p style="white-space: pre-wrap; background: #fafafa; padding: 10px; border-left: 4px solid #007bff;">${mensagem}</p>
+            </div>
+          </div>
+        `,
+      });
+    }
+
+    // Log de sucesso
+    console.log("✅ Email enviado com sucesso para:", email);
 
     return true;
   } catch (error) {
