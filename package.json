@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma migrate deploy && next build",
+    "build": "prisma migrate deploy --skip-generate || true && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "setup:prod": "node scripts/setup-production-db.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

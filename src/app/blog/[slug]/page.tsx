@@ -61,6 +61,42 @@ Dominar Power BI abre muitas oportunidades em análise de dados!`,
     tags: ["Power BI", "Data", "Analytics"],
     autor: "Wolkendo Arias",
   },
+  "typescript-avancado": {
+    titulo: "TypeScript Avançado: Tipos Genéricos e Utilitários",
+    descricao: "Domine tipos genéricos, tipos utilitários e padrões avançados de TypeScript.",
+    conteudo: `# TypeScript Avançado: Tipos Genéricos e Utilitários
+
+TypeScript oferece recursos poderosos para criar código type-safe e reutilizável. Neste artigo, vamos explorar conceitos avançados.
+
+## Tipos Genéricos
+
+Genéricos permitem criar funções e classes que funcionam com múltiplos tipos:
+
+- Functions Genéricas: Reutilizar lógica com diferentes tipos
+- Classes Genéricas: Estruturas flexíveis e type-safe
+- Constraints: Limitar tipos genéricos com extends
+
+## Tipos Utilitários
+
+TypeScript fornece tipos utilitários prontos:
+
+- Partial<T>: Torna todas as propriedades opcionais
+- Pick<T, K>: Seleciona propriedades específicas
+- Omit<T, K>: Exclui propriedades específicas
+- Record<K, T>: Mapeia chaves para valores
+
+## Padrões Avançados
+
+- Conditional Types: Tipos que dependem de condições
+- Mapped Types: Transformar tipos dinamicamente
+- Type Guards: Validação em tempo de execução
+
+Dominar esses conceitos torna você um especialista TypeScript!`,
+    data: "2025-02-03",
+    tempo_leitura: 15,
+    tags: ["TypeScript", "Web Dev", "Advanced"],
+    autor: "Wolkendo Arias",
+  },
 };
 
 export async function generateStaticParams() {
