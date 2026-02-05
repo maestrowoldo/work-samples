@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import FloatingBackground from "@/components/FloatingBackground";
 import MouseGlow from "@/components/MouseGlow";
+import AIAssistant from "@/components/AIAssistant";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -72,6 +73,7 @@ export default function RootLayout({
         <FloatingBackground />
         <MouseGlow />
         <Providers>{children}</Providers>
+        <AIAssistant />
         <Analytics />
       </body>
     </html>
