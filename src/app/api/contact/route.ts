@@ -3,6 +3,7 @@ import { contactFormSchema } from "@/lib/validations";
 import { sendContactEmail } from "@/lib/email";
 import { PrismaClient } from "@prisma/client";
 
+// Use connection pooling in production
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
@@ -31,11 +32,22 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("❌ Erro ao processar contato:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("❌ Erro ao processar contato:", errorMessage);
+    console.error("Stack:", error instanceof Error ? error.stack : "N/A");
+
+    // Log detalhado para debug
+    console.error("Erro completo:", JSON.stringify(error, null, 2));
 
     return NextResponse.json(
-      { message: "Erro ao enviar mensagem. Tente novamente." },
+      { 
+        message: "Erro ao enviar mensagem. Tente novamente.",
+        // Remover em produção - apenas para debug
+        error: process.env.NODE_ENV === "development" ? errorMessage : undefined
+      },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
