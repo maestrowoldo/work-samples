@@ -8,9 +8,9 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(globalThis.scrollY > 20);
+    globalThis.addEventListener("scroll", onScroll);
+    return () => globalThis.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

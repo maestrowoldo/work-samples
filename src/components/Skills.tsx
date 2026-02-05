@@ -1,7 +1,6 @@
 // src/components/Skills.tsx
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Code2, Database, Palette, Zap } from "lucide-react";
 

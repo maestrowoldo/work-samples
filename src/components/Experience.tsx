@@ -1,6 +1,6 @@
 "use client";
 
-import { FadeIn, StaggerContainer } from "./animations";
+import { StaggerContainer } from "./animations";
 import { motion } from "framer-motion";
 import { Calendar, Briefcase } from "lucide-react";
 

@@ -1,3 +1,4 @@
+import process from "node:process";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -24,7 +25,7 @@ export async function sendContactEmail(
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: email,
-      subject: "Recebemos sua mensagem! 🎉",
+      subject: "Recebemos sua mensagem! ",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
           <h2>Obrigado, ${nome}!</h2>

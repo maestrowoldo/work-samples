@@ -99,7 +99,7 @@ Dominar esses conceitos torna você um especialista TypeScript!`,
   },
 };
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({
     slug,
   }));

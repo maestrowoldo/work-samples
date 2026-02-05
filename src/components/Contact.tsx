@@ -38,7 +38,7 @@ export default function Contact() {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
       }
-    } catch (err) {
+    } catch (_err) {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }
