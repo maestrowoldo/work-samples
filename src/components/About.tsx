@@ -47,9 +47,9 @@ export default function About() {
             que me ajuda a me adaptar a diferentes contextos e pessoas.
           </motion.p>
           <motion.p variants={itemVariants}>
-            Atualmente curso Ciência da Computação na Universidade Cruzeiro do Sul. Já tive contato
-            com linguagens como Python, Java, PHP e JavaScript, além de bancos de dados SQL, HTML, CSS
-            e fundamentos de redes de computadores.
+            Sou <span className="font-semibold text-emerald-400">Bacharel em Ciência da Computação</span> pela Universidade Cruzeiro do Sul. 
+            Tenho experiência prática com linguagens como Python, Java, PHP e JavaScript, além de expertise em bancos de dados SQL, 
+            HTML, CSS e infraestrutura de redes de computadores.
           </motion.p>
           <motion.p variants={itemVariants}>
             Me encontrei na interseção entre desenvolvimento web, visualização de dados com Power BI

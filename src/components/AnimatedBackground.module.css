@@ -1,0 +1,90 @@
+/* AnimatedBackground.module.css */
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Canvas para partículas */
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+}
+
+/* Efeito de glow que segue o mouse */
+.mouseGlow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(16, 185, 129, 0.4) 0%,
+    rgba(16, 185, 129, 0) 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Overlay para melhorar legibilidade do conteúdo */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 23, 42, 0) 0%,
+    rgba(15, 23, 42, 0.5) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RESPONSIVIDADE */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .mouseGlow {
+    width: 250px !important;
+    height: 250px !important;
+    filter: blur(40px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mouseGlow {
+    width: 150px !important;
+    height: 150px !important;
+    filter: blur(25px) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* ACESSIBILIDADE - Respeitar preferência de movimento reduzido */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .mouseGlow {
+    display: none;
+  }
+
+  .canvas {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  }
+}

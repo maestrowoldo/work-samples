@@ -3,6 +3,7 @@
 
 import { motion } from "framer-motion";
 import { Code2, Database, Palette, Zap } from "lucide-react";
+import CardGlow from "./CardGlow";
 
 const skillCategories = [
   {
@@ -146,50 +147,60 @@ export default function Skills() {
         >
           {skillCategories.map((category) => {
             const IconComponent = category.icon;
-            return (
-              <motion.div
-                key={category.title}
-                variants={categoryVariants}
-                className={`rounded-2xl border border-zinc-800/50 bg-gradient-to-br ${category.color} backdrop-blur-sm p-6 hover:border-zinc-700 transition-all duration-300 group`}
-              >
-                {/* Category Header */}
-                <div className="flex items-start gap-3 mb-5">
-                  <div className="p-2 rounded-lg bg-zinc-900/50 border border-zinc-800 group-hover:border-zinc-700 transition-colors">
-                    <IconComponent className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-zinc-50 text-sm md:text-base">
-                      {category.title}
-                    </h3>
-                    <p className="text-xs text-zinc-400 mt-0.5">{category.description}</p>
-                  </div>
-                </div>
+            const colorMap: Record<string, 'cyan' | 'purple' | 'pink' | 'emerald' | 'blue' | 'orange'> = {
+              Frontend: "cyan",
+              "Backend & Dados": "purple",
+              "Design & UX": "pink",
+              "Análise & BI": "emerald",
+            };
 
-                {/* Skills List */}
-                <div className="space-y-2">
-                  {category.items.map((skill, idx) => (
-                    <motion.div
-                      key={skill.name}
-                      variants={skillVariants}
-                      transition={{ delay: idx * 0.05 }}
-                      className="group/item"
-                    >
-                      <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-zinc-900/40 border border-zinc-800/50 hover:bg-zinc-900/60 hover:border-emerald-500/30 transition-all duration-200">
-                        <span className="text-xs font-medium text-zinc-200">
-                          {skill.name}
-                        </span>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getLevelColor(
-                            skill.level
-                          )}`}
-                        >
-                          {skill.level}
-                        </span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+            const iconEmojiMap: Record<string, string> = {
+              Frontend: "💻",
+              "Backend & Dados": "🗄️",
+              "Design & UX": "🎨",
+              "Análise & BI": "⚡",
+            };
+
+            return (
+              <CardGlow
+                key={category.title}
+                color={colorMap[category.title] || "emerald"}
+                icon={iconEmojiMap[category.title]}
+                title={category.title}
+                description={category.description}
+                badge={`${category.items.length} skills`}
+                intensity="high"
+              >
+                <motion.div
+                  variants={categoryVariants}
+                  className={`rounded-lg bg-gradient-to-br ${category.color} backdrop-blur-sm`}
+                >
+                  {/* Skills List */}
+                  <div className="space-y-2 mt-2">
+                    {category.items.map((skill, idx) => (
+                      <motion.div
+                        key={skill.name}
+                        variants={skillVariants}
+                        transition={{ delay: idx * 0.05 }}
+                        className="group/item"
+                      >
+                        <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-zinc-900/40 border border-zinc-800/50 hover:bg-zinc-900/60 hover:border-emerald-500/30 transition-all duration-200">
+                          <span className="text-xs font-medium text-zinc-200">
+                            {skill.name}
+                          </span>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getLevelColor(
+                              skill.level
+                            )}`}
+                          >
+                            {skill.level}
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </CardGlow>
             );
           })}
         </motion.div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Linkedin, Github } from "lucide-react";
 
 export default function Hero() {
   const containerVariants = {
@@ -56,6 +57,27 @@ export default function Hero() {
               className="text-sm font-medium text-zinc-300 hover:text-emerald-400"
             >
               Ver meus projetos →
+            </a>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="flex gap-4">
+            <a
+              href="https://linkedin.com/in/wolkendo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
+            >
+              <Linkedin size={18} />
+              LinkedIn
+            </a>
+            <a
+              href="https://github.com/maestrowoldo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
+            >
+              <Github size={18} />
+              GitHub
             </a>
           </motion.div>
 

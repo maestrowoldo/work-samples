@@ -3,3 +3,56 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* MOUSE GLOW EFFECT */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+#mouse-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(0, 200, 255, 0.25),
+    rgba(0, 200, 255, 0.15),
+    transparent 70%
+  );
+  filter: blur(60px);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* CARD GLOW EFFECTS */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+.tech-card {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    circle at top,
+    rgba(0, 200, 255, 0.5),
+    transparent 70%
+  );
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.tech-card:hover {
+  transform: scale(1.05);
+}
+
+.tech-card:hover::before {
+  opacity: 1;
+}
