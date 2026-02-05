@@ -11,7 +11,7 @@
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "setup:prod": "tsx scripts/setup-production-db.ts"
+    "setup:prod": "node scripts/setup-production-db.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
