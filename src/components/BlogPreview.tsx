@@ -2,6 +2,7 @@ import { Card } from "./ui";
 import { FadeIn } from "./animations";
 import { Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import "./BlogPreview.css";
 
 const posts = [
   {
@@ -50,13 +51,13 @@ export default function BlogPreview() {
           {posts.map((post, index) => (
             <FadeIn key={post.slug} delay={index * 0.1}>
               <Link href={`/blog/${post.slug}`}>
-                <Card hover>
+                <Card hover className="blog-card">
                   <div className="space-y-4">
                     <div className="flex flex-wrap gap-2">
                       {post.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                          className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 tag-glow"
                         >
                           {tag}
                         </span>

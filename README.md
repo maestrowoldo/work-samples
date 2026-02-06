@@ -1,8 +1,8 @@
-# 🚀 Portfólio Profissional - Wolkendo Arias
+#  Portfólio Profissional - Wolkendo Arias
 
 Uma aplicação web moderna, responsiva e profissional construída com **Next.js 16**, **TypeScript**, **Tailwind CSS** e **Framer Motion**.
 
-## ✨ Características Principais
+##  Características Principais
 
 - ✅ **Design Moderno & Animações** - Framer Motion para efeitos visuais fluidos
 - ✅ **Totalmente Responsivo** - Mobile-first design
@@ -13,7 +13,7 @@ Uma aplicação web moderna, responsiva e profissional construída com **Next.js
 - ✅ **Banco de Dados** - Prisma ORM com PostgreSQL (pronto)
 - ✅ **Analytics** - Vercel Analytics integrado
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Next.js 16** - Framework React
 - **React 19** - UI library
@@ -24,7 +24,7 @@ Uma aplicação web moderna, responsiva e profissional construída com **Next.js
 - **Prisma** - ORM
 - **PostgreSQL** - Banco de dados
 
-## 📦 Instalação Rápida
+##  Instalação Rápida
 
 ```bash
 # Clone o repositório
@@ -43,7 +43,7 @@ npm run dev
 
 Acesse [http://localhost:3000](http://localhost:3000)
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 src/
@@ -69,7 +69,7 @@ src/
 └── public/               # Arquivos estáticos
 ```
 
-## 📝 Scripts Disponíveis
+## Scripts Disponíveis
 
 ```bash
 npm run dev           # Desenvolvimento
@@ -108,25 +108,25 @@ npx prisma migrate dev
 npx prisma studio
 ```
 
-## 🎨 Customização
+## Customização
 
 - **Cores**: Edite `tailwind.config.ts`
 - **Conteúdo**: Modifique os componentes em `src/components/`
 - **Blog**: Adicione artigos em `src/app/blog/[slug]/page.tsx`
 
-## 🚀 Deploy com Vercel
+## Deploy com Vercel
 
 1. Push para GitHub
 2. Conecte no Vercel
 3. Configure variáveis de ambiente
 4. Deploy automático
 
-## 📞 Contato
+## Contato
 
 - **Email**: contact@wolkendoarias.com
 - **LinkedIn**: linkedin.com/in/wolkendo
 - **GitHub**: github.com/wolkendo
 
-## 📄 Licença
+## Licença
 
 MIT - Desenvolvido com ❤️ por Wolkendo Arias

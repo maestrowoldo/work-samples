@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import clsx from "clsx";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed",

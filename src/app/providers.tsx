@@ -6,7 +6,9 @@ import { ReactNode } from "react";
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      {children}
+      <div className="relative z-10">
+        {children}
+      </div>
     </ThemeProvider>
   );
 }

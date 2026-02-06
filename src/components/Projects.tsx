@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import "./Projects.css";
 
 const projects = [
   {
@@ -77,15 +78,16 @@ export default function Projects() {
               href={project.href}
               target="_blank"
               variants={itemVariants}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md transition duration-300 hover:-translate-y-1 hover:border-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/10"
+              className="project-card group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md transition duration-300 hover:-translate-y-2"
             >
-              <div className="relative h-40 w-full overflow-hidden bg-zinc-800">
+              <div className="project-image relative h-40 w-full overflow-hidden bg-zinc-800">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  className="object-cover transition duration-700 group-hover:scale-110"
                 />
+                <div className="shine" />
                 <div className="absolute left-3 top-3 rounded-full bg-zinc-950/80 px-2 py-1 text-xs text-emerald-400">
                   {project.tag}
                 </div>

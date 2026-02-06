@@ -1,25 +1,33 @@
 "use client";
 
-import { FadeIn, StaggerContainer } from "./animations";
+import { StaggerContainer } from "./animations";
 import { motion } from "framer-motion";
 import { Calendar, Briefcase } from "lucide-react";
 
 const experiences = [
   {
     title: "Desenvolvedor Full Stack",
-    company: "Freelancer",
-    period: "2023 - Presente",
+    company: "Prime Secure",
+    period: "Novembro 2025 - Presente",
     description:
       "Desenvolvimento de aplicações web com React, Next.js e Node.js. Integração com bancos de dados e APIs.",
     skills: ["React", "Next.js", "TypeScript", "Node.js", "SQL"],
   },
   {
-    title: "Analista de Dados",
-    company: "Projetos Acadêmicos",
-    period: "2023 - Presente",
+    title: "Analista de Suporte de TI",
+    company: "DXC Technology",
+    period: "Setembro 2025 - Novembro 2025",
     description:
-      "Análise e visualização de dados com Power BI e Python. Criação de dashboards interativos.",
-    skills: ["Power BI", "Python", "SQL", "Excel", "Tableau"],
+      "Onboarding e Offboarding de colaboradores, suporte técnico de hardware e software, manutenção preventivos de equipamentos e infraestrutura de TI, Instalação de softwares",
+    skills: ["Power BI", "Python", "SQL", "Excel"],
+  },
+  {
+    title: "Estagiario de TI",
+    company: "Tribunal de Justiça de São Paulo",
+    period: "Setembro 2024 - Setembro 2025",
+    description:
+      "Contribuí para a automação e organização de fluxos de trabalho, auxiliando no desenvolvimento de processos por meio do Bizagi e do Excel. Atuei no desenvolvimento de painéis no Power BI, realizando revisão e análise de dados, além de desenvolver, em low-code, um aplicativo de controle de ponto eletrônico utilizando Power Apps e Power Automate..",
+    skills: ["Power BI", "Bizagi", "SharePoint", "Excel", "Power Platform"],
   },
   {
     title: "Designer Gráfico",
@@ -28,14 +36,6 @@ const experiences = [
     description:
       "Identidade visual, design de interfaces e materiais gráficos para redes sociais.",
     skills: ["Photoshop", "Illustrator", "Figma", "Adobe XD"],
-  },
-  {
-    title: "Estudante de Ciência da Computação",
-    company: "Universidade Cruzeiro do Sul",
-    period: "2023 - 2026 (previsto)",
-    description:
-      "Formação em Ciência da Computação com foco em desenvolvimento web e análise de dados.",
-    skills: ["Java", "Python", "JavaScript", "SQL", "Arquitetura"],
   },
 ];
 
@@ -48,7 +48,7 @@ export default function Experience() {
             Minha <span className="text-emerald-400">Trajetória</span>
           </h2>
           <p className="mt-3 text-sm text-zinc-400 md:text-base">
-            Experiências e formação que moldaram minha carreira em tecnologia
+            Experiências e formação que construíram minha carreira em tecnologia
           </p>
         </div>
 

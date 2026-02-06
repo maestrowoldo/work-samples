@@ -1,0 +1,146 @@
+/* TechMarquee.module.css */
+
+.marqueeContainer {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  padding: 60px 0;
+  backdrop-filter: none;
+}
+
+.marqueeTitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: bold;
+  letter-spacing: -0.02em;
+}
+
+.marqueeTitle .white {
+  color: #ffffff;
+}
+
+.marqueeTitle .green {
+  color: #10b981;
+}
+
+.marqueeContent {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.marqueeTrack {
+  display: flex;
+  animation: scrollCircle 25s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+@keyframes scrollCircle {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.techItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 2vw, 16px);
+  padding: clamp(16px, 3vw, 24px) clamp(18px, 4vw, 32px);
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.techItem:hover {
+  border-color: none;
+  background: transparent;
+  transform: translateY(-8px);
+  box-shadow: none;
+}
+
+.techLabel {
+  font-size: clamp(10px, 1.5vw, 12px);
+  font-weight: 600;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.techItem:hover .techLabel {
+  color: #f4f4f5;
+}
+
+.fadeLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+}
+
+.fadeRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .marqueeContainer {
+    padding: clamp(20px, 5vw, 30px) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .marqueeContainer {
+    padding: clamp(20px, 4vw, 25px) 0;
+  }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+
+  .techItem:hover {
+    transform: none;
+  }
+}

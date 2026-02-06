@@ -11,14 +11,39 @@ import { CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [celularFormatado, setCelularFormatado] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
   });
+
+  // Função para formatar celular em (11) 99999-9999
+  const formatarCelular = (valor: string) => {
+    // Remove tudo que não é número
+    const apenasNumeros = valor.replace(/\D/g, "");
+    
+    // Limita a 11 dígitos
+    const limitado = apenasNumeros.slice(0, 11);
+    
+    // Aplica o formato (DD) 9XXXX-XXXX
+    if (limitado.length === 0) return "";
+    if (limitado.length <= 2) return `(${limitado}`;
+    if (limitado.length <= 7) return `(${limitado.slice(0, 2)}) ${limitado.slice(2)}`;
+    return `(${limitado.slice(0, 2)}) ${limitado.slice(2, 7)}-${limitado.slice(7)}`;
+  };
+
+  const handleCelularChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valor = e.target.value;
+    const formatado = formatarCelular(valor);
+    setCelularFormatado(formatado);
+    // Atualiza o valor do formulário com os dígitos sem formatação
+    setValue("celular", valor.replace(/\D/g, ""));
+  };
 
   async function onSubmit(data: ContactFormData) {
     setStatus("loading");
@@ -38,7 +63,7 @@ export default function Contact() {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
       }
-    } catch (err) {
+    } catch (_err) {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }
@@ -100,7 +125,8 @@ export default function Contact() {
             <Input
               label="Celular (opcional)"
               placeholder="(11) 99999-9999"
-              {...register("celular")}
+              value={celularFormatado}
+              onChange={handleCelularChange}
               error={errors.celular?.message}
             />
 
