@@ -9,21 +9,12 @@ import { Button } from "./ui";
 const links = [
   { href: "#inicio", label: "Início" },
   { href: "#sobre", label: "Sobre" },
-  { href: "#especialidade", label: "Especialidades" },
   { href: "#experiencia", label: "Experiência" },
   { href: "#projeto", label: "Projetos" },
-  { href: "#contato", label: "Contato" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
-  const downloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/cv-wolkendo-arias.pdf";
-    link.download = "CV - Wolkendo Arias.pdf";
-    link.click();
-  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
@@ -47,15 +38,13 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <Button
-            onClick={downloadCV}
-            variant="secondary"
-            size="sm"
-            className="flex items-center gap-2"
+          <Link
+            href="/curriculum"
+            className="flex items-center gap-2 hover:text-emerald-400 transition-colors"
           >
             <Download size={14} />
             CV
-          </Button>
+          </Link>
           <a
             href="#contato"
             className="rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"
@@ -84,16 +73,14 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <button
-                onClick={() => {
-                  downloadCV();
-                  setOpen(false);
-                }}
-                className="mt-2 w-full rounded-full border border-zinc-800 px-4 py-2 text-center text-sm font-semibold text-zinc-200 hover:border-emerald-500 hover:text-emerald-400 transition-colors flex items-center justify-center gap-2"
+              <Link
+                href="/curriculum"
+                className="rounded-md px-2 py-1 text-zinc-200 hover:bg-zinc-900 hover:text-emerald-400 transition-colors flex items-center gap-2"
+                onClick={() => setOpen(false)}
               >
                 <Download size={14} />
-                Download CV
-              </button>
+                Ver CV
+              </Link>
               <a
                 href="#contato"
                 className="mt-2 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"

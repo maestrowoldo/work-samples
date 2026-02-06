@@ -35,8 +35,8 @@ export default function TechMarquee() {
   return (
     <section className={styles.marqueeContainer}>
       <h2 className={styles.marqueeTitle}>
-        <span className={styles.white}>I WORK</span>{' '}
-        <span className={styles.green}>WITH:</span>
+        <span className={styles.white}>Tecnologia</span>{' '}
+        <span className={styles.green}>& Ferramenta</span>
       </h2>
       
       <div className={styles.marqueeContent}>

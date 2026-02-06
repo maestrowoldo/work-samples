@@ -127,7 +127,7 @@ export default function FloatingBackground() {
       // Posição orbital com movimento suave
       const angle = (timeRef.current * moon.floatSpeed) % (Math.PI * 2);
       moon.x = centerX + Math.cos(angle) * orbitRadius;
-      moon.y = centerY + Math.sin(angle) * orbitRadius * 0.6; // Um pouco menos em Y para melhor visualização
+      moon.y = centerY + Math.sin(angle) * orbitRadius * 0.6;
       
       drawMoon(moon.x, moon.y, moon.radius, timeRef.current);
 
