@@ -25,7 +25,7 @@ export default function Contact() {
   // Função para formatar celular em (11) 99999-9999
   const formatarCelular = (valor: string) => {
     // Remove tudo que não é número
-    const apenasNumeros = valor.replace(/\D/g, "");
+    const apenasNumeros = valor.replaceAll(/\D/g, "");
     
     // Limita a 11 dígitos
     const limitado = apenasNumeros.slice(0, 11);
@@ -42,7 +42,7 @@ export default function Contact() {
     const formatado = formatarCelular(valor);
     setCelularFormatado(formatado);
     // Atualiza o valor do formulário com os dígitos sem formatação
-    setValue("celular", valor.replace(/\D/g, ""));
+    setValue("celular", valor.replaceAll(/\D/g, ""));
   };
 
   async function onSubmit(data: ContactFormData) {
@@ -64,7 +64,8 @@ export default function Contact() {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
       }
-    } catch (_err) {
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }

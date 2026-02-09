@@ -1,21 +1,21 @@
 // src/components/Footer.tsx
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { Code2, Briefcase, Share2 } from "lucide-react";
 
 export default function Footer() {
   const socialLinks = [
     {
       name: "GitHub",
-      icon: Github,
+      icon: Code2,
       url: "https://github.com/maestrowoldo",
     },
     {
       name: "LinkedIn",
-      icon: Linkedin,
+      icon: Briefcase,
       url: "https://www.linkedin.com/in/wolkendo-arias/",
     },
     {
       name: "Instagram",
-      icon: Instagram,
+      icon: Share2,
       url: "https://instagram.com/maestro_woldo",
     },
   ];

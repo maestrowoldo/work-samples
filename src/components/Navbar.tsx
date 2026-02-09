@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Download } from "lucide-react";
-import { Button } from "./ui";
 
 const links = [
   { href: "#inicio", label: "Início" },

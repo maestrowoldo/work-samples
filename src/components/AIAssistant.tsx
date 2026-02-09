@@ -134,7 +134,7 @@ export default function AIAssistant() {
     }, 600);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     sendMessage(input);
@@ -259,7 +259,7 @@ export default function AIAssistant() {
                   onClick={() => {
                     setIsOpen(false);
                     // Se já está na página principal, scroll direto
-                    if (window.location.pathname === "/") {
+                    if (globalThis.location.pathname === "/") {
                       setTimeout(() => {
                         const element = document.getElementById("contato");
                         if (element) {
@@ -268,7 +268,7 @@ export default function AIAssistant() {
                       }, 100);
                     } else {
                       // Se está em outra página, redireciona para principal
-                      window.location.href = "/#contato";
+                      globalThis.location.href = "/#contato";
                     }
                   }}
                   className="inline-block text-xs font-bold text-emerald-400 hover:text-emerald-300 transition px-2 py-1 rounded-lg hover:bg-emerald-500/10 cursor-pointer"

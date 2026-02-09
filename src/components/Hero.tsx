@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Linkedin, Github } from "lucide-react";
+import { Briefcase, Code2 } from "lucide-react";
 
 export default function Hero() {
   const containerVariants = {
@@ -67,7 +67,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
             >
-              <Linkedin size={18} />
+              <Briefcase size={18} />
               LinkedIn
             </a>
             <a
@@ -76,7 +76,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
             >
-              <Github size={18} />
+              <Code2 size={18} />
               GitHub
             </a>
           </motion.div>

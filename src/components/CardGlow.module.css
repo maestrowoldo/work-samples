@@ -54,6 +54,7 @@
   background: linear-gradient(135deg, var(--border-color), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.3s ease-out;
@@ -151,7 +152,8 @@
   bottom: -8px;
   right: -8px;
   background: linear-gradient(135deg, var(--glow-color), rgba(16, 185, 129, 0.5));
-  color: white;
+  color: #000000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
   font-size: 11px;
   font-weight: 700;
   padding: 4px 10px;

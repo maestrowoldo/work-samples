@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Download, Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+import { ArrowLeft, Download, Mail, Phone, MapPin, Code2, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
@@ -18,7 +18,7 @@ export default function CurriculumPage() {
       link.download = "Curriculo-Wolkendo-Arias.pdf";
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      link.remove();
     } catch (error) {
       console.error("Erro ao baixar PDF:", error);
       alert("Erro ao baixar o currículo. Por favor, tente novamente.");
@@ -102,10 +102,10 @@ export default function CurriculumPage() {
 
               <motion.div variants={itemVariants} className="mt-4 flex gap-3">
                 <a href="https://github.com/maestrowoldo" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
-                  <Github size={18} />
+                  <Code2 size={18} />
                 </a>
                 <a href="https://www.linkedin.com/in/wolkendo-arias/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
-                  <Linkedin size={18} />
+                  <Briefcase size={18} />
                 </a>
               </motion.div>
             </motion.div>
@@ -164,7 +164,7 @@ export default function CurriculumPage() {
                   ]
                 },
               ].map((exp, idx) => (
-                <div key={idx} className="pl-4 border-l-2 border-emerald-500 space-y-2">
+                <div key={`${exp.cargo}-${exp.empresa}`} className="pl-4 border-l-2 border-emerald-500 space-y-2">
                   <div>
                     <h3 className="font-semibold text-zinc-50">{exp.cargo}</h3>
                     <p className="text-sm text-emerald-400">{exp.empresa}</p>
@@ -172,7 +172,7 @@ export default function CurriculumPage() {
                   </div>
                   <ul className="space-y-1">
                     {exp.descricoes.map((desc, i) => (
-                      <li key={i} className="text-sm text-zinc-400 flex gap-2">
+                      <li key={`${exp.cargo}-${i}`} className="text-sm text-zinc-400 flex gap-2">
                         <span className="text-emerald-400">•</span>
                         <span>{desc}</span>
                       </li>
@@ -207,12 +207,12 @@ export default function CurriculumPage() {
                   tecnologias: ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion", "GitHub Pages"]
                 },
               ].map((proj, idx) => (
-                <div key={idx} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 space-y-3">
+                <div key={proj.titulo} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 space-y-3">
                   <h3 className="font-semibold text-zinc-50">{proj.titulo}</h3>
                   <p className="text-sm text-zinc-300">{proj.descricao}</p>
                   <div className="flex flex-wrap gap-2">
                     {proj.tecnologias.map((tech, i) => (
-                      <span key={i} className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                      <span key={`${proj.titulo}-${tech}`} className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
                         {tech}
                       </span>
                     ))}
@@ -255,7 +255,7 @@ export default function CurriculumPage() {
                   skills: "Power Apps, Power Automate, N8N, Notion"
                 },
               ].map((skill, idx) => (
-                <div key={idx} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
+                <div key={skill.area} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
                   <h3 className="font-semibold text-emerald-400 mb-2">{skill.area}</h3>
                   <p className="text-sm text-zinc-300">{skill.skills}</p>
                 </div>
@@ -282,7 +282,7 @@ export default function CurriculumPage() {
                   periodo: "2015 - 2017"
                 },
               ].map((form, idx) => (
-                <div key={idx} className="pl-4 border-l-2 border-emerald-500">
+                <div key={form.curso} className="pl-4 border-l-2 border-emerald-500">
                   <h3 className="font-semibold text-zinc-50">{form.curso}</h3>
                   <p className="text-sm text-zinc-400">{form.instituição}</p>
                   <p className="text-xs text-zinc-500">{form.periodo}</p>
@@ -308,7 +308,7 @@ export default function CurriculumPage() {
                 "Google: Inteligência Artificial e Produtividade - Santander | Open Academy (2024)",
                 "Automação com N8N - Santander Open Academy (2026)"
               ].map((cert, idx) => (
-                <div key={idx} className="flex items-start gap-2">
+                <div key={cert} className="flex items-start gap-2">
                   <span className="text-emerald-400 mt-1 flex-shrink-0">✓</span>
                   <span className="text-sm text-zinc-300">{cert}</span>
                 </div>
@@ -328,7 +328,7 @@ export default function CurriculumPage() {
                 { idioma: "Português", nivel: "Fluente" },
                 { idioma: "Inglês", nivel: "Intermediário" }
               ].map((lang, idx) => (
-                <div key={idx} className="flex justify-between items-center pb-2 border-b border-zinc-800/50 last:border-b-0">
+                <div key={lang.idioma} className="flex justify-between items-center pb-2 border-b border-zinc-800/50 last:border-b-0">
                   <span className="font-medium text-zinc-50">{lang.idioma}</span>
                   <span className="text-sm text-emerald-400">{lang.nivel}</span>
                 </div>

@@ -42,10 +42,10 @@ export default function TechMarquee() {
       <div className={styles.marqueeContent}>
         <div className={styles.marqueeTrack}>
           {/* Primeira fileira */}
-          {technologies.map((tech, idx) => {
+          {technologies.map((tech) => {
             const Icon = tech.icon;
             return (
-              <div key={`tech-1-${idx}`} className={styles.techItem}>
+              <div key={`tech-1-${tech.name}`} className={styles.techItem}>
                 <Icon size={72} color={tech.color} />
                 <span className={styles.techLabel}>{tech.name}</span>
               </div>
@@ -53,10 +53,10 @@ export default function TechMarquee() {
           })}
 
           {/* Segunda fileira (duplicada para efeito infinito) */}
-          {technologies.map((tech, idx) => {
+          {technologies.map((tech) => {
             const Icon = tech.icon;
             return (
-              <div key={`tech-2-${idx}`} className={styles.techItem}>
+              <div key={`tech-2-${tech.name}`} className={styles.techItem}>
                 <Icon size={72} color={tech.color} />
                 <span className={styles.techLabel}>{tech.name}</span>
               </div>
