@@ -42,7 +42,7 @@ export default function Hero() {
             <span className="text-emerald-400">realidade digital</span>.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-sm text-zinc-300 sm:text-base">
-            Desenvolvedor Full Stack com experiência em dados, automação e visualização com Power BI. Transformo problemas em soluções inovadoras e acessíveis usando tecnologia, dados e design.
+            Desenvolvedor Full Stack com experiência em React, Next.js, Node e testes automatizados — focado em performance, escalabilidade e qualidade de código.
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
@@ -95,16 +95,37 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative h-56 w-56 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/40 shadow-2xl sm:h-64 sm:w-64 md:h-72 md:w-72"
+          className="relative h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72"
         >
-          <Image
-            src="/designer.avif"
-            alt="Foto de perfil de Wolkendo Arias"
-            fill
-            className="object-cover"
-            priority
+          {/* Brilho ao redor */}
+          <motion.div
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute inset-0 bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-emerald-500/30 rounded-3xl blur-xl"
+            style={{ zIndex: 0 }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent" />
+
+          {/* Círculo animado ao redor */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 rounded-3xl"
+            style={{ padding: "2px", zIndex: 1 }}
+          >
+            <div className="absolute inset-[2px] bg-zinc-950 rounded-3xl" />
+          </motion.div>
+
+          {/* Imagem dentro */}
+          <div className="absolute inset-[2px] rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/40 shadow-2xl z-10">
+            <Image
+              src="/designer.avif"
+              alt="Foto de perfil de Wolkendo Arias"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent" />
+          </div>
         </motion.div>
       </div>
     </section>

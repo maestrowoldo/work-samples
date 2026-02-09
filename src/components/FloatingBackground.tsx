@@ -131,12 +131,23 @@ export default function FloatingBackground() {
       
       drawMoon(moon.x, moon.y, moon.radius, timeRef.current);
 
-      // Desenhar estrelas
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      // Desenhar estrelas com mais brilho
       stars.forEach((star) => {
         star.y -= star.speed;
         if (star.y < 0) star.y = height;
 
+        // Glow effect ao redor das estrelas
+        const glowGradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 3);
+        glowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+        glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.fillStyle = glowGradient;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Estrela brilhante
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
