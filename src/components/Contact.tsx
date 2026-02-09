@@ -1,7 +1,7 @@
 // src/components/Contact.tsx
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactFormSchema, type ContactFormData } from "@/lib/validations";
@@ -58,6 +58,7 @@ export default function Contact() {
       if (res.ok) {
         setStatus("success");
         reset();
+        setCelularFormatado("");
         setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");

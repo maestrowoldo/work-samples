@@ -35,14 +35,14 @@ export default function Hero() {
           variants={containerVariants}
         >
           <motion.p variants={itemVariants} className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-400">
-            Desenvolvedor Full Stack & Analista de Dados
+            Desenvolvedor Full Stack
           </motion.p>
           <motion.h1 variants={itemVariants} className="text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl lg:text-5xl">
             Transformando ideias em{" "}
             <span className="text-emerald-400">realidade digital</span>.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-sm text-zinc-300 sm:text-base">
-            Desenvolvedor Full Stack, Analista de Dados e especialista em Power BI. Transformo problemas em soluções inovadoras e acessíveis usando tecnologia, dados e design.
+            Desenvolvedor Full Stack com experiência em dados, automação e visualização com Power BI. Transformo problemas em soluções inovadoras e acessíveis usando tecnologia, dados e design.
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">

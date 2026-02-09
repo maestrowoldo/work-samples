@@ -11,7 +11,7 @@ const projects = [
     title: "Programação Web",
     description: "Landing pages, portfólios e sistemas web responsivos.",
     image: "/web_pro.jpg",
-    href: "https://github.com",
+    href: "https://github.com/maestrowoldo",
     tag: "Web",
     tech: ["React", "Next.js", "Tailwind"],
   },

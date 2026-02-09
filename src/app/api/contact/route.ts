@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     // Enviar email
     console.log("📧 Enviando email para:", email);
-    const emailEnviado = await sendContactEmail(nome, email, mensagem);
+    const emailEnviado = await sendContactEmail(nome, email, mensagem, celular);
 
     if (!emailEnviado) {
       console.warn("⚠️ Email não foi enviado, mas contato foi salvo no banco");

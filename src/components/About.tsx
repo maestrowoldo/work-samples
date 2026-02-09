@@ -42,19 +42,11 @@ export default function About() {
           className="mt-8 max-w-3xl mx-auto space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
         >
           <motion.p variants={itemVariants}>
-            Nascido no Haiti, sou fluente em Crioulo e Francês. Durante minha jornada no Brasil,
-            desenvolvi o Português e aprimorei meu Inglês, construindo uma base multicultural
-            que me ajuda a me adaptar a diferentes contextos e pessoas.
-          </motion.p>
-          <motion.p variants={itemVariants}>
-            Sou <span className="font-semibold text-emerald-400">Bacharel em Ciência da Computação</span> pela Universidade Cruzeiro do Sul. 
-            Tenho experiência prática com linguagens como Python, Java, PHP e JavaScript, além de expertise em bancos de dados SQL, 
-            HTML, CSS e infraestrutura de redes de computadores.
-          </motion.p>
-          <motion.p variants={itemVariants}>
-            Me encontrei na interseção entre desenvolvimento web, visualização de dados com Power BI
-            e automação com Power Platform. Gosto de transformar problemas em soluções visuais e acessíveis,
-            sempre com foco em usabilidade e impacto real.
+            Desenvolvedor Full Stack, bacharel em Ciência da Computação, com experiência no desenvolvimento de aplicações web, integração de sistemas e automação de processos. Atuo com tecnologias como React, Next.js, Node.js, Python e bancos de dados SQL, sempre com foco em qualidade, usabilidade e entrega em produção.
+
+            Possuo vivência complementar em análise de dados e visualização com Power BI, além de automação com Power Platform.
+
+            Nascido no Haiti, sou fluente em Crioulo e Francês, com domínio do Português e Inglês, o que me permite atuar em ambientes multiculturais e colaborativos.
           </motion.p>
         </motion.div>
       </div>

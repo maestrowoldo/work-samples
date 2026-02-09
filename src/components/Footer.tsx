@@ -6,17 +6,17 @@ export default function Footer() {
     {
       name: "GitHub",
       icon: Github,
-      url: "https://github.com/wolkendo",
+      url: "https://github.com/maestrowoldo",
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
-      url: "https://linkedin.com/in/wolkendo",
+      url: "https://www.linkedin.com/in/wolkendo-arias/",
     },
     {
       name: "Instagram",
       icon: Instagram,
-      url: "https://instagram.com/wolkendo",
+      url: "https://instagram.com/maestro_woldo",
     },
   ];
 

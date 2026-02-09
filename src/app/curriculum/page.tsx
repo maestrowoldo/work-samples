@@ -4,8 +4,29 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Download, Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
+import { useRef, useState } from "react";
 
 export default function CurriculumPage() {
+  const cvRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const generatePDF = async () => {
+    setIsGenerating(true);
+    try {
+      const link = document.createElement("a");
+      link.href = "/Wolkendo CV 11-25.pdf";
+      link.download = "Curriculo-Wolkendo-Arias.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Erro ao baixar PDF:", error);
+      alert("Erro ao baixar o currículo. Por favor, tente novamente.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -20,80 +41,82 @@ export default function CurriculumPage() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950 pt-24">
-      <div className="mx-auto max-w-4xl px-4 py-16 lg:px-6">
-        {/* Botão voltar */}
+    <main className="min-h-screen bg-zinc-950 pt-24 pb-12">
+      <div className="mx-auto max-w-4xl px-4 lg:px-6">
+        {/* Botão voltar e Download */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-8"
+          className="mb-8 flex items-center justify-between"
         >
           <Link href="/" className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors">
             <ArrowLeft size={18} />
             <span>Voltar ao portfólio</span>
           </Link>
+          <button
+            onClick={generatePDF}
+            disabled={isGenerating}
+            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download size={18} />
+            <span>{isGenerating ? "Gerando..." : "Baixar PDF"}</span>
+          </button>
         </motion.div>
 
-        {/* Header */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          className="mb-12 pb-8 border-b border-zinc-800"
-        >
-          <motion.div variants={itemVariants} className="mb-4">
-            <h1 className="text-4xl font-bold text-zinc-50 md:text-5xl">
-              Wolkendo Arias
-            </h1>
-            <p className="mt-2 text-lg text-emerald-400 font-medium">
-              Computólogo | Desenvolvedor Web | Data Analyst
-            </p>
-          </motion.div>
+        {/* CV Content */}
+        <div ref={cvRef} className="rounded-lg border border-zinc-800/50 bg-zinc-950 p-8 md:p-12">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+            className="space-y-12"
+          >
+            {/* Header */}
+            <motion.div
+              variants={itemVariants}
+              className="mb-12 pb-8 border-b border-zinc-800"
+            >
+              <motion.div variants={itemVariants} className="mb-4">
+                <h1 className="text-4xl font-bold text-zinc-50 md:text-5xl">
+                  Wolkendo Arias
+                </h1>
+                <p className="mt-2 text-lg text-emerald-400 font-medium">
+                  Desenvolvedor Web Full Stack 
+                </p>
+              </motion.div>
 
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 text-sm text-zinc-400">
-            <a href="tel:11988519854" className="flex items-center gap-2 hover:text-emerald-400 transition-colors">
-              <Phone size={16} />
-              <span>(11) 98851-9854</span>
-            </a>
-            <a href="mailto:woldobest@gmail.com" className="flex items-center gap-2 hover:text-emerald-400 transition-colors">
-              <Mail size={16} />
-              <span>woldobest@gmail.com</span>
-            </a>
-            <div className="flex items-center gap-2">
-              <MapPin size={16} />
-              <span>Perus, SP</span>
-            </div>
-          </motion.div>
+              <motion.div variants={itemVariants} className="flex flex-wrap gap-4 text-sm text-zinc-400">
+                <div className="flex items-center gap-2">
+                  <Phone size={16} />
+                  <span>(11) 98851-9854</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail size={16} />
+                  <span>woldobest@gmail.com</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin size={16} />
+                  <span>Perus, SP</span>
+                </div>
+              </motion.div>
 
-          <motion.div variants={itemVariants} className="mt-4 flex gap-3">
-            <a href="https://github.com/wolkendo" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
-              <Github size={18} />
-            </a>
-            <a href="https://linkedin.com/in/wolkendo" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
-              <Linkedin size={18} />
-            </a>
-          </motion.div>
-        </motion.div>
+              <motion.div variants={itemVariants} className="mt-4 flex gap-3">
+                <a href="https://github.com/maestrowoldo" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
+                  <Github size={18} />
+                </a>
+                <a href="https://www.linkedin.com/in/wolkendo-arias/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-emerald-400 transition-colors">
+                  <Linkedin size={18} />
+                </a>
+              </motion.div>
+            </motion.div>
 
-        {/* Conteúdo do CV */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          className="space-y-12"
-        >
-          {/* Resumo Profissional */}
+            {/* Resumo Profissional */}
           <motion.section variants={itemVariants} className="space-y-3">
             <h2 className="text-2xl font-bold text-zinc-50 border-b border-emerald-400 pb-2">
               Resumo Profissional
             </h2>
             <p className="text-zinc-300 leading-relaxed text-justify">
-              Profissional com experiência em desenvolvimento de software, análise de dados e automação de processos. 
-              Domino lógica de programação orientada a dados, desenvolvimento web completo (do código ao deploy) e 
-              integração de sistemas. Experiência com linguagens como Python, JavaScript, Java, além de ferramentas 
-              de Business Intelligence (Power BI), modelagem de processos (Bizagi) e desenvolvimento low-code 
-              (Power Apps). Buscando aplicar conhecimentos técnicos em projetos de desenvolvimento web e soluções 
-              baseadas em dados.
+              Desenvolvedor Full Stack com experiência no desenvolvimento de aplicações web do código ao deploy, integração de sistemas e automação de processos. Atuo principalmente com Node.js, JavaScript e TypeScript, criando aplicações robustas e escaláveis. Possuo vivência complementar em análise de dados e Business Intelligence (Power BI), além de modelagem de processos e soluções low-code, aplicando tecnologia com foco em qualidade de software, automação e prevenção de falhas.
             </p>
           </motion.section>
 
@@ -110,20 +133,23 @@ export default function CurriculumPage() {
                   empresa: "Prime Secure",
                   periodo: "Novembro 2025 - Presente",
                   descricoes: [
-                    "Desenvolvimento de aplicações web com React, Next.js e Node.js",
-                    "Integração com bancos de dados e APIs",
-                    "Implementação de funcionalidades full stack"
+                    "Desenvolvimento de aplicações web full stack utilizando React, Next.js e Node.js",
+                    "Criação e consumo de APIs REST, integração com bancos de dados relacionais",
+                    "Implementação de autenticação de usuários, regras de negócio e validações",
+                    "Criação de testes automatizados com Vitest voltados à validação de funcionalidades e controle de regressões",
+                    "Apoio em atividades de QA, identificação de falhas e validação funcional das aplicações",
+                    "Análise e detecção de vulnerabilidades e riscos de segurança em aplicações web",
+                    "Atuação no ciclo completo: desenvolvimento, versionamento, testes e deploy"
                   ]
                 },
                 {
-                  cargo: "Analista de Suporte Técnico - PJ",
-                  empresa: "DXC",
+                  cargo: "Analista de Suporte Técnico",
+                  empresa: "DXC Technology",
                   periodo: "Setembro 2025 - Novembro 2025",
                   descricoes: [
-                    "Onboarding e Offboarding de usuários",
-                    "Instalação e configuração de softwares",
-                    "Controle e manutenção de máquinas",
-                    "Apoio nas rotinas de infraestrutura e manutenção preventiva"
+                    "Suporte técnico a usuários (onboarding/offboarding)",
+                    "Instalação e configuração de softwares e ambientes",
+                    "Apoio à infraestrutura e manutenção preventiva"
                   ]
                 },
                 {
@@ -166,8 +192,8 @@ export default function CurriculumPage() {
             <div className="space-y-5">
               {[
                 {
-                  titulo: "Sistema Full Stack de Cadastro Web (Em andamento)",
-                  descricao: "Aplicação web desenvolvida do zero até o deploy na nuvem, com autenticação de usuários, integração com banco de dados e hospedagem em ambiente AWS.",
+                  titulo: "Sistema Full Stack de Cadastro Web",
+                  descricao: "Aplicação web full stack desenvolvida do zero até o deploy em nuvem, com implementação completa de autenticação de usuários, API REST em Node.js e Express, modelagem relacional com PostgreSQL e versionamento com Git/Github.",
                   tecnologias: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"]
                 },
                 {
@@ -309,7 +335,8 @@ export default function CurriculumPage() {
               ))}
             </div>
           </motion.section>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </main>
   );

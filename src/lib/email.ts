@@ -18,7 +18,8 @@ const transporter = nodemailer.createTransport({
 export async function sendContactEmail(
   nome: string,
   email: string,
-  mensagem: string
+  mensagem: string,
+  celular?: string
 ) {
   try {
     // Email para o usuário - confirmar recebimento
@@ -50,6 +51,7 @@ export async function sendContactEmail(
             <div style="background: white; padding: 15px; border-radius: 5px;">
               <p><strong>👤 Nome:</strong> ${nome}</p>
               <p><strong>📧 Email:</strong> <a href="mailto:${email}">${email}</a></p>
+              ${celular ? `<p><strong>📱 Celular:</strong> <a href="tel:${celular.replace(/\D/g, "")}">${celular}</a></p>` : ""}
               <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
               <p><strong>💬 Mensagem:</strong></p>
               <p style="white-space: pre-wrap; background: #fafafa; padding: 10px; border-left: 4px solid #007bff;">${mensagem}</p>

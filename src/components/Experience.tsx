@@ -10,7 +10,7 @@ const experiences = [
     company: "Prime Secure",
     period: "Novembro 2025 - Presente",
     description:
-      "Desenvolvimento de aplicações web com React, Next.js e Node.js. Integração com bancos de dados e APIs.",
+      "Desenvolvimento de aplicações web full stack com React, Next.js e Node.js, incluindo integração com APIs, banco de dados e validações de negócio.",
     skills: ["React", "Next.js", "TypeScript", "Node.js", "SQL"],
   },
   {
