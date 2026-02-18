@@ -16,6 +16,12 @@ interface CardGlowProps {
   intensity?: "low" | "medium" | "high";
 }
 
+const PARTICLE_OFFSETS = [
+  { x: -22, y: -16 },
+  { x: 0, y: 18 },
+  { x: 20, y: -10 },
+];
+
 /**
  * Componente CardGlow Premium - Versão 2
  * Efeitos visuais avançados com ícone, glow duplo, partículas, etc
@@ -179,13 +185,13 @@ export default function CardGlow({
       {/* Partículas ao hover */}
       {isHovering && (
         <div className={styles.particles}>
-          {[...Array(3)].map((_, i) => (
+          {PARTICLE_OFFSETS.map((offset, i) => (
             <div
               key={i}
               className={styles.particle}
               style={{
-                left: `${mousePos.x + (Math.random() - 0.5) * 60}px`,
-                top: `${mousePos.y + (Math.random() - 0.5) * 60}px`,
+                left: `${mousePos.x + offset.x}px`,
+                top: `${mousePos.y + offset.y}px`,
                 backgroundColor: selectedColor.glow,
                 animation: `particleFloat ${0.8 + i * 0.2}s ease-out forwards`,
               }}

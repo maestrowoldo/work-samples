@@ -9,9 +9,13 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
-  // Configuração para Mailtrap e outros provedores
   tls: {
-    rejectUnauthorized: false,
+    // Mantem validacao de certificado ativa por padrao (producao).
+    // Permite desabilitar apenas em ambiente controlado de desenvolvimento.
+    rejectUnauthorized:
+      process.env.NODE_ENV === "development"
+        ? process.env.EMAIL_ALLOW_SELF_SIGNED !== "true"
+        : true,
   },
 });
 

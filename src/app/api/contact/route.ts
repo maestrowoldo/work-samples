@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
 import { sendContactEmail } from "@/lib/email";
 import { PrismaClient } from "@prisma/client";
+import { ZodError } from "zod";
 
 // Use connection pooling in production
 const prisma = new PrismaClient();
@@ -33,6 +34,16 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          message: "Dados inválidos. Verifique os campos enviados.",
+          issues: error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("❌ Erro ao processar contato:", errorMessage);
     console.error("Stack:", error instanceof Error ? error.stack : "N/A");
