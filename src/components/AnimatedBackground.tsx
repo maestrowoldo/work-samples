@@ -20,6 +20,21 @@ interface Particle {
   directionY: number;
 }
 
+const ANIMATED_BACKGROUND_CONFIG = {
+  glowSize: 400,
+  glowOpacity: 0.2,
+  glowBlur: 60,
+  followSpeed: 0.08,
+  glowColor: "rgba(16, 185, 129",
+  particleCount: 50,
+  particleMaxRadius: 1.5,
+  particleMinRadius: 0.5,
+  particleMaxOpacity: 0.6,
+  particleMinOpacity: 0.2,
+  particleSpeed: 0.5,
+  animationDuration: 45,
+} as const;
+
 /**
  * Componente de Background Animado
  * - Partículas/estrelas flutuantes
@@ -40,91 +55,61 @@ export default function AnimatedBackground() {
   const animationFrameRef = useRef<number | null>(null);
 
   // ═══════════════════════════════════════════════════════════════════
-  // CONFIGURAÇÕES CUSTOMIZÁVEIS
-  // ═══════════════════════════════════════════════════════════════════
-  const config = {
-    // Efeito de Mouse
-    glowSize: 400,
-    glowOpacity: 0.2,
-    glowBlur: 60,
-    followSpeed: 0.08,
-    glowColor: "rgba(16, 185, 129", // Esmeralda com alpha customizável
-
-    // Partículas
-    particleCount: 50,
-    particleMaxRadius: 1.5,
-    particleMinRadius: 0.5,
-    particleMaxOpacity: 0.6,
-    particleMinOpacity: 0.2,
-    particleSpeed: 0.5,
-
-    // Animação
-    animationDuration: 45, // segundos
-  };
-
-  // ═══════════════════════════════════════════════════════════════════
-  // INICIALIZAR PARTÍCULAS
-  // ═══════════════════════════════════════════════════════════════════
-  const initializeParticles = (width: number, height: number) => {
-    particlesRef.current = [];
-
-    for (let i = 0; i < config.particleCount; i++) {
-      particlesRef.current.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * (config.particleMaxRadius - config.particleMinRadius) + config.particleMinRadius,
-        opacity: Math.random() * (config.particleMaxOpacity - config.particleMinOpacity) + config.particleMinOpacity,
-        speed: Math.random() * config.particleSpeed + 0.1,
-        directionX: (Math.random() - 0.5) * 2,
-        directionY: (Math.random() - 0.5) * 2,
-      });
-    }
-  };
-
-  // ═══════════════════════════════════════════════════════════════════
-  // DESENHAR PARTÍCULAS COM CANVAS
-  // ═══════════════════════════════════════════════════════════════════
-  const drawParticles = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Limpar canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Desenhar cada partícula
-    particlesRef.current.forEach((particle) => {
-      // Atualizar posição
-      particle.x += particle.directionX * particle.speed;
-      particle.y += particle.directionY * particle.speed;
-
-      // Wrap around (voltar do outro lado)
-      if (particle.x > canvas.width) particle.x = 0;
-      if (particle.x < 0) particle.x = canvas.width;
-      if (particle.y > canvas.height) particle.y = 0;
-      if (particle.y < 0) particle.y = canvas.height;
-
-      // Desenhar com glow sutil
-      ctx.fillStyle = `rgba(16, 185, 129, ${particle.opacity})`;
-      ctx.shadowColor = "rgba(16, 185, 129, 0.5)";
-      ctx.shadowBlur = 10;
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Próximo frame
-    animationFrameRef.current = requestAnimationFrame(drawParticles);
-  };
-
-  // ═══════════════════════════════════════════════════════════════════
   // LISTENERS DE MOUSE
   // ═══════════════════════════════════════════════════════════════════
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const initializeParticles = (width: number, height: number) => {
+      particlesRef.current = [];
+
+      for (let i = 0; i < ANIMATED_BACKGROUND_CONFIG.particleCount; i++) {
+        particlesRef.current.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius:
+            Math.random() *
+              (ANIMATED_BACKGROUND_CONFIG.particleMaxRadius -
+                ANIMATED_BACKGROUND_CONFIG.particleMinRadius) +
+            ANIMATED_BACKGROUND_CONFIG.particleMinRadius,
+          opacity:
+            Math.random() *
+              (ANIMATED_BACKGROUND_CONFIG.particleMaxOpacity -
+                ANIMATED_BACKGROUND_CONFIG.particleMinOpacity) +
+            ANIMATED_BACKGROUND_CONFIG.particleMinOpacity,
+          speed: Math.random() * ANIMATED_BACKGROUND_CONFIG.particleSpeed + 0.1,
+          directionX: (Math.random() - 0.5) * 2,
+          directionY: (Math.random() - 0.5) * 2,
+        });
+      }
+    };
+
+    const drawParticles = () => {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach((particle) => {
+        particle.x += particle.directionX * particle.speed;
+        particle.y += particle.directionY * particle.speed;
+
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.y > canvas.height) particle.y = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+
+        ctx.fillStyle = `rgba(16, 185, 129, ${particle.opacity})`;
+        ctx.shadowColor = "rgba(16, 185, 129, 0.5)";
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationFrameRef.current = requestAnimationFrame(drawParticles);
+    };
 
     // Redimensionar canvas
     const handleResize = () => {
@@ -148,15 +133,19 @@ export default function AnimatedBackground() {
 
       // Smooth follow
       mousePos.current.x +=
-        (mousePos.current.targetX - mousePos.current.x) * config.followSpeed;
+        (mousePos.current.targetX - mousePos.current.x) *
+        ANIMATED_BACKGROUND_CONFIG.followSpeed;
       mousePos.current.y +=
-        (mousePos.current.targetY - mousePos.current.y) * config.followSpeed;
+        (mousePos.current.targetY - mousePos.current.y) *
+        ANIMATED_BACKGROUND_CONFIG.followSpeed;
 
       // Atualizar posição do glow
       if (glowRef.current) {
         glowRef.current.style.left = `${mousePos.current.x}px`;
         glowRef.current.style.top = `${mousePos.current.y}px`;
-        glowRef.current.style.opacity = String(config.glowOpacity);
+        glowRef.current.style.opacity = String(
+          ANIMATED_BACKGROUND_CONFIG.glowOpacity,
+        );
       }
     };
 
@@ -202,10 +191,10 @@ export default function AnimatedBackground() {
         ref={glowRef}
         className={styles.mouseGlow}
         style={{
-          width: `${config.glowSize}px`,
-          height: `${config.glowSize}px`,
-          background: `radial-gradient(circle, ${config.glowColor}, ${config.glowOpacity}) 0%, ${config.glowColor}, 0) 70%)`,
-          filter: `blur(${config.glowBlur}px)`,
+          width: `${ANIMATED_BACKGROUND_CONFIG.glowSize}px`,
+          height: `${ANIMATED_BACKGROUND_CONFIG.glowSize}px`,
+          background: `radial-gradient(circle, ${ANIMATED_BACKGROUND_CONFIG.glowColor}, ${ANIMATED_BACKGROUND_CONFIG.glowOpacity}) 0%, ${ANIMATED_BACKGROUND_CONFIG.glowColor}, 0) 70%)`,
+          filter: `blur(${ANIMATED_BACKGROUND_CONFIG.glowBlur}px)`,
         }}
       />
 

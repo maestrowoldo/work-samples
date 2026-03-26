@@ -146,7 +146,6 @@ export default function Skills() {
           variants={containerVariants}
         >
           {skillCategories.map((category) => {
-            const IconComponent = category.icon;
             const colorMap: Record<string, 'cyan' | 'purple' | 'pink' | 'emerald' | 'blue' | 'orange'> = {
               Frontend: "cyan",
               "Backend & Dados": "purple",

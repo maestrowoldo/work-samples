@@ -10,7 +10,7 @@ export default function CurriculumPage() {
   const cvRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generatePDF = async () => {
+  const generatePDF = () => {
     setIsGenerating(true);
     try {
       const link = document.createElement("a");
@@ -163,7 +163,7 @@ export default function CurriculumPage() {
                     "Desenvolvimento low-code de aplicativo de controle de ponto eletrônico utilizando Power Apps e Power Automate"
                   ]
                 },
-              ].map((exp, idx) => (
+              ].map((exp) => (
                 <div key={`${exp.cargo}-${exp.empresa}`} className="pl-4 border-l-2 border-emerald-500 space-y-2">
                   <div>
                     <h3 className="font-semibold text-zinc-50">{exp.cargo}</h3>
@@ -206,12 +206,12 @@ export default function CurriculumPage() {
                   descricao: "Projeto desenvolvido para apresentar habilidades e experiências em desenvolvimento web, design gráfico e inteligência de dados. Interface moderna, responsiva e animada com integração com GitHub.",
                   tecnologias: ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion", "GitHub Pages"]
                 },
-              ].map((proj, idx) => (
+              ].map((proj) => (
                 <div key={proj.titulo} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4 space-y-3">
                   <h3 className="font-semibold text-zinc-50">{proj.titulo}</h3>
                   <p className="text-sm text-zinc-300">{proj.descricao}</p>
                   <div className="flex flex-wrap gap-2">
-                    {proj.tecnologias.map((tech, i) => (
+                    {proj.tecnologias.map((tech) => (
                       <span key={`${proj.titulo}-${tech}`} className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
                         {tech}
                       </span>
@@ -254,7 +254,7 @@ export default function CurriculumPage() {
                   area: "Ferramentas & Automação",
                   skills: "Power Apps, Power Automate, N8N, Notion"
                 },
-              ].map((skill, idx) => (
+              ].map((skill) => (
                 <div key={skill.area} className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-4">
                   <h3 className="font-semibold text-emerald-400 mb-2">{skill.area}</h3>
                   <p className="text-sm text-zinc-300">{skill.skills}</p>
@@ -281,7 +281,7 @@ export default function CurriculumPage() {
                   instituição: "Centre Professionnel Notre Guadalupe",
                   periodo: "2015 - 2017"
                 },
-              ].map((form, idx) => (
+              ].map((form) => (
                 <div key={form.curso} className="pl-4 border-l-2 border-emerald-500">
                   <h3 className="font-semibold text-zinc-50">{form.curso}</h3>
                   <p className="text-sm text-zinc-400">{form.instituição}</p>
@@ -307,7 +307,7 @@ export default function CurriculumPage() {
                 "CCNA: Introduction to Networks - Cisco (2024)",
                 "Google: Inteligência Artificial e Produtividade - Santander | Open Academy (2024)",
                 "Automação com N8N - Santander Open Academy (2026)"
-              ].map((cert, idx) => (
+              ].map((cert) => (
                 <div key={cert} className="flex items-start gap-2">
                   <span className="text-emerald-400 mt-1 flex-shrink-0">✓</span>
                   <span className="text-sm text-zinc-300">{cert}</span>
@@ -327,7 +327,7 @@ export default function CurriculumPage() {
                 { idioma: "Francês e Crioulo", nivel: "Nativo" },
                 { idioma: "Português", nivel: "Fluente" },
                 { idioma: "Inglês", nivel: "Intermediário" }
-              ].map((lang, idx) => (
+              ].map((lang) => (
                 <div key={lang.idioma} className="flex justify-between items-center pb-2 border-b border-zinc-800/50 last:border-b-0">
                   <span className="font-medium text-zinc-50">{lang.idioma}</span>
                   <span className="text-sm text-emerald-400">{lang.nivel}</span>
