@@ -1,8 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Briefcase, Code2 } from "lucide-react";
+import { ArrowRight, Briefcase, Code2, Download, MessageSquareText } from "lucide-react";
+
+const proofItems = [
+  { label: "Stack principal", value: "Next.js, Node.js, TypeScript e SQL" },
+  { label: "Foco de entrega", value: "Interfaces, APIs, integrações e automação" },
+  { label: "Qualidade", value: "Validação, testes e deploy com atenção a regressão" },
+];
 
 export default function Hero() {
   const containerVariants = {
@@ -35,34 +42,54 @@ export default function Hero() {
           variants={containerVariants}
         >
           <motion.p variants={itemVariants} className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-400">
-            Desenvolvedor Full Stack
+            Desenvolvimento web, automação e integração
           </motion.p>
           <motion.h1 variants={itemVariants} className="text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl lg:text-5xl">
-            Transformando ideias em{" "}
-            <span className="text-emerald-400">realidade digital</span>.
+            Desenvolvedor Full Stack para tirar projetos do{" "}
+            <span className="text-emerald-400">conceito à produção</span>.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-sm text-zinc-300 sm:text-base">
-            Desenvolvedor Full Stack com experiência em React, Next.js, Node e testes automatizados — focado em performance, escalabilidade e qualidade de código.
+            Desenvolvo aplicações web completas, unindo interfaces modernas a uma lógica de negócio bem estruturada e integração com banco de dados. Meu foco está em qualidade, performance e na entrega de soluções realmente utilizáveis, não apenas visuais atrativos.
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
             <a
               href="#contato"
-              className="rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-zinc-950 hover:bg-emerald-400"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
             >
-              Entre em contato
+              <MessageSquareText size={16} />
+              Falar sobre um projeto
             </a>
             <a
               href="#projeto"
-              className="text-sm font-medium text-zinc-300 hover:text-emerald-400"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-emerald-500 hover:text-emerald-400"
             >
-              Ver meus projetos →
+              Ver estudos de caso
+              <ArrowRight size={16} />
             </a>
+            <Link
+              href="/curriculum"
+              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
+            >
+              <Download size={16} />
+              Abrir currículo
+            </Link>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="grid gap-3 rounded-3xl border border-zinc-800/80 bg-zinc-900/40 p-4 sm:grid-cols-3">
+            {proofItems.map((item) => (
+              <div key={item.label} className="space-y-1">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-400/90">
+                  {item.label}
+                </p>
+                <p className="text-sm text-zinc-200">{item.value}</p>
+              </div>
+            ))}
           </motion.div>
 
           <motion.div variants={itemVariants} className="flex gap-4">
             <a
-              href="https://linkedin.com/in/wolkendo"
+              href="https://www.linkedin.com/in/wolkendo-arias/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
@@ -83,10 +110,13 @@ export default function Hero() {
 
           <motion.div variants={itemVariants} className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-400">
             <span className="rounded-full border border-zinc-700/80 px-3 py-1">
-              Multilíngue: PT · FR · CR · EN
+              PT · FR · CR · EN
             </span>
             <span className="rounded-full border border-zinc-700/80 px-3 py-1">
-              Ciência da Computação · Cruzeiro do Sul
+              Computação + dados + design aplicado
+            </span>
+            <span className="rounded-full border border-zinc-700/80 px-3 py-1">
+              Disponível para projetos web e automação
             </span>
           </motion.div>
         </motion.div>
