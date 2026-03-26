@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
+import HowIWork from "@/components/HowIWork";
 import Projects from "@/components/Projects";
 import BlogPreview from "@/components/BlogPreview";
 import TechMarquee from "@/components/TechMarquee";
@@ -25,6 +26,10 @@ export default function HomePage() {
 
         <section id="experiencia" className="scroll-mt-24">
           <Experience />
+        </section>
+
+        <section id="processo" className="scroll-mt-24">
+          <HowIWork />
         </section>
 
         <section id="projeto" className="scroll-mt-24">

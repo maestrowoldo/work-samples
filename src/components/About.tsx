@@ -2,6 +2,30 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Blocks, Bot, ChartColumnIncreasing, Globe2 } from "lucide-react";
+
+const pillars = [
+  {
+    title: "Aplicações web ponta a ponta",
+    description: "Interfaces, APIs, integrações e persistência trabalhando juntas com foco em entrega real.",
+    icon: Blocks,
+  },
+  {
+    title: "Automação de processos",
+    description: "Redução de tarefas manuais com fluxos, validações e ferramentas low-code quando fazem sentido.",
+    icon: Bot,
+  },
+  {
+    title: "Dados e visualização",
+    description: "Dashboards, análise e modelagem para transformar informação em decisão mais rápida.",
+    icon: ChartColumnIncreasing,
+  },
+  {
+    title: "Comunicação multicultural",
+    description: "Experiência em ambientes colaborativos com fluência em crioulo, francês e português.",
+    icon: Globe2,
+  },
+];
 
 export default function About() {
   const containerVariants = {
@@ -39,15 +63,44 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="mt-8 max-w-3xl mx-auto space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
+          className="mx-auto mt-8 max-w-5xl"
         >
-          <motion.p variants={itemVariants}>
-            Desenvolvedor Full Stack, bacharel em Ciência da Computação, com experiência no desenvolvimento de aplicações web, integração de sistemas e automação de processos. Atuo com tecnologias como React, Next.js, Node.js, Python e bancos de dados SQL, sempre com foco em qualidade, usabilidade e entrega em produção.
+          <motion.div
+            variants={itemVariants}
+            className="mx-auto max-w-3xl space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
+          >
+            <p>
+              Atuo construindo soluções digitais com visão de produto e execução
+              técnica. Meu trabalho conecta interface, regras de negócio, banco de
+              dados, integrações e qualidade de software para que o projeto funcione
+              de verdade em produção.
+            </p>
+            <p>
+              Além do desenvolvimento web, também trago repertório em Power BI,
+              automação de processos e organização de fluxos operacionais. Isso me
+              ajuda a pensar não apenas na tela, mas no problema completo que o
+              sistema precisa resolver.
+            </p>
+          </motion.div>
 
-            Possuo vivência complementar em análise de dados e visualização com Power BI, além de automação com Power Platform.
+          <motion.div variants={itemVariants} className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {pillars.map((pillar) => {
+              const Icon = pillar.icon;
 
-            Nascido no Haiti, sou fluente em Crioulo e Francês, com domínio do Português e Inglês, o que me permite atuar em ambientes multiculturais e colaborativos.
-          </motion.p>
+              return (
+                <div
+                  key={pillar.title}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5"
+                >
+                  <div className="mb-4 inline-flex rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-emerald-400">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="text-base font-semibold text-zinc-50">{pillar.title}</h3>
+                  <p className="mt-2 text-sm text-zinc-400">{pillar.description}</p>
+                </div>
+              );
+            })}
+          </motion.div>
         </motion.div>
       </div>
     </section>

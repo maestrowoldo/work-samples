@@ -2,12 +2,13 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactFormSchema, type ContactFormData } from "@/lib/validations";
 import { Button, Input, Textarea } from "@/components/ui";
 import { motion } from "framer-motion";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { CheckCircle, AlertCircle, Download, MessageSquare, TimerReset } from "lucide-react";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -87,26 +88,54 @@ export default function Contact() {
 
   return (
     <section className="py-16">
-      <div className="mx-auto max-w-3xl px-4 lg:px-6">
+      <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="max-w-3xl mx-auto"
+          className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]"
         >
-          <motion.h2 variants={itemVariants} className="text-center text-2xl font-semibold text-zinc-50 md:text-3xl">
-            Fale <span className="text-emerald-400">comigo</span>
-          </motion.h2>
+          <motion.div variants={itemVariants} className="space-y-5">
+            <div>
+              <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
+                Vamos transformar sua necessidade em <span className="text-emerald-400">entrega concreta</span>
+              </h2>
 
-          <motion.p variants={itemVariants} className="mt-3 text-center text-sm text-zinc-400 md:text-base">
-            Me conta sobre a sua ideia, projeto ou necessidade. Eu respondo assim que possível.
-          </motion.p>
+              <p className="mt-3 text-sm text-zinc-400 md:text-base">
+                Se você precisa de uma aplicação web, melhoria de processo, integração
+                entre sistemas ou uma solução mais organizada para operação, me mande o
+                contexto. Eu respondo com objetividade.
+              </p>
+            </div>
+
+            <div className="space-y-3 rounded-3xl border border-zinc-800 bg-zinc-900/40 p-5">
+              <div className="flex items-start gap-3">
+                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-emerald-400">
+                  <MessageSquare size={18} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">O que você pode me enviar</p>
+                  <p className="text-sm text-zinc-400">Ideia do projeto, prazo, stack atual, gargalo técnico ou necessidade do negócio.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-emerald-400">
+                  <TimerReset size={18} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-zinc-100">Como eu costumo atuar</p>
+                  <p className="text-sm text-zinc-400">Diagnóstico, implementação, validação e ajuste fino para a entrega ficar utilizável de verdade.</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           <motion.form
             variants={itemVariants}
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-8 space-y-4"
+            className="space-y-4 rounded-[2rem] border border-zinc-800 bg-zinc-900/35 p-6 md:p-8"
           >
             <div className="grid gap-4 md:grid-cols-2">
               <Input
@@ -134,8 +163,8 @@ export default function Contact() {
 
             <Textarea
               label="Mensagem"
-              placeholder="Digite sua mensagem aqui..."
-              rows={4}
+              placeholder="Conte o que você precisa resolver, o contexto atual e o que espera como entrega."
+              rows={5}
               {...register("mensagem")}
               error={errors.mensagem?.message}
             />
