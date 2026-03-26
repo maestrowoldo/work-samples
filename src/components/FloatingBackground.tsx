@@ -53,7 +53,7 @@ export default function FloatingBackground() {
     };
 
     // Desenhar a lua - versão realista
-    const drawMoon = (x: number, y: number, radius: number, time: number) => {
+    const drawMoon = (x: number, y: number, radius: number) => {
       // Glow externo sutil e realista
       const haloGradient = ctx.createRadialGradient(x, y, radius, x, y, radius + 80);
       haloGradient.addColorStop(0, 'rgba(200, 200, 180, 0.15)');
@@ -129,7 +129,7 @@ export default function FloatingBackground() {
       moon.x = centerX + Math.cos(angle) * orbitRadius;
       moon.y = centerY + Math.sin(angle) * orbitRadius * 0.6;
       
-      drawMoon(moon.x, moon.y, moon.radius, timeRef.current);
+      drawMoon(moon.x, moon.y, moon.radius);
 
       // Desenhar estrelas com mais brilho
       stars.forEach((star) => {
