@@ -129,4 +129,4 @@ npx prisma studio
 
 ## Licença
 
-MIT - Desenvolvido com ❤️ por Wolkendo Arias
+MIT - Wolkendo Arias
