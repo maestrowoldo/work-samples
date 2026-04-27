@@ -4,14 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Briefcase, Code2, Download, MessageSquareText } from "lucide-react";
-
-const proofItems = [
-  { label: "Stack principal", value: "Next.js, Node.js, TypeScript e SQL" },
-  { label: "Foco de entrega", value: "Interfaces, APIs, integrações e automação" },
-  { label: "Qualidade", value: "Validação, testes e deploy com atenção a regressão" },
-];
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Hero() {
+  const { dictionary, locale } = useLocaleContext();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,14 +38,14 @@ export default function Hero() {
           variants={containerVariants}
         >
           <motion.p variants={itemVariants} className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-400">
-            Desenvolvimento web, automação e integração
+            {dictionary.hero.eyebrow}
           </motion.p>
           <motion.h1 variants={itemVariants} className="text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl lg:text-5xl">
-            Desenvolvedor Full Stack para tirar projetos do{" "}
-            <span className="text-emerald-400">conceito à produção</span>.
+            {dictionary.hero.title}{" "}
+            <span className="text-emerald-400">{dictionary.hero.titleHighlight}</span>.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-sm text-zinc-300 sm:text-base">
-            Desenvolvo aplicações web completas, unindo interfaces modernas a uma lógica de negócio bem estruturada e integração com banco de dados. Meu foco está em qualidade, performance e na entrega de soluções realmente utilizáveis, não apenas visuais atrativos.
+            {dictionary.hero.description}
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
@@ -58,26 +54,26 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
             >
               <MessageSquareText size={16} />
-              Falar sobre um projeto
+              {dictionary.hero.ctaPrimary}
             </a>
             <a
               href="#projeto"
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-emerald-500 hover:text-emerald-400"
             >
-              Ver estudos de caso
+              {dictionary.hero.ctaSecondary}
               <ArrowRight size={16} />
             </a>
             <Link
-              href="/curriculum"
+              href={`/${locale}/curriculum`}
               className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
             >
               <Download size={16} />
-              Abrir currículo
+              {dictionary.hero.resumeLabel}
             </Link>
           </motion.div>
 
           <motion.div variants={itemVariants} className="grid gap-3 rounded-3xl border border-zinc-800/80 bg-zinc-900/40 p-4 sm:grid-cols-3">
-            {proofItems.map((item) => (
+            {dictionary.hero.proofItems.map((item) => (
               <div key={item.label} className="space-y-1">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-400/90">
                   {item.label}
@@ -95,7 +91,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
             >
               <Briefcase size={18} />
-              LinkedIn
+              {dictionary.hero.socialLinkedIn}
             </a>
             <a
               href="https://github.com/maestrowoldo"
@@ -104,20 +100,16 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
             >
               <Code2 size={18} />
-              GitHub
+              {dictionary.hero.socialGitHub}
             </a>
           </motion.div>
 
           <motion.div variants={itemVariants} className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-400">
-            <span className="rounded-full border border-zinc-700/80 px-3 py-1">
-              PT · FR · CR · EN
-            </span>
-            <span className="rounded-full border border-zinc-700/80 px-3 py-1">
-              Computação + dados + design aplicado
-            </span>
-            <span className="rounded-full border border-zinc-700/80 px-3 py-1">
-              Disponível para projetos web e automação
-            </span>
+            {dictionary.hero.badges.map((badge) => (
+              <span key={badge} className="rounded-full border border-zinc-700/80 px-3 py-1">
+                {badge}
+              </span>
+            ))}
           </motion.div>
         </motion.div>
 
@@ -149,7 +141,7 @@ export default function Hero() {
           <div className="absolute inset-[2px] rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/40 shadow-2xl z-10">
             <Image
               src="/designer.avif"
-              alt="Foto de perfil de Wolkendo Arias"
+              alt={dictionary.hero.profileAlt}
               fill
               className="object-cover"
               priority

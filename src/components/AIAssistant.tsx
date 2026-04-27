@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, MessageCircle } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 interface Message {
   id: string;
@@ -11,71 +12,13 @@ interface Message {
   timestamp: Date;
 }
 
-interface AIResponse {
-  keywords: string[];
-  response: string | string[];
-}
-
-const aiResponses: AIResponse[] = [
-  {
-    keywords: ["oi", "olá", "ola"],
-    response: [
-      "Olá! 👋 Sou o assistente virtual do Wolkendo. Como posso ajudar?",
-      "Oi! 😄 Posso te contar sobre projetos, experiência ou como entrar em contato.",
-    ],
-  },
-  {
-    keywords: ["quem é você", "quem você é"],
-    response:
-      "Sou o assistente virtual do Wolkendo Arias, Desenvolvedor Full Stack, bacharel em Ciência da Computação, com experiência em aplicações web, dados e automação.",
-  },
-  {
-    keywords: ["o que você faz", "seu trabalho"],
-    response:
-      "O Wolkendo atua no desenvolvimento de aplicações web modernas, do código ao deploy, com foco em qualidade, automação e soluções escaláveis.",
-  },
-  {
-    keywords: ["tecnologias", "stack", "ferramentas"],
-    response:
-      "Ele trabalha com React, Next.js, TypeScript, Node.js, PostgreSQL, Python, Power BI e ferramentas de automação.",
-  },
-  {
-    keywords: ["projetos"],
-    response:
-      "Entre os projetos estão aplicações Full Stack, dashboards em Power BI e automações internas. Você pode ver os detalhes na seção de projetos 😉",
-  },
-  {
-    keywords: ["experiência", "trabalho"],
-    response:
-      "Atualmente, Wolkendo atua como Desenvolvedor Full Stack na Prime Secure, com experiência prévia em TI, dados e automação.",
-  },
-  {
-    keywords: ["contato", "falar", "email"],
-    response:
-      "Você pode entrar em contato pelo formulário do site, LinkedIn ou GitHub. É só clicar em ‘Vamos conversar’.",
-  },
-  {
-    keywords: ["disponível", "contratar", "freelance"],
-    response:
-      "Sim! Wolkendo está disponível para novos projetos e oportunidades. Vamos conversar?",
-  },
-  {
-    keywords: ["preço", "valor"],
-    response:
-      "Os valores variam conforme o escopo e a complexidade do projeto. O ideal é conversar para entender sua necessidade.",
-  },
-];
-
-const defaultResponse =
-  "Boa pergunta! 😊 Posso te contar sobre projetos, tecnologias, experiência ou como entrar em contato.";
-
 export default function AIAssistant() {
+  const { dictionary, locale } = useLocaleContext();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: crypto.randomUUID(),
-      text:
-        "Olá! 👋 Sou o assistente virtual do Wolkendo. Posso te ajudar com informações sobre projetos, experiência ou contato.",
+      text: dictionary.assistant.greeting,
       sender: "ai",
       timestamp: new Date(),
     },
@@ -95,11 +38,11 @@ export default function AIAssistant() {
   const getAIResponse = (message: string): string => {
     const lower = message.toLowerCase();
 
-    const match = aiResponses.find(({ keywords }) =>
+    const match = dictionary.assistant.responses.find(({ keywords }) =>
       keywords.some((k) => lower.includes(k))
     );
 
-    if (!match) return defaultResponse;
+    if (!match) return dictionary.assistant.defaultResponse;
 
     if (Array.isArray(match.response)) {
       return match.response[Math.floor(Math.random() * match.response.length)];
@@ -141,12 +84,6 @@ export default function AIAssistant() {
     setInput("");
   };
 
-  const suggestionQuestions = [
-    "Quais tecnologias você domina?",
-    "Quais projetos você já fez?",
-    "Você está disponível para trabalho?",
-  ];
-
   return (
     <>
       {/* Botão flutuante */}
@@ -161,7 +98,7 @@ export default function AIAssistant() {
         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
           <MessageCircle size={16} />
         </div>
-        <span className="font-semibold text-xs">Vamos conversar</span>
+        <span className="font-semibold text-xs">{dictionary.assistant.buttonLabel}</span>
       </motion.button>
 
       <AnimatePresence>
@@ -184,8 +121,8 @@ export default function AIAssistant() {
               {/* Header */}
               <div className="p-3 bg-gradient-to-r from-emerald-600 to-cyan-600 text-white flex justify-between items-center">
                 <div>
-                  <h3 className="font-bold text-sm">Assistente Wolkendo</h3>
-                  <p className="text-xs text-white/80">Online</p>
+                  <h3 className="font-bold text-sm">{dictionary.assistant.headerTitle}</h3>
+                  <p className="text-xs text-white/80">{dictionary.assistant.onlineLabel}</p>
                 </div>
                 <button onClick={() => setIsOpen(false)}>
                   <X size={18} />
@@ -214,7 +151,7 @@ export default function AIAssistant() {
                 ))}
 
                 {isLoading && (
-                  <div className="text-xs text-zinc-400">Digitando...</div>
+                  <div className="text-xs text-zinc-400">{dictionary.assistant.typingLabel}</div>
                 )}
 
                 <div ref={messagesEndRef} />
@@ -228,7 +165,7 @@ export default function AIAssistant() {
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Digite sua mensagem..."
+                  placeholder={dictionary.assistant.inputPlaceholder}
                   className="flex-1 bg-zinc-800 text-zinc-100 text-xs rounded-lg px-3 py-1.5 border border-zinc-700 focus:border-emerald-500 outline-none"
                 />
                 <button
@@ -242,7 +179,7 @@ export default function AIAssistant() {
               {/* Sugestões */}
               {messages.length === 1 && !isLoading && (
                 <div className="p-2 border-t border-zinc-700 space-y-1">
-                  {suggestionQuestions.map((q) => (
+                  {dictionary.assistant.suggestionQuestions.map((q) => (
                     <button
                       key={q}
                       onClick={() => sendMessage(q)}
@@ -260,7 +197,7 @@ export default function AIAssistant() {
                     setIsOpen(false);
                     // Se já está na página principal, scroll direto
                     if (globalThis.location.pathname === "/") {
-                      setTimeout(() => {
+                            setTimeout(() => {
                         const element = document.getElementById("contato");
                         if (element) {
                           element.scrollIntoView({ behavior: "smooth" });
@@ -268,12 +205,12 @@ export default function AIAssistant() {
                       }, 100);
                     } else {
                       // Se está em outra página, redireciona para principal
-                      globalThis.location.href = "/#contato";
+                      globalThis.location.href = `/${locale}#contato`;
                     }
                   }}
                   className="inline-block text-xs font-bold text-emerald-400 hover:text-emerald-300 transition px-2 py-1 rounded-lg hover:bg-emerald-500/10 cursor-pointer"
                 >
-                    Fale diretamente comigo →
+                    {dictionary.assistant.ctaLabel} →
                 </button>
               </div>
             </motion.div>

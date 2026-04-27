@@ -2,15 +2,16 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactFormSchema, type ContactFormData } from "@/lib/validations";
+import { createContactFormSchema, type ContactFormData } from "@/lib/validations";
 import { Button, Input, Textarea } from "@/components/ui";
 import { motion } from "framer-motion";
-import { CheckCircle, AlertCircle, Download, MessageSquare, TimerReset } from "lucide-react";
+import { CheckCircle, AlertCircle, MessageSquare, TimerReset } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Contact() {
+  const { dictionary } = useLocaleContext();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [celularFormatado, setCelularFormatado] = useState("");
   const {
@@ -20,7 +21,7 @@ export default function Contact() {
     reset,
     setValue,
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(createContactFormSchema(dictionary.contactSection.form.validation)),
   });
 
   // Função para formatar celular em (11) 99999-9999
@@ -99,13 +100,12 @@ export default function Contact() {
           <motion.div variants={itemVariants} className="space-y-5">
             <div>
               <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-                Vamos transformar sua necessidade em <span className="text-emerald-400">entrega concreta</span>
+                {dictionary.contactSection.heading.replace(dictionary.contactSection.highlight, "")}
+                <span className="text-emerald-400">{dictionary.contactSection.highlight}</span>
               </h2>
 
               <p className="mt-3 text-sm text-zinc-400 md:text-base">
-                Se você precisa de uma aplicação web, melhoria de processo, integração
-                entre sistemas ou uma solução mais organizada para operação, me mande o
-                contexto. Eu respondo com objetividade.
+                {dictionary.contactSection.description}
               </p>
             </div>
 
@@ -115,8 +115,8 @@ export default function Contact() {
                   <MessageSquare size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-zinc-100">O que você pode me enviar</p>
-                  <p className="text-sm text-zinc-400">Ideia do projeto, prazo, stack atual, gargalo técnico ou necessidade do negócio.</p>
+                  <p className="text-sm font-semibold text-zinc-100">{dictionary.contactSection.infoCards[0]?.title}</p>
+                  <p className="text-sm text-zinc-400">{dictionary.contactSection.infoCards[0]?.description}</p>
                 </div>
               </div>
 
@@ -125,8 +125,8 @@ export default function Contact() {
                   <TimerReset size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-zinc-100">Como eu costumo atuar</p>
-                  <p className="text-sm text-zinc-400">Diagnóstico, implementação, validação e ajuste fino para a entrega ficar utilizável de verdade.</p>
+                  <p className="text-sm font-semibold text-zinc-100">{dictionary.contactSection.infoCards[1]?.title}</p>
+                  <p className="text-sm text-zinc-400">{dictionary.contactSection.infoCards[1]?.description}</p>
                 </div>
               </div>
             </div>
@@ -139,31 +139,31 @@ export default function Contact() {
           >
             <div className="grid gap-4 md:grid-cols-2">
               <Input
-                label="Nome completo"
-                placeholder="Seu nome"
+                label={dictionary.contactSection.form.nameLabel}
+                placeholder={dictionary.contactSection.form.namePlaceholder}
                 {...register("nome")}
                 error={errors.nome?.message}
               />
               <Input
-                label="E-mail"
+                label={dictionary.contactSection.form.emailLabel}
                 type="email"
-                placeholder="seu@email.com"
+                placeholder={dictionary.contactSection.form.emailPlaceholder}
                 {...register("email")}
                 error={errors.email?.message}
               />
             </div>
 
             <Input
-              label="Celular (opcional)"
-              placeholder="(11) 99999-9999"
+              label={dictionary.contactSection.form.cellphoneLabel}
+              placeholder={dictionary.contactSection.form.cellphonePlaceholder}
               value={celularFormatado}
               onChange={handleCelularChange}
               error={errors.celular?.message}
             />
 
             <Textarea
-              label="Mensagem"
-              placeholder="Conte o que você precisa resolver, o contexto atual e o que espera como entrega."
+              label={dictionary.contactSection.form.messageLabel}
+              placeholder={dictionary.contactSection.form.messagePlaceholder}
               rows={5}
               {...register("mensagem")}
               error={errors.mensagem?.message}
@@ -171,7 +171,7 @@ export default function Contact() {
 
             <div className="flex items-center gap-2">
               <Button type="submit" disabled={status === "loading"}>
-                {status === "loading" ? "Enviando..." : "Enviar mensagem"}
+                {status === "loading" ? dictionary.contactSection.form.submitLoading : dictionary.contactSection.form.submitIdle}
               </Button>
             </div>
 
@@ -182,7 +182,7 @@ export default function Contact() {
                 className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-400"
               >
                 <CheckCircle size={18} />
-                <span>Mensagem enviada com sucesso! Obrigado por entrar em contato.</span>
+                <span>{dictionary.contactSection.form.successMessage}</span>
               </motion.div>
             )}
 
@@ -193,7 +193,7 @@ export default function Contact() {
                 className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-400"
               >
                 <AlertCircle size={18} />
-                <span>Erro ao enviar. Tente novamente em alguns instantes.</span>
+                <span>{dictionary.contactSection.form.errorMessage}</span>
               </motion.div>
             )}
           </motion.form>

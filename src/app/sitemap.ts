@@ -1,51 +1,47 @@
 import process from "node:process";
 import { MetadataRoute } from "next";
+import { locales } from "@/lib/i18n";
+import { getBlogPosts } from "@/lib/site-content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
+  const lastModified = new Date();
 
-  return [
+  const localizedPages = locales.flatMap((locale) => [
     {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      url: `${baseUrl}/${locale}`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: locale === "pt" ? 1 : 0.9,
     },
     {
-      url: `${baseUrl}#sobre`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      url: `${baseUrl}/${locale}/blog`,
+      lastModified,
+      changeFrequency: "weekly" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}#especialidade`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#experiencia`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#projeto`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}#blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
+      url: `${baseUrl}/${locale}/curriculum`,
+      lastModified,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}#contato`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.8,
+      url: `${baseUrl}/${locale}/contato`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
-  ];
+  ]);
+
+  const localizedPosts = locales.flatMap((locale) =>
+    getBlogPosts(locale).map((post) => ({
+      url: `${baseUrl}/${locale}/blog/${post.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  );
+
+  return [...localizedPages, ...localizedPosts];
 }
