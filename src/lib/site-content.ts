@@ -501,7 +501,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         { label: "Qualidade", value: "Validação, testes e deploy com atenção a regressão" },
       ],
       badges: [
-        "PT · FR · CR · EN",
+        "PT · FR  · EN",
         "Computação + dados + design aplicado",
         "Disponível para projetos web e automação",
       ],
@@ -921,7 +921,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         { label: "Quality", value: "Validation, testing, and deploys with regression awareness" },
       ],
       badges: [
-        "PT · FR · CR · EN",
+        "PT · FR · EN",
         "Computing + data + applied design",
         "Available for web and automation projects",
       ],
@@ -1341,7 +1341,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         { label: "Qualité", value: "Validation, tests et déploiement avec attention aux régressions" },
       ],
       badges: [
-        "PT · FR · CR · EN",
+        "PT · FR  · EN",
         "Informatique + données + design appliqué",
         "Disponible pour projets web et automatisation",
       ],
