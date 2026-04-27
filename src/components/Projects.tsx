@@ -27,13 +27,15 @@ const itemVariants = {
 
 export default function Projects() {
   const { dictionary, locale } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.projects.heading.split(dictionary.projects.highlight);
   return (
     <section className="border-y border-zinc-900 bg-zinc-950/60 py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-            {dictionary.projects.heading.replace(dictionary.projects.highlight, "")}
+            {headingBefore}
             <span className="text-emerald-400">{dictionary.projects.highlight}</span>
+            {headingAfter}
           </h2>
 
           <p className="mt-3 text-sm text-zinc-400 md:text-base">
@@ -53,6 +55,7 @@ export default function Projects() {
               key={project.title}
               href={project.href.startsWith("/") ? `/${locale}${project.href}` : project.href}
               target={project.href.startsWith("http") ? "_blank" : undefined}
+              rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
               variants={itemVariants}
               className="project-card group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md transition duration-300 hover:-translate-y-2"
             >

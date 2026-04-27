@@ -1,24 +1,51 @@
 // src/components/Navbar.tsx
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X, Download } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Menu, X, Download, Languages, ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { buildLocalePath, localeLabels, locales, type Locale } from "@/lib/i18n";
+import { buildLocalePath, type Locale } from "@/lib/i18n";
 import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { dictionary, locale } = useLocaleContext();
   const homePath = `/${locale}`;
+  const languageMenuRef = useRef<HTMLDivElement>(null);
+  const languageOptions = useMemo(
+    () => [
+      { locale: "pt" as Locale, label: "PT", name: "Português", flagSrc: "/flags/br.svg", flagAlt: "Bandeira do Brasil" },
+      { locale: "en" as Locale, label: "EN", name: "English", flagSrc: "/flags/us.svg", flagAlt: "United States flag" },
+      { locale: "fr" as Locale, label: "FR", name: "Français", flagSrc: "/flags/fr.svg", flagAlt: "Drapeau de la France" },
+    ],
+    [],
+  );
+  const currentLanguage = languageOptions.find((item) => item.locale === locale) ?? languageOptions[0];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        languageMenuRef.current &&
+        !languageMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsLanguageMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const changeLocale = (nextLocale: Locale) => {
     const hash = globalThis.location.hash || "";
     router.push(`${buildLocalePath(nextLocale, pathname)}${hash}`);
     setOpen(false);
+    setIsLanguageMenuOpen(false);
   };
 
   return (
@@ -50,24 +77,61 @@ export default function Navbar() {
             <Download size={14} />
             {dictionary.navbar.cvLabel}
           </Link>
-          <div className="flex items-center gap-2 rounded-full border border-zinc-800 px-2 py-1">
-            <span className="text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-              {dictionary.navbar.localeSwitcherLabel}
-            </span>
-            {locales.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => changeLocale(item)}
-                className={`rounded-full px-2 py-1 text-xs transition-colors ${
-                  item === locale
-                    ? "bg-emerald-500 text-zinc-950"
-                    : "text-zinc-300 hover:text-emerald-400"
-                }`}
-              >
-                {localeLabels[item]}
-              </button>
-            ))}
+          <div className="relative" ref={languageMenuRef}>
+            <button
+              type="button"
+              onClick={() => setIsLanguageMenuOpen((value) => !value)}
+              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-sm text-zinc-100 transition-colors hover:border-emerald-500"
+            >
+              <Languages size={16} className="text-emerald-400" />
+              <span className="inline-flex h-6 w-8 overflow-hidden rounded-md border border-white/10">
+                <Image
+                  src={currentLanguage.flagSrc}
+                  alt={currentLanguage.flagAlt}
+                  width={32}
+                  height={24}
+                  className="h-full w-full object-cover"
+                />
+              </span>
+              <span className="font-semibold">{currentLanguage.label}</span>
+              <ChevronDown
+                size={16}
+                className={`transition-transform ${isLanguageMenuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {isLanguageMenuOpen && (
+              <div className="absolute right-0 top-[calc(100%+0.75rem)] w-52 rounded-[1.75rem] border border-zinc-200/80 bg-zinc-100 p-2 shadow-2xl">
+                {languageOptions.map((item) => (
+                  <button
+                    key={item.locale}
+                    type="button"
+                    onClick={() => changeLocale(item.locale)}
+                    className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition-colors ${
+                      item.locale === locale
+                        ? "bg-zinc-900 text-white"
+                        : "text-zinc-900 hover:bg-white"
+                    }`}
+                  >
+                    <span className="inline-flex h-9 w-11 items-center justify-center rounded-xl bg-white shadow-sm">
+                      <Image
+                        src={item.flagSrc}
+                        alt={item.flagAlt}
+                        width={32}
+                        height={24}
+                        className="h-6 w-8 rounded-[4px] object-cover"
+                      />
+                    </span>
+                    <span className="flex flex-col">
+                      <span className="text-sm font-semibold">{item.name}</span>
+                      <span className={`text-xs ${item.locale === locale ? "text-zinc-300" : "text-zinc-500"}`}>
+                        {item.label}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <a
             href={`${homePath}#contato`}
@@ -79,7 +143,10 @@ export default function Navbar() {
 
         <button
           className="inline-flex items-center justify-center rounded-md border border-zinc-700 p-2 text-zinc-200 md:hidden hover:border-emerald-500 transition-colors"
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => {
+            setOpen((value) => !value);
+            setIsLanguageMenuOpen(false);
+          }}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -105,26 +172,68 @@ export default function Navbar() {
                 <Download size={14} />
                 {dictionary.navbar.mobileCvLabel}
               </Link>
-              <div className="mt-2 flex items-center justify-between rounded-xl border border-zinc-800 px-3 py-2">
-                <span className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                  {dictionary.navbar.localeSwitcherLabel}
-                </span>
-                <div className="flex gap-2">
-                  {locales.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => changeLocale(item)}
-                      className={`rounded-full px-2 py-1 text-xs transition-colors ${
-                        item === locale
-                          ? "bg-emerald-500 text-zinc-950"
-                          : "text-zinc-300 hover:text-emerald-400"
-                      }`}
-                    >
-                      {localeLabels[item]}
-                    </button>
-                  ))}
-                </div>
+              <div className="mt-2 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => setIsLanguageMenuOpen((value) => !value)}
+                  className="flex w-full items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-zinc-100"
+                >
+                  <span className="flex items-center gap-2">
+                    <Languages size={16} className="text-emerald-400" />
+                    <span className="text-sm font-medium">
+                      {dictionary.navbar.localeSwitcherLabel}
+                    </span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="inline-flex h-6 w-8 overflow-hidden rounded-md border border-white/10">
+                      <Image
+                        src={currentLanguage.flagSrc}
+                        alt={currentLanguage.flagAlt}
+                        width={32}
+                        height={24}
+                        className="h-full w-full object-cover"
+                      />
+                    </span>
+                    <span className="text-sm font-semibold">{currentLanguage.label}</span>
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform ${isLanguageMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </span>
+                </button>
+
+                {isLanguageMenuOpen && (
+                  <div className="rounded-[1.75rem] border border-zinc-200/80 bg-zinc-100 p-2 shadow-xl">
+                    {languageOptions.map((item) => (
+                      <button
+                        key={item.locale}
+                        type="button"
+                        onClick={() => changeLocale(item.locale)}
+                        className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition-colors ${
+                          item.locale === locale
+                            ? "bg-zinc-900 text-white"
+                            : "text-zinc-900 hover:bg-white"
+                        }`}
+                      >
+                        <span className="inline-flex h-9 w-11 items-center justify-center rounded-xl bg-white shadow-sm">
+                          <Image
+                            src={item.flagSrc}
+                            alt={item.flagAlt}
+                            width={32}
+                            height={24}
+                            className="h-6 w-8 rounded-[4px] object-cover"
+                          />
+                        </span>
+                        <span className="flex flex-col">
+                          <span className="text-sm font-semibold">{item.name}</span>
+                          <span className={`text-xs ${item.locale === locale ? "text-zinc-300" : "text-zinc-500"}`}>
+                            {item.label}
+                          </span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <a
                 href={`${homePath}#contato`}

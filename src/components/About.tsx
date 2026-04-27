@@ -9,6 +9,7 @@ const icons = [Blocks, Bot, ChartColumnIncreasing, Globe2];
 
 export default function About() {
   const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.about.heading.split(dictionary.about.highlight);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -36,8 +37,9 @@ export default function About() {
           viewport={{ once: true }}
           className="text-center text-2xl font-semibold text-zinc-50 md:text-3xl"
         >
-          {dictionary.about.heading.replace(dictionary.about.highlight, "")}
-          <span className="text-emerald-400">{dictionary.about.highlight}</span>.
+          {headingBefore}
+          <span className="text-emerald-400">{dictionary.about.highlight}</span>
+          {headingAfter}
         </motion.h2>
 
         <motion.div

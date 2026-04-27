@@ -8,13 +8,15 @@ const icons = [SearchCheck, Blocks, Bug, Rocket];
 
 export default function HowIWork() {
   const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.howIWork.heading.split(dictionary.howIWork.highlight);
   return (
     <section className="py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-            {dictionary.howIWork.heading.replace(dictionary.howIWork.highlight, "")}
+            {headingBefore}
             <span className="text-emerald-400">{dictionary.howIWork.highlight}</span>
+            {headingAfter}
           </h2>
           <p className="mt-3 text-sm text-zinc-400 md:text-base">
             {dictionary.howIWork.description}

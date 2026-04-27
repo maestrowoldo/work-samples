@@ -87,6 +87,7 @@ export interface SiteDictionary {
     contact: {
       location: string;
     };
+    downloadError: string;
     downloadFileName: string;
     downloadLabel: string;
     generatingLabel: string;
@@ -779,6 +780,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       metadataDescription: "Currículo profissional de Wolkendo Arias em desenvolvimento web, dados e automação.",
       backLabel: "Voltar ao portfólio",
       downloadLabel: "Baixar PDF",
+      downloadError: "Erro ao baixar o currículo. Tente novamente em instantes.",
       generatingLabel: "Gerando...",
       downloadFileName: "Curriculo-Wolkendo-Arias.pdf",
       subtitle: "Desenvolvedor Web Full Stack",
@@ -1199,6 +1201,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       metadataDescription: "Professional resume of Wolkendo Arias focused on web development, data, and automation.",
       backLabel: "Back to portfolio",
       downloadLabel: "Download PDF",
+      downloadError: "Could not download the resume. Please try again in a moment.",
       generatingLabel: "Preparing...",
       downloadFileName: "Wolkendo-Arias-Resume.pdf",
       subtitle: "Full Stack Web Developer",
@@ -1619,6 +1622,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       metadataDescription: "CV professionnel de Wolkendo Arias centré sur le développement web, les données et l'automatisation.",
       backLabel: "Retour au portfolio",
       downloadLabel: "Télécharger le PDF",
+      downloadError: "Impossible de télécharger le CV. Réessayez dans un instant.",
       generatingLabel: "Préparation...",
       downloadFileName: "CV-Wolkendo-Arias.pdf",
       subtitle: "Développeur Web Full Stack",

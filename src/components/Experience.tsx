@@ -7,13 +7,15 @@ import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Experience() {
   const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.experience.heading.split(dictionary.experience.highlight);
   return (
     <section className="border-y border-zinc-900 bg-zinc-950/60 py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-            {dictionary.experience.heading.replace(dictionary.experience.highlight, "")}
+            {headingBefore}
             <span className="text-emerald-400">{dictionary.experience.highlight}</span>
+            {headingAfter}
           </h2>
           <p className="mt-3 text-sm text-zinc-400 md:text-base">
             {dictionary.experience.description}

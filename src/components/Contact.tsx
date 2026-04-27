@@ -12,6 +12,7 @@ import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Contact() {
   const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.contactSection.heading.split(dictionary.contactSection.highlight);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [celularFormatado, setCelularFormatado] = useState("");
   const {
@@ -100,8 +101,9 @@ export default function Contact() {
           <motion.div variants={itemVariants} className="space-y-5">
             <div>
               <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-                {dictionary.contactSection.heading.replace(dictionary.contactSection.highlight, "")}
+                {headingBefore}
                 <span className="text-emerald-400">{dictionary.contactSection.highlight}</span>
+                {headingAfter}
               </h2>
 
               <p className="mt-3 text-sm text-zinc-400 md:text-base">

@@ -22,7 +22,7 @@ export default function CurriculumPage() {
       link.remove();
     } catch (error) {
       console.error("Error downloading PDF:", error);
-      alert(dictionary.contactSection.form.errorMessage);
+      alert(dictionary.curriculum.downloadError);
     } finally {
       setIsGenerating(false);
     }
