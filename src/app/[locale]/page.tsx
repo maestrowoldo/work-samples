@@ -9,6 +9,7 @@ import BlogPreview from "@/components/BlogPreview";
 import TechMarquee from "@/components/TechMarquee";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { getBlogPosts } from "@/lib/blog/content.server";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getDictionary } from "@/lib/site-content";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -30,7 +31,15 @@ export async function generateMetadata({
   });
 }
 
-export default function LocalizedHomePage() {
+export default async function LocalizedHomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const resolvedLocale: Locale = isLocale(locale) ? locale : "pt";
+  const posts = (await getBlogPosts(resolvedLocale)).slice(0, 3);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -57,7 +66,7 @@ export default function LocalizedHomePage() {
         </section>
 
         <section id="blog" className="scroll-mt-24">
-          <BlogPreview />
+          <BlogPreview posts={posts} />
         </section>
 
         <TechMarquee />

@@ -6,9 +6,15 @@ import { Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import "./BlogPreview.css";
 import { useLocaleContext } from "@/components/LocaleProvider";
+import { buildBlogReaderPath } from "@/lib/blog/presentation";
+import type { BlogPostContent } from "@/lib/blog/types";
 import { formatDate } from "@/lib/i18n";
 
-export default function BlogPreview() {
+export default function BlogPreview({
+  posts,
+}: {
+  posts: BlogPostContent[];
+}) {
   const { dictionary, locale } = useLocaleContext();
   return (
     <section className="py-16">
@@ -23,9 +29,9 @@ export default function BlogPreview() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {dictionary.blog.posts.map((post, index) => (
+          {posts.map((post, index) => (
             <FadeIn key={post.slug} delay={index * 0.1}>
-              <Link href={`/${locale}/blog/${post.slug}`}>
+              <Link href={buildBlogReaderPath(locale, post.slug)}>
                 <Card hover className="blog-card">
                   <div className="space-y-4">
                     <div className="flex flex-wrap gap-2">
@@ -67,7 +73,7 @@ export default function BlogPreview() {
 
         <div className="text-center mt-10">
           <Link
-            href={`/${locale}/blog`}
+            href={buildBlogReaderPath(locale)}
             className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
           >
             <span>{dictionary.blog.viewAllLabel}</span>

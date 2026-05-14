@@ -1,9 +1,9 @@
 import process from "node:process";
 import { MetadataRoute } from "next";
+import { getBlogPosts } from "@/lib/blog/content.server";
 import { locales } from "@/lib/i18n";
-import { getBlogPosts } from "@/lib/site-content";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
   const lastModified = new Date();
 
@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: locale === "pt" ? 1 : 0.9,
     },
     {
-      url: `${baseUrl}/${locale}/blog`,
+      url: `${baseUrl}/articles/${locale}`,
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.8,
@@ -34,14 +34,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]);
 
-  const localizedPosts = locales.flatMap((locale) =>
-    getBlogPosts(locale).map((post) => ({
-      url: `${baseUrl}/${locale}/blog/${post.slug}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
+  const localizedPostsByLocale = await Promise.all(
+    locales.map(async (locale) =>
+      (await getBlogPosts(locale)).map((post) => ({
+        url: `${baseUrl}/articles/${locale}/${post.slug}`,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      })),
+    ),
   );
 
-  return [...localizedPages, ...localizedPosts];
+  return [...localizedPages, ...localizedPostsByLocale.flat()];
 }

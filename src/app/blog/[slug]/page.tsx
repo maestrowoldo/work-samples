@@ -6,5 +6,5 @@ export default async function LegacyBlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  redirect(`/pt/blog/${slug}`);
+  redirect(`/articles/pt/${slug}`);
 }

@@ -1,16 +1,6 @@
-import { defaultLocale, type Locale } from "@/lib/i18n";
-import type { ContactValidationMessages } from "@/lib/validations";
-
-export interface BlogPostContent {
-  author: string;
-  content: string;
-  date: string;
-  description: string;
-  readTime: number;
-  slug: string;
-  tags: string[];
-  title: string;
-}
+import { defaultLocale, type Locale } from "./i18n";
+import type { ContactValidationMessages } from "./validations";
+import type { BlogPostContent } from "./blog/types";
 
 export interface SiteDictionary {
   about: {
@@ -40,6 +30,7 @@ export interface SiteDictionary {
   blog: {
     backLabel: string;
     byLabel: string;
+    categoryLabel: string;
     emptyTitle: string;
     metadataDescription: string;
     metadataTitle: string;
@@ -49,6 +40,7 @@ export interface SiteDictionary {
     previewTitle: string;
     previewTitleAccent: string;
     readTimeLabel: string;
+    sourcesLabel: string;
     title: string;
     viewAllLabel: string;
   };
@@ -667,7 +659,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewAllLabel: "Ver todos os artigos",
       backLabel: "Voltar",
       byLabel: "Por",
+      categoryLabel: "Categoria",
       readTimeLabel: "min de leitura",
+      sourcesLabel: "Fontes utilizadas",
       emptyTitle: "Artigo não encontrado",
       posts: ptBlogPosts,
     },
@@ -1088,7 +1082,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewAllLabel: "View all articles",
       backLabel: "Back",
       byLabel: "By",
+      categoryLabel: "Category",
       readTimeLabel: "min read",
+      sourcesLabel: "Sources used",
       emptyTitle: "Article not found",
       posts: enBlogPosts,
     },
@@ -1509,7 +1505,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewAllLabel: "Voir tous les articles",
       backLabel: "Retour",
       byLabel: "Par",
+      categoryLabel: "Catégorie",
       readTimeLabel: "min de lecture",
+      sourcesLabel: "Sources utilisées",
       emptyTitle: "Article introuvable",
       posts: frBlogPosts,
     },
