@@ -140,7 +140,7 @@ export default function Hero() {
           {/* Imagem dentro */}
           <div className="absolute inset-[2px] rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/40 shadow-2xl z-10">
             <Image
-              src="/designer.avif"
+              src="/foto-perfil.png"
               alt={dictionary.hero.profileAlt}
               fill
               className="object-cover"

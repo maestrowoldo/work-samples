@@ -185,22 +185,24 @@ export interface SiteDictionary {
     mobileCvLabel: string;
   };
   projects: {
-    challengeLabel: string;
-    deliveryLabel: string;
     description: string;
     heading: string;
     highlight: string;
     items: Array<{
       category: string;
-      challenge: string;
-      delivery: string;
       description: string;
       href: string;
+      impact: string;
       image: string;
+      problem: string;
+      solution: string;
       tag: string;
       tech: string[];
       title: string;
     }>;
+    impactLabel: string;
+    problemLabel: string;
+    solutionLabel: string;
     viewMoreLabel: string;
   };
   techMarquee: {
@@ -605,46 +607,50 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
     },
     projects: {
-      heading: "Projetos com contexto e entrega",
-      highlight: "contexto e entrega",
+      heading: "Projetos que resolvem problemas reais",
+      highlight: "problemas reais",
       description:
-        "Em vez de só listar stack, aqui está o tipo de problema que eu gosto de resolver e o que entrego em cada frente.",
-      challengeLabel: "Desafio",
-      deliveryLabel: "Entrega",
-      viewMoreLabel: "Ver mais",
+        "Cases pensados para operação real, com contexto, decisão técnica e execução limpa do começo ao fim.",
+      problemLabel: "Problema",
+      solutionLabel: "Solução",
+      impactLabel: "Impacto",
+      viewMoreLabel: "Explorar case",
       items: [
         {
-          title: "Sistema Full Stack de cadastro e contato",
+          title: "Plataforma full stack de captação e contato",
           category: "Aplicação web",
-          description: "Projeto com front-end em Next.js, API, persistência em banco e fluxo de contato com validação.",
+          description: "Experiência em Next.js com API, persistência relacional e fluxo de contato pronto para produção.",
           image: "/web_pro.jpg",
           href: "https://github.com/maestrowoldo",
           tag: "Full Stack",
           tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          challenge: "Criar uma base confiável para captação de contatos e apresentação profissional em produção.",
-          delivery: "Interface responsiva, rota de API, validação com Zod, persistência com Prisma e pipeline com lint, testes e build.",
+          problem: "Era preciso reunir apresentação profissional, captura de leads e confiabilidade operacional em uma base única.",
+          solution: "Estruturei interface, rota de API, validação com Zod e camada Prisma/PostgreSQL em um fluxo consistente de ponta a ponta.",
+          impact: "Entrega pronta para produção, com base escalável para evolução do produto e manutenção mais previsível.",
         },
         {
-          title: "Aplicativo interno de controle de ponto",
+          title: "Aplicativo interno para controle de ponto",
           category: "Automação de processo",
-          description: "Solução interna low-code para registro operacional, organização de fluxo e automações.",
+          description: "Ferramenta operacional low-code com registros padronizados, integrações M365 e automações.",
           image: "/designer.avif",
           href: "https://github.com/maestrowoldo/Aplicativo---Ponto---Power-Apps",
           tag: "Power Platform",
           tech: ["Power Apps", "Power Automate", "SharePoint", "Processos"],
-          challenge: "Reduzir esforço manual e estruturar um fluxo mais claro para controle de ponto e acompanhamento.",
-          delivery: "Aplicativo interno com registro padronizado, integrações com Microsoft 365 e automações para o processo.",
+          problem: "O processo exigia esforço manual alto e pouco controle sobre registros e acompanhamento.",
+          solution: "Desenhei um aplicativo no Power Apps integrado a SharePoint e Power Automate para organizar o fluxo e eliminar gargalos repetitivos.",
+          impact: "Mais clareza operacional, menos retrabalho e uma rotina interna mais confiável para o time.",
         },
         {
-          title: "Dashboards e análise operacional em Power BI",
+          title: "Dashboards operacionais para leitura gerencial",
           category: "Dados e visualização",
-          description: "Painéis para acompanhar indicadores e apoiar tomada de decisão com melhor leitura dos dados.",
+          description: "Painéis em Power BI para transformar dados dispersos em acompanhamento acionável.",
           image: "/BI.jpg",
           href: "/curriculum",
           tag: "Power BI",
           tech: ["Power BI", "SQL", "DAX"],
-          challenge: "Transformar dados operacionais em leitura visual útil para acompanhamento e priorização.",
-          delivery: "Modelagem, revisão de dados e dashboards voltados a acompanhamento de indicadores e contexto de negócio.",
+          problem: "Os dados existiam, mas faltava uma leitura visual útil para priorização e tomada de decisão.",
+          solution: "Modelei dados, revisei indicadores e construí dashboards com foco em contexto de negócio e leitura rápida.",
+          impact: "Indicadores mais fáceis de acompanhar, decisões mais rápidas e melhor visibilidade da operação.",
         },
       ],
     },
@@ -1028,46 +1034,50 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
     },
     projects: {
-      heading: "Projects with context and delivery",
-      highlight: "context and delivery",
+      heading: "Projects that solve real problems",
+      highlight: "real problems",
       description:
-        "Instead of only listing stack, this section shows the kind of problems I like to solve and what I deliver in each scenario.",
-      challengeLabel: "Challenge",
-      deliveryLabel: "Delivery",
-      viewMoreLabel: "View more",
+        "Selected work built for real operations, where context, technical choices, and delivery quality all matter.",
+      problemLabel: "Problem",
+      solutionLabel: "Solution",
+      impactLabel: "Impact",
+      viewMoreLabel: "Explore case",
       items: [
         {
-          title: "Full stack contact and registration platform",
+          title: "Full stack lead capture and contact platform",
           category: "Web application",
-          description: "Project with a Next.js front end, API layer, database persistence, and a validated contact flow.",
+          description: "A Next.js experience with API workflows, relational persistence, and a contact flow ready for production.",
           image: "/web_pro.jpg",
           href: "https://github.com/maestrowoldo",
           tag: "Full Stack",
           tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          challenge: "Create a reliable production-ready base for lead capture and professional presentation.",
-          delivery: "Responsive interface, API route, Zod validation, Prisma persistence, and a lint-test-build workflow.",
+          problem: "The product needed a single foundation for professional presentation, lead capture, and operational reliability.",
+          solution: "I structured the UI, API route, Zod validation, and Prisma/PostgreSQL layer into a consistent end-to-end flow.",
+          impact: "A production-ready delivery with a scalable base for product evolution and more predictable maintenance.",
         },
         {
-          title: "Internal time-tracking application",
+          title: "Internal time tracking application",
           category: "Process automation",
-          description: "Internal low-code solution for operational records, clearer workflows, and automation.",
+          description: "An operational low-code tool with standardized records, Microsoft 365 integrations, and automation.",
           image: "/designer.avif",
           href: "https://github.com/maestrowoldo/Aplicativo---Ponto---Power-Apps",
           tag: "Power Platform",
           tech: ["Power Apps", "Power Automate", "SharePoint", "Processes"],
-          challenge: "Reduce manual effort and organize a clearer flow for time tracking and follow-up.",
-          delivery: "Internal application with standardized records, Microsoft 365 integrations, and automation around the process.",
+          problem: "The workflow relied on too much manual effort and lacked clear control over records and follow-up.",
+          solution: "I designed a Power Apps experience connected to SharePoint and Power Automate to organize the flow and remove repetitive bottlenecks.",
+          impact: "Better operational clarity, less rework, and a more reliable routine for the internal team.",
         },
         {
-          title: "Operational dashboards and analysis in Power BI",
+          title: "Operational dashboards for management visibility",
           category: "Data and visualization",
-          description: "Dashboards to monitor indicators and support decisions with clearer data reading.",
+          description: "Power BI dashboards that turn scattered data into actionable monitoring for real decisions.",
           image: "/BI.jpg",
           href: "/curriculum",
           tag: "Power BI",
           tech: ["Power BI", "SQL", "DAX"],
-          challenge: "Turn operational data into useful visual insight for follow-up and prioritization.",
-          delivery: "Data modeling, data review, and dashboards designed for indicators and business context.",
+          problem: "The data already existed, but there was no useful visual layer for prioritization and decision-making.",
+          solution: "I modeled the data, reviewed the indicators, and built dashboards designed for business context and fast reading.",
+          impact: "Easier KPI follow-up, faster decisions, and stronger visibility into the operation.",
         },
       ],
     },
@@ -1451,46 +1461,50 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
     },
     projects: {
-      heading: "Des projets avec contexte et résultat",
-      highlight: "contexte et résultat",
+      heading: "Des projets qui résolvent des problèmes réels",
+      highlight: "problèmes réels",
       description:
-        "Au lieu de simplement lister une stack, cette section montre le type de problème que j'aime résoudre et ce que je livre concrètement.",
-      challengeLabel: "Défi",
-      deliveryLabel: "Livraison",
-      viewMoreLabel: "Voir plus",
+        "Une sélection de réalisations pensée pour l'usage réel, avec du contexte, des choix techniques assumés et une livraison soignée.",
+      problemLabel: "Problème",
+      solutionLabel: "Solution",
+      impactLabel: "Impact",
+      viewMoreLabel: "Voir l'étude de cas",
       items: [
         {
-          title: "Plateforme full stack de contact et d'inscription",
+          title: "Plateforme full stack de captation et contact",
           category: "Application web",
-          description: "Projet avec front-end Next.js, couche API, persistance en base et flux de contact validé.",
+          description: "Une expérience Next.js avec API, persistance relationnelle et parcours de contact prêt pour la production.",
           image: "/web_pro.jpg",
           href: "https://github.com/maestrowoldo",
           tag: "Full Stack",
           tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          challenge: "Créer une base fiable prête pour la production afin de capter des contacts et présenter un profil professionnel.",
-          delivery: "Interface responsive, route API, validation Zod, persistance Prisma et workflow lint-test-build.",
+          problem: "Il fallait réunir présentation professionnelle, captation de leads et fiabilité opérationnelle dans une seule base.",
+          solution: "J'ai structuré l'interface, la route API, la validation Zod et la couche Prisma/PostgreSQL dans un flux cohérent de bout en bout.",
+          impact: "Une livraison prête pour la production, avec une base scalable et une maintenance plus prévisible.",
         },
         {
-          title: "Application interne de pointage",
+          title: "Application interne de suivi des heures",
           category: "Automatisation de processus",
-          description: "Solution low-code interne pour les enregistrements opérationnels, l'organisation des flux et l'automatisation.",
+          description: "Un outil opérationnel low-code avec enregistrements standardisés, intégrations Microsoft 365 et automatisations.",
           image: "/designer.avif",
           href: "https://github.com/maestrowoldo/Aplicativo---Ponto---Power-Apps",
           tag: "Power Platform",
           tech: ["Power Apps", "Power Automate", "SharePoint", "Processus"],
-          challenge: "Réduire l'effort manuel et structurer un flux plus clair pour le suivi des heures.",
-          delivery: "Application interne avec enregistrement standardisé, intégrations Microsoft 365 et automatisations autour du processus.",
+          problem: "Le processus demandait trop d'effort manuel et offrait peu de contrôle sur les enregistrements et le suivi.",
+          solution: "J'ai conçu une expérience Power Apps reliée à SharePoint et Power Automate pour structurer le flux et supprimer les frictions répétitives.",
+          impact: "Plus de clarté opérationnelle, moins de reprises et une routine interne plus fiable pour l'équipe.",
         },
         {
-          title: "Dashboards et analyse opérationnelle avec Power BI",
+          title: "Dashboards opérationnels pour pilotage",
           category: "Données et visualisation",
-          description: "Tableaux de bord pour suivre les indicateurs et mieux soutenir les décisions.",
+          description: "Des dashboards Power BI qui transforment des données dispersées en suivi exploitable pour la décision.",
           image: "/BI.jpg",
           href: "/curriculum",
           tag: "Power BI",
           tech: ["Power BI", "SQL", "DAX"],
-          challenge: "Transformer des données opérationnelles en lecture visuelle utile pour le suivi et la priorisation.",
-          delivery: "Modélisation, revue des données et dashboards pensés pour les indicateurs et le contexte métier.",
+          problem: "Les données existaient déjà, mais il manquait une lecture visuelle utile pour prioriser et décider.",
+          solution: "J'ai modélisé les données, revu les indicateurs et construit des dashboards pensés pour le contexte métier et une lecture rapide.",
+          impact: "Un suivi plus simple des KPI, des décisions plus rapides et une meilleure visibilité sur l'opération.",
         },
       ],
     },

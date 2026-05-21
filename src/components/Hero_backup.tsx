@@ -76,7 +76,7 @@ export default function Hero() {
           className="relative h-56 w-56 overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/40 shadow-2xl sm:h-64 sm:w-64 md:h-72 md:w-72"
         >
           <Image
-            src="/designer.avif"
+            src="/foto-perfil.png"
             alt="Foto de perfil de Wolkendo Arias"
             fill
             className="object-cover"
