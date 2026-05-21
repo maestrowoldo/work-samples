@@ -1,29 +1,33 @@
 // src/components/Footer.tsx
-import { Github, Linkedin, Instagram } from "lucide-react";
+"use client";
+
+import { Code2, Briefcase, Share2 } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Footer() {
+  const { dictionary } = useLocaleContext();
   const socialLinks = [
     {
       name: "GitHub",
-      icon: Github,
-      url: "https://github.com/wolkendo",
+      icon: Code2,
+      url: "https://github.com/maestrowoldo",
     },
     {
       name: "LinkedIn",
-      icon: Linkedin,
-      url: "https://linkedin.com/in/wolkendo",
+      icon: Briefcase,
+      url: "https://www.linkedin.com/in/wolkendo-arias/",
     },
     {
       name: "Instagram",
-      icon: Instagram,
-      url: "https://instagram.com/wolkendo",
+      icon: Share2,
+      url: "https://instagram.com/maestro_woldo",
     },
   ];
 
   return (
     <footer className="border-t border-zinc-900 bg-zinc-950 py-6">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 text-xs text-zinc-500 md:flex-row lg:px-6">
-        <p>&copy; {new Date().getFullYear()} Woldo Pro · Wolkendo Arias.</p>
+        <p>&copy; {new Date().getFullYear()} {dictionary.footer.copyright}</p>
 
         <div className="flex items-center gap-4">
           {socialLinks.map((link) => {

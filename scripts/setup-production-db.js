@@ -61,7 +61,7 @@ async function setupProductionDatabase() {
           1
         )
       `);
-    } catch (insertError) {
+    } catch {
       console.log("ℹ️  Tentando inserir com schema alternativo...");
       await prisma.$executeRawUnsafe(`
         INSERT INTO "_prisma_migrations" ("id", "checksum", "finished_at", "migration_name", "logs", "started_at")

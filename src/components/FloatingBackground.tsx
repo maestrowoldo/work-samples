@@ -53,7 +53,7 @@ export default function FloatingBackground() {
     };
 
     // Desenhar a lua - versão realista
-    const drawMoon = (x: number, y: number, radius: number, time: number) => {
+    const drawMoon = (x: number, y: number, radius: number) => {
       // Glow externo sutil e realista
       const haloGradient = ctx.createRadialGradient(x, y, radius, x, y, radius + 80);
       haloGradient.addColorStop(0, 'rgba(200, 200, 180, 0.15)');
@@ -129,14 +129,25 @@ export default function FloatingBackground() {
       moon.x = centerX + Math.cos(angle) * orbitRadius;
       moon.y = centerY + Math.sin(angle) * orbitRadius * 0.6;
       
-      drawMoon(moon.x, moon.y, moon.radius, timeRef.current);
+      drawMoon(moon.x, moon.y, moon.radius);
 
-      // Desenhar estrelas
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      // Desenhar estrelas com mais brilho
       stars.forEach((star) => {
         star.y -= star.speed;
         if (star.y < 0) star.y = height;
 
+        // Glow effect ao redor das estrelas
+        const glowGradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 3);
+        glowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+        glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.fillStyle = glowGradient;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Estrela brilhante
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();

@@ -2,8 +2,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Blocks, Bot, ChartColumnIncreasing, Globe2 } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
+
+const icons = [Blocks, Bot, ChartColumnIncreasing, Globe2];
 
 export default function About() {
+  const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.about.heading.split(dictionary.about.highlight);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -31,7 +37,9 @@ export default function About() {
           viewport={{ once: true }}
           className="text-center text-2xl font-semibold text-zinc-50 md:text-3xl"
         >
-          Muito prazer, <span className="text-emerald-400">sou Wolkendo Arias</span>.
+          {headingBefore}
+          <span className="text-emerald-400">{dictionary.about.highlight}</span>
+          {headingAfter}
         </motion.h2>
 
         <motion.div
@@ -39,23 +47,35 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="mt-8 max-w-3xl mx-auto space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
+          className="mx-auto mt-8 max-w-5xl"
         >
-          <motion.p variants={itemVariants}>
-            Nascido no Haiti, sou fluente em Crioulo e Francês. Durante minha jornada no Brasil,
-            desenvolvi o Português e aprimorei meu Inglês, construindo uma base multicultural
-            que me ajuda a me adaptar a diferentes contextos e pessoas.
-          </motion.p>
-          <motion.p variants={itemVariants}>
-            Sou <span className="font-semibold text-emerald-400">Bacharel em Ciência da Computação</span> pela Universidade Cruzeiro do Sul. 
-            Tenho experiência prática com linguagens como Python, Java, PHP e JavaScript, além de expertise em bancos de dados SQL, 
-            HTML, CSS e infraestrutura de redes de computadores.
-          </motion.p>
-          <motion.p variants={itemVariants}>
-            Me encontrei na interseção entre desenvolvimento web, visualização de dados com Power BI
-            e automação com Power Platform. Gosto de transformar problemas em soluções visuais e acessíveis,
-            sempre com foco em usabilidade e impacto real.
-          </motion.p>
+          <motion.div
+            variants={itemVariants}
+            className="mx-auto max-w-3xl space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
+          >
+            {dictionary.about.description.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {dictionary.about.pillars.map((pillar, index) => {
+              const Icon = icons[index];
+
+              return (
+                <div
+                  key={pillar.title}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5"
+                >
+                  <div className="mb-4 inline-flex rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-emerald-400">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="text-base font-semibold text-zinc-50">{pillar.title}</h3>
+                  <p className="mt-2 text-sm text-zinc-400">{pillar.description}</p>
+                </div>
+              );
+            })}
+          </motion.div>
         </motion.div>
       </div>
     </section>

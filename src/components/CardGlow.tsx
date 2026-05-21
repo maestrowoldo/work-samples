@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import clsx from 'clsx';
 import styles from './CardGlow.module.css';
 
 interface CardGlowProps {
@@ -14,6 +15,13 @@ interface CardGlowProps {
   floating?: boolean;
   onClick?: () => void;
   className?: string;
+  href?: string;
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+  contentLayout?: 'centered' | 'stretch';
+  childrenSpacing?: 'default' | 'none';
+  orbitingAura?: boolean;
 }
 
 export default function CardGlow({
@@ -27,6 +35,13 @@ export default function CardGlow({
   floating = false,
   onClick,
   className = '',
+  href,
+  target,
+  rel,
+  ariaLabel,
+  contentLayout = 'centered',
+  childrenSpacing = 'default',
+  orbitingAura = false,
 }: CardGlowProps) {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
@@ -45,31 +60,37 @@ export default function CardGlow({
       glow: 'rgba(16, 185, 129, 0.4)',
       border: '#10b981',
       bg: 'rgba(16, 185, 129, 0.1)',
+      orbit: '#22d3ee',
     },
     cyan: {
       glow: 'rgba(34, 211, 238, 0.4)',
       border: '#22d3ee',
       bg: 'rgba(34, 211, 238, 0.1)',
+      orbit: '#10b981',
     },
     purple: {
       glow: 'rgba(168, 85, 247, 0.4)',
       border: '#a855f7',
       bg: 'rgba(168, 85, 247, 0.1)',
+      orbit: '#38bdf8',
     },
     blue: {
       glow: 'rgba(59, 130, 246, 0.4)',
       border: '#3b82f6',
       bg: 'rgba(59, 130, 246, 0.1)',
+      orbit: '#22d3ee',
     },
     pink: {
       glow: 'rgba(236, 72, 153, 0.4)',
       border: '#ec4899',
       bg: 'rgba(236, 72, 153, 0.1)',
+      orbit: '#a855f7',
     },
     orange: {
       glow: 'rgba(249, 115, 22, 0.4)',
       border: '#f97316',
       bg: 'rgba(249, 115, 22, 0.1)',
+      orbit: '#fb7185',
     },
   };
 
@@ -149,11 +170,12 @@ export default function CardGlow({
   return (
     <div
       ref={cardRef}
-      className={`${styles.cardGlow} ${floating ? styles.floating : ''} ${className}`}
+      className={clsx(styles.cardGlow, floating && styles.floating, className)}
       style={
         {
           '--glow-color': currentColor.border,
           '--border-color': currentColor.border,
+          '--orbit-color': currentColor.orbit,
         } as React.CSSProperties
       }
       onMouseMove={handleMouseMove}
@@ -161,6 +183,13 @@ export default function CardGlow({
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
+      {orbitingAura ? (
+        <>
+          <div className={styles.orbitGlow} />
+          <div className={styles.orbitBorder} />
+        </>
+      ) : null}
+
       {/* Borda iluminada */}
       <div className={styles.border} />
 
@@ -204,8 +233,23 @@ export default function CardGlow({
         ))}
       </div>
 
+      {href ? (
+        <a
+          href={href}
+          target={target}
+          rel={rel}
+          aria-label={ariaLabel ?? title ?? description ?? 'Open card'}
+          className={styles.linkOverlay}
+        />
+      ) : null}
+
       {/* Conteúdo */}
-      <div className={styles.content}>
+      <div
+        className={clsx(
+          styles.content,
+          contentLayout === 'stretch' ? styles.contentStretch : styles.contentCentered
+        )}
+      >
         {/* Seção do ícone com badge */}
         {icon && (
           <div className={styles.iconSection}>
@@ -231,7 +275,14 @@ export default function CardGlow({
         )}
 
         {/* Children (conteúdo customizado) */}
-        <div className={styles.children}>{children}</div>
+        <div
+          className={clsx(
+            styles.children,
+            childrenSpacing === 'none' && styles.childrenFlush
+          )}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

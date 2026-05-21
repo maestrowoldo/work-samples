@@ -1,123 +1,88 @@
-// src/components/Projects.tsx
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import "./Projects.css";
-
-const projects = [
-  {
-    title: "Programação Web",
-    description: "Landing pages, portfólios e sistemas web responsivos.",
-    image: "/web_pro.jpg",
-    href: "https://github.com",
-    tag: "Web",
-    tech: ["React", "Next.js", "Tailwind"],
-  },
-  {
-    title: "Design & Identidade Visual",
-    description: "Artes para redes sociais, identidade visual e materiais gráficos.",
-    image: "/designer.avif",
-    href: "https://www.behance.net",
-    tag: "Design",
-    tech: ["Photoshop", "Illustrator", "Figma"],
-  },
-  {
-    title: "Dashboards em Power BI",
-    description: "Painéis para acompanhamento de indicadores, cursos e operações.",
-    image: "/BI.jpg",
-    href: "#",
-    tag: "Power BI",
-    tech: ["Power BI", "SQL", "DAX"],
-  },
-];
+import { motion, useReducedMotion } from "framer-motion";
+import ProjectCaseCard from "@/components/ProjectCaseCard";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.12,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 26 },
   visible: {
     opacity: 1,
     y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
   },
 };
 
 export default function Projects() {
-  return (
-    <section className="border-y border-zinc-900 bg-zinc-950/60 py-16">
-      <div className="mx-auto max-w-6xl px-4 lg:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-            Meu <span className="text-emerald-400">Portfólio</span>
-          </h2>
+  const { dictionary, locale } = useLocaleContext();
+  const shouldReduceMotion = useReducedMotion();
+  const [headingBefore, headingAfter = ""] = dictionary.projects.heading.split(
+    dictionary.projects.highlight,
+  );
 
-          <p className="mt-3 text-sm text-zinc-400 md:text-base">
-            Alguns dos trabalhos que refletem minha mistura de código, dados e design.
+  return (
+    <section className="relative overflow-hidden border-y border-white/6 bg-zinc-950 py-16 sm:py-20">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(45,212,191,0.08),transparent_22%),radial-gradient(circle_at_85%_30%,rgba(59,130,246,0.08),transparent_24%),linear-gradient(180deg,rgba(9,9,11,0.92)_0%,rgba(9,9,11,0.98)_100%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-400/8 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mb-10 max-w-3xl text-center sm:mb-12"
+        >
+          <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          <h2 className="mt-5 text-3xl font-semibold leading-[1.04] text-zinc-50 sm:text-4xl lg:text-[2.8rem]">
+            {headingBefore}
+            <span className="bg-[linear-gradient(135deg,#f8fafc_0%,#d1fae5_42%,#67e8f9_100%)] bg-clip-text text-transparent">
+              {dictionary.projects.highlight}
+            </span>
+            {headingAfter}
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-zinc-400 sm:text-base">
+            {dictionary.projects.description}
           </p>
-        </div>
+        </motion.div>
 
         <motion.div
-          className="grid gap-6 md:grid-cols-3"
+          className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-5"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          viewport={{ once: true, amount: 0.2 }}
+          variants={shouldReduceMotion ? undefined : containerVariants}
         >
-          {projects.map((project) => (
-            <motion.a
+          {dictionary.projects.items.map((project) => (
+            <motion.div
               key={project.title}
-              href={project.href}
-              target="_blank"
-              variants={itemVariants}
-              className="project-card group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 shadow-md transition duration-300 hover:-translate-y-2"
+              variants={shouldReduceMotion ? undefined : itemVariants}
+              className="h-full"
             >
-              <div className="project-image relative h-40 w-full overflow-hidden bg-zinc-800">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition duration-700 group-hover:scale-110"
-                />
-                <div className="shine" />
-                <div className="absolute left-3 top-3 rounded-full bg-zinc-950/80 px-2 py-1 text-xs text-emerald-400">
-                  {project.tag}
-                </div>
-              </div>
-
-              <div className="flex flex-1 flex-col gap-2 p-4">
-                <h3 className="text-sm font-semibold text-zinc-50 md:text-base">
-                  {project.title}
-                </h3>
-                <p className="text-xs text-zinc-400 md:text-sm">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-auto pt-3 flex items-center gap-2 text-xs font-medium text-emerald-400 group-hover:translate-x-1 transition-transform">
-                  <span>Ver detalhes</span>
-                  <ExternalLink size={14} />
-                </div>
-              </div>
-            </motion.a>
+              <ProjectCaseCard
+                locale={locale}
+                project={project}
+                copy={{
+                  problemLabel: dictionary.projects.problemLabel,
+                  solutionLabel: dictionary.projects.solutionLabel,
+                  impactLabel: dictionary.projects.impactLabel,
+                  viewMoreLabel: dictionary.projects.viewMoreLabel,
+                }}
+              />
+            </motion.div>
           ))}
         </motion.div>
       </div>

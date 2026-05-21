@@ -12,8 +12,8 @@ export function GET() {
     jobTitle: ["Full Stack Developer", "Data Analyst"],
     email: "contact@wolkendoarias.com",
     sameAs: [
-      "https://linkedin.com/in/wolkendo",
-      "https://github.com/wolkendo",
+      "https://www.linkedin.com/in/wolkendo-arias/",
+      "https://github.com/maestrowoldo",
       "https://behance.net/wolkendo",
     ],
     worksFor: {

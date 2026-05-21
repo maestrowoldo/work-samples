@@ -1,4 +1,18 @@
 /* TechMarquee.module.css */
+/* 
+  SAFE AREA MARQUEE
+  ================
+  Este marquee implementa uma área segura real que impede que ícones
+  toquem as bordas da viewport, sem depender apenas de mask-image.
+  
+  ESTRATÉGIA:
+  1. .marqueeContainer: Padding estrutural cria a safe area (80px desktop, responsivo)
+  2. .marqueeContent: overflow: hidden garante que nada ultrapasse a área segura
+  3. .marqueeTrack: animation-delay negativo faz começar já em movimento
+     - Isso faz o primeiro item estar fora da viewport visível no início
+     - Cria ilusão de que o loop já estava acontecendo
+  4. @keyframes: Simples 0% → -50% para loop infinito com duplicação de items
+*/
 
 .marqueeContainer {
   position: relative;
@@ -7,7 +21,10 @@
   background: transparent;
   border-top: none;
   border-bottom: none;
-  padding: 60px 0;
+  
+  /* SAFE AREA: Padding estrutural que protege os ícones */
+  padding: 60px clamp(32px, 8vw, 96px);
+  box-sizing: border-box;
   backdrop-filter: none;
 }
 
@@ -31,18 +48,25 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  
+  /* BARREIRA REAL: Garante que nada ultrapasse as bordas */
+  border-left: clamp(32px, 8vw, 96px) solid transparent;
+  border-right: clamp(32px, 8vw, 96px) solid transparent;
+  box-sizing: border-box;
+  
+  /* TRANSIÇÃO SUAVE (opcional, remova se preferir corte nítido) */
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black clamp(32px, 8vw, 96px),
+    black calc(100% - clamp(32px, 8vw, 96px)),
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black clamp(32px, 8vw, 96px),
+    black calc(100% - clamp(32px, 8vw, 96px)),
     transparent 100%
   );
 }
@@ -52,9 +76,23 @@
   animation: scrollCircle 25s linear infinite;
   width: max-content;
   will-change: transform;
+  
+  /* 
+    OFFSET INICIAL: animation-delay negativo faz o track começar já em movimento
+    Isso garante que o primeiro item NÃO aparece no canto
+    Exemplo: com -5s, em uma animação de 25s total, já avançou 5/25 = 20%
+  */
+  animation-delay: -5s;
 }
 
 @keyframes scrollCircle {
+  /* 
+    LOOP INFINITO: 
+    - 0%: Começa em translateX(0)
+    - 100%: Vai para -50% (metade do width)
+    - Funciona porque o track tem items duplicados (primeira metade = segunda metade)
+    - Quando chega em -50%, volta a 0% e ninguém percebe a transição
+  */
   0% {
     transform: translateX(0);
   }
@@ -121,26 +159,52 @@
   display: none;
 }
 
-/* Responsividade */
+/* 
+  RESPONSIVIDADE DA SAFE AREA
+  ===========================
+  A safe area se ajusta responsivamente usando clamp():
+  - Desktop (>1200px): 96px de padding
+  - Tablet (768px-1024px): ~64px de padding
+  - Celular (<480px): 32px de padding
+  
+  Uma única regra clamp(32px, 8vw, 96px) substitui 3+ media queries!
+*/
+
+@media (max-width: 1024px) {
+  .marqueeContainer {
+    padding: 60px clamp(48px, 6vw, 80px);
+  }
+}
+
 @media (max-width: 768px) {
   .marqueeContainer {
-    padding: clamp(20px, 5vw, 30px) 0;
+    padding: 50px clamp(32px, 5vw, 64px);
   }
 }
 
 @media (max-width: 480px) {
   .marqueeContainer {
-    padding: clamp(20px, 4vw, 25px) 0;
+    padding: 40px clamp(24px, 4vw, 48px);
+  }
+
+  .marqueeTitle {
+    margin-bottom: 30px;
   }
 }
 
-/* Acessibilidade */
+/* 
+  ACESSIBILIDADE
+  ==============
+  Respeita prefers-reduced-motion para usuários sensíveis a animações
+*/
 @media (prefers-reduced-motion: reduce) {
   .marqueeTrack {
     animation: none;
+    animation-delay: 0;
   }
 
   .techItem:hover {
     transform: none;
   }
 }
+

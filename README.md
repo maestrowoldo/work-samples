@@ -123,10 +123,10 @@ npx prisma studio
 
 ## Contato
 
-- **Email**: contact@wolkendoarias.com
+- **Email**: maestrowoldo97@hotmail.com
 - **LinkedIn**: linkedin.com/in/wolkendo
 - **GitHub**: github.com/wolkendo
 
 ## Licença
 
-MIT - Desenvolvido com ❤️ por Wolkendo Arias
+MIT - Wolkendo Arias

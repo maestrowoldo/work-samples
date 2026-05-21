@@ -73,7 +73,7 @@ interface CountUpProps {
   suffix?: string;
 }
 
-export function CountUp({ value, duration = 2, suffix = "" }: CountUpProps) {
+export function CountUp({ value, suffix = "" }: CountUpProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}

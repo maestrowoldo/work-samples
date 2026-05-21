@@ -3,22 +3,27 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: parseInt(process.env.EMAIL_PORT || "587"),
+  port: Number.parseInt(process.env.EMAIL_PORT || "587"),
   secure: process.env.EMAIL_PORT === "465", // true para porta 465 (SSL), false para 587 e 2525
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
-  // Configuração para Mailtrap e outros provedores
   tls: {
-    rejectUnauthorized: false,
+    // Mantem validacao de certificado ativa por padrao (producao).
+    // Permite desabilitar apenas em ambiente controlado de desenvolvimento.
+    rejectUnauthorized:
+      process.env.NODE_ENV === "development"
+        ? process.env.EMAIL_ALLOW_SELF_SIGNED !== "true"
+        : true,
   },
 });
 
 export async function sendContactEmail(
   nome: string,
   email: string,
-  mensagem: string
+  mensagem: string,
+  celular?: string
 ) {
   try {
     // Email para o usuário - confirmar recebimento
@@ -32,14 +37,14 @@ export async function sendContactEmail(
           <p>Recebemos sua mensagem com sucesso. Vou analisar e entrar em contato em breve.</p>
           <hr style="margin: 20px 0;">
           <p><strong>Sua mensagem:</strong></p>
-          <p>${mensagem.replace(/\n/g, "<br>")}</p>
+          <p>${mensagem.replaceAll("\n", "<br>")}</p>
         </div>
       `,
     });
 
     // Email para o administrador com a mensagem completa
     const adminEmail = process.env.EMAIL_ADMIN_TO || process.env.EMAIL_FROM;
-    if (adminEmail && adminEmail.includes("@")) {
+    if (adminEmail?.includes("@")) {
       await transporter.sendMail({
         from: process.env.EMAIL_FROM,
         to: adminEmail,
@@ -50,6 +55,7 @@ export async function sendContactEmail(
             <div style="background: white; padding: 15px; border-radius: 5px;">
               <p><strong>👤 Nome:</strong> ${nome}</p>
               <p><strong>📧 Email:</strong> <a href="mailto:${email}">${email}</a></p>
+              ${celular ? `<p><strong>📱 Celular:</strong> <a href="tel:${celular.replaceAll(/\D/g, "")}">${celular}</a></p>` : ""}
               <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
               <p><strong>💬 Mensagem:</strong></p>
               <p style="white-space: pre-wrap; background: #fafafa; padding: 10px; border-left: 4px solid #007bff;">${mensagem}</p>
