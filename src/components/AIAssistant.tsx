@@ -195,18 +195,7 @@ export default function AIAssistant() {
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    // Se já está na página principal, scroll direto
-                    if (globalThis.location.pathname === "/") {
-                            setTimeout(() => {
-                        const element = document.getElementById("contato");
-                        if (element) {
-                          element.scrollIntoView({ behavior: "smooth" });
-                        }
-                      }, 100);
-                    } else {
-                      // Se está em outra página, redireciona para principal
-                      globalThis.location.href = `/${locale}#contato`;
-                    }
+                    globalThis.location.href = `/${locale}/contato`;
                   }}
                   className="inline-block text-xs font-bold text-emerald-400 hover:text-emerald-300 transition px-2 py-1 rounded-lg hover:bg-emerald-500/10 cursor-pointer"
                 >

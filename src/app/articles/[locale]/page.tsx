@@ -45,7 +45,7 @@ export default async function ArticlesIndexPage({
         <div className="rounded-[2rem] border border-stone-200 bg-white shadow-[0_25px_80px_rgba(28,25,23,0.08)]">
           <section className="border-b border-stone-200 px-6 py-8 md:px-10 md:py-12">
             <Link
-              href={`/${resolvedLocale}#blog`}
+              href={`/${resolvedLocale}/blog`}
               className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
             >
               <ArrowLeft size={16} />

@@ -470,11 +470,11 @@ const dictionaries: Record<Locale, SiteDictionary> = {
   pt: {
     navbar: {
       links: [
-        { href: "#inicio", label: "Início" },
-        { href: "#sobre", label: "Sobre" },
-        { href: "#experiencia", label: "Experiência" },
-        { href: "#processo", label: "Processo" },
-        { href: "#projeto", label: "Projetos" },
+        { href: "/", label: "Início" },
+        { href: "/sobre", label: "Sobre" },
+        { href: "/experiencia", label: "Experiência" },
+        { href: "/processo", label: "Processo" },
+        { href: "/projetos", label: "Projetos" },
       ],
       cvLabel: "CV",
       mobileCvLabel: "Ver CV",
@@ -897,11 +897,11 @@ const dictionaries: Record<Locale, SiteDictionary> = {
   en: {
     navbar: {
       links: [
-        { href: "#inicio", label: "Home" },
-        { href: "#sobre", label: "About" },
-        { href: "#experiencia", label: "Experience" },
-        { href: "#processo", label: "Process" },
-        { href: "#projeto", label: "Projects" },
+        { href: "/", label: "Home" },
+        { href: "/sobre", label: "About" },
+        { href: "/experiencia", label: "Experience" },
+        { href: "/processo", label: "Process" },
+        { href: "/projetos", label: "Projects" },
       ],
       cvLabel: "Resume",
       mobileCvLabel: "View resume",
@@ -1324,11 +1324,11 @@ const dictionaries: Record<Locale, SiteDictionary> = {
   fr: {
     navbar: {
       links: [
-        { href: "#inicio", label: "Accueil" },
-        { href: "#sobre", label: "À propos" },
-        { href: "#experiencia", label: "Expérience" },
-        { href: "#processo", label: "Méthode" },
-        { href: "#projeto", label: "Projets" },
+        { href: "/", label: "Accueil" },
+        { href: "/sobre", label: "À propos" },
+        { href: "/experiencia", label: "Expérience" },
+        { href: "/processo", label: "Méthode" },
+        { href: "/projetos", label: "Projets" },
       ],
       cvLabel: "CV",
       mobileCvLabel: "Voir le CV",

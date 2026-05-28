@@ -15,7 +15,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { dictionary, locale } = useLocaleContext();
-  const homePath = `/${locale}`;
+  const homePath = buildLocalePath(locale, "/");
+  const contactPath = buildLocalePath(locale, "/contato");
   const languageMenuRef = useRef<HTMLDivElement>(null);
   const languageOptions = useMemo(
     () => [
@@ -51,7 +52,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 lg:px-6">
-        <Link href={`${homePath}#inicio`} className="flex items-center gap-2 group">
+        <Link href={homePath} className="flex items-center gap-2 group">
           <div className="h-10 w-10 rounded-xl bg-emerald-500 flex items-center justify-center text-zinc-950 font-bold group-hover:bg-emerald-400 transition-colors">
             WA
           </div>
@@ -64,14 +65,14 @@ export default function Navbar() {
           {dictionary.navbar.links.map((link) => (
             <a
               key={link.href}
-              href={`${homePath}${link.href}`}
+              href={buildLocalePath(locale, link.href)}
               className="hover:text-emerald-400 transition-colors"
             >
               {link.label}
             </a>
           ))}
           <Link
-            href={`${homePath}/curriculum`}
+            href={buildLocalePath(locale, "/curriculum")}
             className="flex items-center gap-2 hover:text-emerald-400 transition-colors"
           >
             <Download size={14} />
@@ -134,7 +135,7 @@ export default function Navbar() {
             )}
           </div>
           <a
-            href={`${homePath}#contato`}
+            href={contactPath}
             className="rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"
           >
             {dictionary.navbar.contactCta}
@@ -157,7 +158,7 @@ export default function Navbar() {
               {dictionary.navbar.links.map((link) => (
                 <a
                   key={link.href}
-                  href={`${homePath}${link.href}`}
+                  href={buildLocalePath(locale, link.href)}
                   className="rounded-md px-2 py-1 text-zinc-200 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
                   onClick={() => setOpen(false)}
                 >
@@ -165,7 +166,7 @@ export default function Navbar() {
                 </a>
               ))}
               <Link
-                href={`${homePath}/curriculum`}
+                href={buildLocalePath(locale, "/curriculum")}
                 className="rounded-md px-2 py-1 text-zinc-200 hover:bg-zinc-900 hover:text-emerald-400 transition-colors flex items-center gap-2"
                 onClick={() => setOpen(false)}
               >
@@ -236,7 +237,7 @@ export default function Navbar() {
                 )}
               </div>
               <a
-                href={`${homePath}#contato`}
+                href={contactPath}
                 className="mt-2 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"
                 onClick={() => setOpen(false)}
               >

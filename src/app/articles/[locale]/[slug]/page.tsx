@@ -133,7 +133,7 @@ export default async function ArticleReaderPage({
               <span>Leitura separada do portfólio</span>
             </div>
             <Link
-              href={`/${resolvedLocale}#blog`}
+              href={`/${resolvedLocale}/blog`}
               className="inline-flex items-center gap-2 transition-colors hover:text-stone-900"
             >
               Portfólio
@@ -340,7 +340,7 @@ export default async function ArticleReaderPage({
             </div>
 
             <Link
-              href={`/${resolvedLocale}#blog`}
+              href={`/${resolvedLocale}/blog`}
               className="flex items-center justify-between rounded-[1.75rem] border border-stone-200 bg-white p-6 transition-colors hover:border-emerald-300"
             >
               <div>

@@ -49,20 +49,20 @@ export default function Hero() {
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
-            <a
-              href="#contato"
+            <Link
+              href={`/${locale}/contato`}
               className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
             >
               <MessageSquareText size={16} />
               {dictionary.hero.ctaPrimary}
-            </a>
-            <a
-              href="#projeto"
+            </Link>
+            <Link
+              href={`/${locale}/projetos`}
               className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-emerald-500 hover:text-emerald-400"
             >
               {dictionary.hero.ctaSecondary}
               <ArrowRight size={16} />
-            </a>
+            </Link>
             <Link
               href={`/${locale}/curriculum`}
               className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
