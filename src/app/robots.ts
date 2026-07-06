@@ -1,5 +1,5 @@
-import process from "node:process";
 import { MetadataRoute } from "next";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin", "/api"],
     },
-    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com"}/sitemap.xml`,
+    sitemap: buildAbsoluteUrl("/sitemap.xml"),
   };
 }

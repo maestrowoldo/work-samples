@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import process from "node:process";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getBlogPost, getStaticBlogParams } from "@/lib/blog/content.server";
 import { buildBlogReaderPath, extractArticleSections, getBlogVisualAssets } from "@/lib/blog/presentation";
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 import { getDictionary } from "@/lib/site-content";
 
 function renderArticleContent(content: string) {
@@ -87,7 +87,6 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const resolvedLocale: Locale = isLocale(locale) ? locale : "pt";
   const post = await getBlogPost(resolvedLocale, slug);
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
 
   if (!post) {
     return {};
@@ -97,7 +96,7 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     alternates: {
-      canonical: `${baseUrl}${buildBlogReaderPath(resolvedLocale, slug)}`,
+      canonical: buildAbsoluteUrl(buildBlogReaderPath(resolvedLocale, slug)),
     },
   };
 }

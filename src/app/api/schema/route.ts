@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 
 export function GET() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Wolkendo Arias",
-    url: "https://wolkendoarias.com",
-    image: "https://wolkendoarias.com/perfilgood.jpg",
+    url: buildAbsoluteUrl(),
+    image: buildAbsoluteUrl("/perfilgood.jpg"),
     description:
       "Desenvolvedor Full Stack, Analista de Dados e especialista em Power BI",
     jobTitle: ["Full Stack Developer", "Data Analyst"],
