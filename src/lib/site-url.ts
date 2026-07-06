@@ -1,7 +1,7 @@
 import process from "node:process";
 
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev"
 ).replace(/\/$/, "");
 
 export function buildAbsoluteUrl(pathname = "/") {
