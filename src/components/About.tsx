@@ -3,31 +3,13 @@
 
 import { motion } from "framer-motion";
 import { Blocks, Bot, ChartColumnIncreasing, Globe2 } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
-const pillars = [
-  {
-    title: "Aplicações web ponta a ponta",
-    description: "Interfaces, APIs, integrações e persistência trabalhando juntas com foco em entrega real.",
-    icon: Blocks,
-  },
-  {
-    title: "Automação de processos",
-    description: "Redução de tarefas manuais com fluxos, validações e ferramentas low-code quando fazem sentido.",
-    icon: Bot,
-  },
-  {
-    title: "Dados e visualização",
-    description: "Dashboards, análise e modelagem para transformar informação em decisão mais rápida.",
-    icon: ChartColumnIncreasing,
-  },
-  {
-    title: "Comunicação multicultural",
-    description: "Experiência em ambientes colaborativos com fluência em crioulo, francês e português.",
-    icon: Globe2,
-  },
-];
+const icons = [Blocks, Bot, ChartColumnIncreasing, Globe2];
 
 export default function About() {
+  const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.about.heading.split(dictionary.about.highlight);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,7 +37,9 @@ export default function About() {
           viewport={{ once: true }}
           className="text-center text-2xl font-semibold text-zinc-50 md:text-3xl"
         >
-          Muito prazer, <span className="text-emerald-400">sou Wolkendo Arias</span>.
+          {headingBefore}
+          <span className="text-emerald-400">{dictionary.about.highlight}</span>
+          {headingAfter}
         </motion.h2>
 
         <motion.div
@@ -69,23 +53,14 @@ export default function About() {
             variants={itemVariants}
             className="mx-auto max-w-3xl space-y-4 text-sm leading-relaxed text-zinc-300 md:text-base"
           >
-            <p>
-              Atuo construindo soluções digitais com visão de produto e execução
-              técnica. Meu trabalho conecta interface, regras de negócio, banco de
-              dados, integrações e qualidade de software para que o projeto funcione
-              de verdade em produção.
-            </p>
-            <p>
-              Além do desenvolvimento web, também trago repertório em Power BI,
-              automação de processos e organização de fluxos operacionais. Isso me
-              ajuda a pensar não apenas na tela, mas no problema completo que o
-              sistema precisa resolver.
-            </p>
+            {dictionary.about.description.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </motion.div>
 
           <motion.div variants={itemVariants} className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {pillars.map((pillar) => {
-              const Icon = pillar.icon;
+            {dictionary.about.pillars.map((pillar, index) => {
+              const Icon = icons[index];
 
               return (
                 <div

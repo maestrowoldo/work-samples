@@ -15,6 +15,7 @@ import {
   SiTailwindcss,
 } from 'react-icons/si';
 import styles from './TechMarquee.module.css';
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 const technologies = [
   { name: 'HTML5', icon: SiHtml5, color: '#E34C26' },
@@ -32,11 +33,12 @@ const technologies = [
 ];
 
 export default function TechMarquee() {
+  const { dictionary } = useLocaleContext();
   return (
     <section className={styles.marqueeContainer}>
       <h2 className={styles.marqueeTitle}>
-        <span className={styles.white}>Tecnologia</span>{' '}
-        <span className={styles.green}>& Ferramenta</span>
+        <span className={styles.white}>{dictionary.techMarquee.title}</span>{' '}
+        <span className={styles.green}>{dictionary.techMarquee.accent}</span>
       </h2>
       
       <div className={styles.marqueeContent}>

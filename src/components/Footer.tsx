@@ -1,7 +1,11 @@
 // src/components/Footer.tsx
+"use client";
+
 import { Code2, Briefcase, Share2 } from "lucide-react";
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Footer() {
+  const { dictionary } = useLocaleContext();
   const socialLinks = [
     {
       name: "GitHub",
@@ -23,7 +27,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-zinc-900 bg-zinc-950 py-6">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 text-xs text-zinc-500 md:flex-row lg:px-6">
-        <p>&copy; {new Date().getFullYear()} Woldo Pro · Wolkendo Arias.</p>
+        <p>&copy; {new Date().getFullYear()} {dictionary.footer.copyright}</p>
 
         <div className="flex items-center gap-4">
           {socialLinks.map((link) => {

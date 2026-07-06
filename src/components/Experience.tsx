@@ -3,58 +3,28 @@
 import { StaggerContainer } from "./animations";
 import { motion } from "framer-motion";
 import { Calendar, Briefcase } from "lucide-react";
-
-const experiences = [
-  {
-    title: "Desenvolvedor Full Stack",
-    company: "Prime Secure",
-    period: "Novembro 2025 - Presente",
-    description:
-      "Desenvolvimento de aplicações web full stack com React, Next.js e Node.js, incluindo integração com APIs, banco de dados e validações de negócio.",
-    skills: ["React", "Next.js", "TypeScript", "Node.js", "SQL"],
-  },
-  {
-    title: "Analista de Suporte de TI",
-    company: "DXC Technology",
-    period: "Setembro 2025 - Novembro 2025",
-    description:
-      "Onboarding e Offboarding de colaboradores, suporte técnico de hardware e software, manutenção preventivos de equipamentos e infraestrutura de TI, Instalação de softwares",
-    skills: ["Power BI", "Python", "SQL", "Excel"],
-  },
-  {
-    title: "Estagiario de TI",
-    company: "Tribunal de Justiça de São Paulo",
-    period: "Setembro 2024 - Setembro 2025",
-    description:
-      "Contribuí para a automação e organização de fluxos de trabalho, auxiliando no desenvolvimento de processos por meio do Bizagi e do Excel. Atuei no desenvolvimento de painéis no Power BI, realizando revisão e análise de dados, além de desenvolver, em low-code, um aplicativo de controle de ponto eletrônico utilizando Power Apps e Power Automate..",
-    skills: ["Power BI", "Bizagi", "SharePoint", "Excel", "Power Platform"],
-  },
-  {
-    title: "Designer Gráfico",
-    company: "Behance & Portfólio",
-    period: "2022 - Presente",
-    description:
-      "Identidade visual, design de interfaces e materiais gráficos para redes sociais.",
-    skills: ["Photoshop", "Illustrator", "Figma", "Adobe XD"],
-  },
-];
+import { useLocaleContext } from "@/components/LocaleProvider";
 
 export default function Experience() {
+  const { dictionary } = useLocaleContext();
+  const [headingBefore, headingAfter = ""] = dictionary.experience.heading.split(dictionary.experience.highlight);
   return (
     <section className="border-y border-zinc-900 bg-zinc-950/60 py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
-            Minha <span className="text-emerald-400">Trajetória</span>
+            {headingBefore}
+            <span className="text-emerald-400">{dictionary.experience.highlight}</span>
+            {headingAfter}
           </h2>
           <p className="mt-3 text-sm text-zinc-400 md:text-base">
-            Experiências e formação que construíram minha carreira em tecnologia
+            {dictionary.experience.description}
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
           <StaggerContainer>
-            {experiences.map((exp, index) => (
+            {dictionary.experience.items.map((exp, index) => (
               <motion.div
                 key={exp.title}
                 initial={{ opacity: 0, x: -20 }}
