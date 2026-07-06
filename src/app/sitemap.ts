@@ -3,8 +3,9 @@ import { MetadataRoute } from "next";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { locales } from "@/lib/i18n";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
+  const lastModified = new Date();
 
   const localizedPages = locales.flatMap((locale) => [
     {
