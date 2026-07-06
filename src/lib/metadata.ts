@@ -1,12 +1,10 @@
-import process from "node:process";
 import type { Metadata } from "next";
 import { getHtmlLang, locales, type Locale } from "@/lib/i18n";
-
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 
 export function buildLocalizedUrl(locale: Locale, pathname = "/") {
   const normalizedPath = pathname === "/" ? "" : pathname;
-  return `${baseUrl}/${locale}${normalizedPath}`;
+  return buildAbsoluteUrl(`/${locale}${normalizedPath}`);
 }
 
 export function buildPageMetadata({

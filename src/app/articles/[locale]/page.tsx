@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import process from "node:process";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +6,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { buildBlogReaderPath, getBlogVisualAssets } from "@/lib/blog/presentation";
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 import { getDictionary } from "@/lib/site-content";
 
 export async function generateMetadata({
@@ -17,13 +17,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const resolvedLocale: Locale = isLocale(locale) ? locale : "pt";
   const copy = getDictionary(resolvedLocale).blog;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
 
   return {
     title: copy.metadataTitle,
     description: copy.metadataDescription,
     alternates: {
-      canonical: `${baseUrl}${buildBlogReaderPath(resolvedLocale)}`,
+      canonical: buildAbsoluteUrl(buildBlogReaderPath(resolvedLocale)),
     },
   };
 }
