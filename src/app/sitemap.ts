@@ -3,9 +3,8 @@ import { MetadataRoute } from "next";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { locales } from "@/lib/i18n";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
-  const lastModified = new Date();
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
 
   const localizedPages = locales.flatMap((locale) => [
     {
