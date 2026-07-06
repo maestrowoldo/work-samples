@@ -2,7 +2,7 @@ import process from "node:process";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
 
   return [
     {
