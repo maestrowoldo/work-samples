@@ -95,7 +95,7 @@ function renderArticleContent(content: string) {
     }
 
     elements.push(
-      <ul key={`list-${elements.length}`} className="mb-8 list-disc space-y-3 pl-6 text-lg leading-8 text-stone-700 marker:text-emerald-700">
+      <ul key={`list-${elements.length}`} className="mb-8 list-disc space-y-3 pl-6 text-base leading-7 text-stone-700 marker:text-emerald-700">
         {listItems.map((item, index) => (
           <li key={`${item}-${index}`}>{item}</li>
         ))}
@@ -121,7 +121,7 @@ function renderArticleContent(content: string) {
 
     if (paragraph.startsWith("# ")) {
       elements.push(
-        <h1 key={`h1-${index}`} className="mt-2 text-4xl font-semibold leading-tight text-stone-950 md:text-5xl">
+        <h1 key={`h1-${index}`} className="mt-2 text-2xl font-semibold leading-tight text-stone-950 md:text-3xl">
           {paragraph.replace("# ", "")}
         </h1>,
       );
@@ -130,7 +130,7 @@ function renderArticleContent(content: string) {
 
     if (paragraph.startsWith("## ")) {
       elements.push(
-        <h2 key={`h2-${index}`} className="mt-12 text-2xl font-semibold text-stone-950 md:text-3xl">
+        <h2 key={`h2-${index}`} className="mt-12 text-lg font-semibold text-stone-950 md:text-xl">
           {paragraph.replace("## ", "")}
         </h2>,
       );
@@ -138,7 +138,7 @@ function renderArticleContent(content: string) {
     }
 
     elements.push(
-      <p key={`p-${index}`} className="text-lg leading-8 text-stone-700">
+      <p key={`p-${index}`} className="text-base leading-7 text-stone-700">
         {paragraph}
       </p>,
     );
@@ -161,7 +161,7 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const resolvedLocale: Locale = isLocale(locale) ? locale : "pt";
   const post = await getBlogPost(resolvedLocale, slug);
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendoarias.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
 
   if (!post) {
     return {};
@@ -199,7 +199,7 @@ export default async function ArticleReaderPage({
     <main className="min-h-screen bg-stone-100 px-4 py-6 text-stone-900 md:px-8 md:py-10">
       <div className="mx-auto max-w-6xl rounded-[2rem] border border-stone-200 bg-white shadow-[0_25px_80px_rgba(28,25,23,0.08)]">
         <div className="border-b border-stone-200 px-6 py-4 md:px-10">
-          <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-stone-500">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-stone-500">
             <div className="flex items-center gap-3">
               <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white">
                 Wolkendo Journal
@@ -211,7 +211,7 @@ export default async function ArticleReaderPage({
               className="inline-flex items-center gap-2 transition-colors hover:text-stone-900"
             >
               Portfólio
-              <ArrowUpRight size={16} />
+              <ArrowUpRight size={14} />
             </Link>
           </div>
         </div>
@@ -220,9 +220,9 @@ export default async function ArticleReaderPage({
           <article className="min-w-0">
             <Link
               href={buildBlogReaderPath(resolvedLocale)}
-              className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
+              className="inline-flex items-center gap-2 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900"
             >
-              <ArrowLeft size={16} />
+              <ArrowLeft size={14} />
               Voltar aos artigos
             </Link>
 
@@ -233,18 +233,18 @@ export default async function ArticleReaderPage({
                 </span>
               ) : null}
 
-              <h1 className="mt-4 text-4xl font-semibold leading-tight text-stone-950 md:text-6xl">
+              <h1 className="mt-4 text-3xl font-semibold leading-tight text-stone-950 md:text-4xl">
                 {post.title}
               </h1>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-stone-600">
+              <p className="mt-5 max-w-3xl text-base leading-7 text-stone-600">
                 {post.description}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-stone-500">
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-stone-500">
                 <span>{formatDate(post.date, resolvedLocale)}</span>
                 <span className="text-stone-300">•</span>
                 <span className="inline-flex items-center gap-2">
-                  <Clock3 size={16} />
+                  <Clock3 size={14} />
                   {post.readTime} {copy.readTimeLabel}
                 </span>
               </div>
@@ -253,7 +253,7 @@ export default async function ArticleReaderPage({
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-sm text-stone-600"
+                    className="rounded-full border border-stone-200 bg-stone-50 px-2.5 py-1 text-xs text-stone-600"
                   >
                     {tag}
                   </span>
@@ -289,7 +289,7 @@ export default async function ArticleReaderPage({
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
                 Por que este tema importa
               </p>
-              <p className="mt-3 text-lg leading-8 text-stone-700">
+              <p className="mt-3 text-base leading-7 text-stone-700">
                 {post.whyItMatters ??
                   "Este artigo resume as fontes consultadas, reorganiza os pontos centrais em linguagem própria e destaca o impacto prático para desenvolvimento, produto e operação técnica."}
               </p>
@@ -304,7 +304,7 @@ export default async function ArticleReaderPage({
                   {post.keyTakeaways.map((takeaway) => (
                     <li
                       key={takeaway}
-                      className="border-b border-stone-100 pb-3 text-base leading-7 text-stone-700 last:border-none last:pb-0"
+                      className="border-b border-stone-100 pb-3 text-sm leading-6 text-stone-700 last:border-none last:pb-0"
                     >
                       {takeaway}
                     </li>
@@ -318,23 +318,23 @@ export default async function ArticleReaderPage({
             </div>
 
             {post.sourceLinks && post.sourceLinks.length > 0 ? (
-              <section className="mt-14 rounded-[1.75rem] border border-stone-200 bg-stone-50 p-6 md:p-8">
-                <h2 className="text-2xl font-semibold text-stone-950">
+              <section className="mt-12 rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4 md:p-5">
+                <h2 className="text-base font-semibold text-stone-950">
                   {copy.sourcesLabel}
                 </h2>
-                <div className="mt-5 space-y-4">
+                <div className="mt-3 space-y-2">
                   {post.sourceLinks.map((sourceLink) => (
                     <a
                       key={sourceLink.url}
                       href={sourceLink.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="block rounded-[1.5rem] border border-stone-200 bg-white p-5 transition-colors hover:border-emerald-300"
+                      className="block rounded-xl border border-stone-200 bg-white px-3 py-2.5 transition-colors hover:border-emerald-300"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex min-w-0 gap-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex min-w-0 gap-3">
                           {sourceLink.imageUrl ? (
-                            <div className="relative hidden h-24 w-28 shrink-0 overflow-hidden rounded-[1rem] md:block">
+                            <div className="relative hidden h-12 w-16 shrink-0 overflow-hidden rounded-lg md:block">
                               <img
                                 src={sourceLink.imageUrl}
                                 alt={sourceLink.imageAlt ?? sourceLink.title}
@@ -344,18 +344,18 @@ export default async function ArticleReaderPage({
                             </div>
                           ) : null}
                           <div className="min-w-0">
-                          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700">
                             {sourceLink.siteName ?? sourceLink.source}
                           </p>
-                          <p className="mt-2 text-lg font-medium text-stone-950">
+                          <p className="mt-1 text-sm font-medium leading-5 text-stone-950">
                             {sourceLink.title}
                           </p>
-                          <p className="mt-2 text-sm text-stone-500">
+                          <p className="mt-1 text-[11px] text-stone-500">
                             {getSourceHost(sourceLink.url)}
                           </p>
                           </div>
                         </div>
-                        <ExternalLink size={18} className="mt-1 shrink-0 text-stone-400" />
+                        <ExternalLink size={12} className="mt-1 shrink-0 text-stone-400" />
                       </div>
                     </a>
                   ))}
@@ -423,11 +423,11 @@ export default async function ArticleReaderPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
                   Próximo passo
                 </p>
-                <p className="mt-2 text-lg font-semibold">
+                <p className="mt-2 text-base font-semibold">
                   Conversar sobre uma solução
                 </p>
               </div>
-              <ArrowUpRight size={18} className="text-emerald-100" />
+              <ArrowUpRight size={14} className="text-emerald-100" />
             </Link>
 
             <Link
@@ -438,11 +438,11 @@ export default async function ArticleReaderPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
                   Portfólio
                 </p>
-                <p className="mt-2 text-lg font-semibold text-stone-950">
+                <p className="mt-2 text-base font-semibold text-stone-950">
                   Voltar para a página principal
                 </p>
               </div>
-              <ArrowLeft size={18} className="text-stone-400" />
+              <ArrowLeft size={14} className="text-stone-400" />
             </Link>
           </aside>
         </div>

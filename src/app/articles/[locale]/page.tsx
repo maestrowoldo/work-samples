@@ -88,39 +88,39 @@ export default async function ArticlesIndexPage({
           <section className="border-b border-stone-200 px-6 py-8 md:px-10 md:py-12">
             <Link
               href={`/${resolvedLocale}#blog`}
-              className="inline-flex items-center gap-2 text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
+              className="inline-flex items-center gap-2 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900"
             >
-              <ArrowLeft size={16} />
+              <ArrowLeft size={14} />
               Voltar ao portfólio
             </Link>
 
             <div className="mt-8 grid gap-8 md:grid-cols-[1.35fr_0.65fr] md:items-end">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-700">
                   Wolkendo Journal
                 </p>
-                <h1 className="mt-3 max-w-2xl text-4xl font-semibold leading-tight text-stone-950 md:text-6xl">
+                <h1 className="mt-3 max-w-2xl text-3xl font-semibold leading-tight text-stone-950 md:text-4xl">
                   {copy.title} para acompanhar tecnologia com contexto.
                 </h1>
-                <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 md:text-lg">
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-stone-600 md:text-base">
                   Leituras diretas sobre desenvolvimento, dados, automação, segurança e decisões práticas para produtos digitais.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
                 <div className="rounded-[1.75rem] bg-stone-950 px-5 py-6 text-white">
-                  <p className="text-xs uppercase tracking-[0.22em] text-emerald-300">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300">
                     Posts ativos
                   </p>
-                  <p className="mt-3 text-4xl font-semibold">{posts.length}</p>
+                  <p className="mt-3 text-2xl font-semibold">{posts.length}</p>
                 </div>
                 <div className="rounded-[1.75rem] border border-stone-200 bg-stone-50 px-5 py-6">
-                  <p className="text-xs uppercase tracking-[0.22em] text-stone-500">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-stone-500">
                     Última publicação
                   </p>
-                  <p className="mt-3 text-xl font-semibold text-stone-900">{latestPostDate}</p>
+                  <p className="mt-3 text-base font-semibold text-stone-900">{latestPostDate}</p>
                   {categories.size > 0 ? (
-                    <p className="mt-2 text-sm text-stone-500">
+                    <p className="mt-2 text-xs text-stone-500">
                       {categories.size} temas em destaque
                     </p>
                   ) : null}
@@ -152,13 +152,13 @@ export default async function ArticlesIndexPage({
 
                   <div className="flex flex-col justify-between p-6 md:p-8">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
                         Destaque editorial
                       </p>
-                      <h2 className="mt-4 text-3xl font-semibold leading-tight md:text-4xl">
+                      <h2 className="mt-4 text-xl font-semibold leading-tight md:text-2xl">
                         {featuredPost.title}
                       </h2>
-                      <p className="mt-4 text-base leading-7 text-stone-300">
+                      <p className="mt-4 text-sm leading-6 text-stone-300">
                         {featuredPost.description}
                       </p>
 
@@ -166,7 +166,7 @@ export default async function ArticlesIndexPage({
                         {featuredPost.tags.slice(0, 4).map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-stone-200"
+                            className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] text-stone-200"
                           >
                             {tag}
                           </span>
@@ -174,7 +174,7 @@ export default async function ArticlesIndexPage({
                       </div>
                     </div>
 
-                    <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5 text-sm text-stone-300">
+                    <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5 text-xs text-stone-300">
                       <span>{formatDate(featuredPost.date, resolvedLocale)}</span>
                       <span>{featuredPost.readTime} {copy.readTimeLabel}</span>
                     </div>
@@ -202,7 +202,7 @@ export default async function ArticlesIndexPage({
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/50 via-stone-950/10 to-transparent" />
                       {post.category ? (
-                        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-stone-900">
+                        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-stone-900">
                           {post.category}
                         </span>
                       ) : null}
@@ -213,7 +213,7 @@ export default async function ArticlesIndexPage({
                         {post.tags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full bg-stone-100 px-2.5 py-1 text-xs text-stone-600"
+                            className="rounded-full bg-stone-100 px-2.5 py-1 text-[11px] text-stone-600"
                           >
                             {tag}
                           </span>
@@ -221,7 +221,7 @@ export default async function ArticlesIndexPage({
                       </div>
 
                       <div>
-                        <h2 className="text-2xl font-semibold leading-tight text-stone-950">
+                        <h2 className="text-lg font-semibold leading-tight text-stone-950">
                           {post.title}
                         </h2>
                         <p className="mt-3 text-sm leading-6 text-stone-600">
@@ -229,14 +229,14 @@ export default async function ArticlesIndexPage({
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between border-t border-stone-200 pt-4 text-sm text-stone-500">
+                      <div className="flex items-center justify-between border-t border-stone-200 pt-4 text-xs text-stone-500">
                         <span>{formatDate(post.date, resolvedLocale)}</span>
                         <span>{post.readTime} {copy.readTimeLabel}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 transition-colors group-hover:text-emerald-800">
+                      <div className="inline-flex items-center gap-2 text-xs font-medium text-emerald-700 transition-colors group-hover:text-emerald-800">
                         Ler artigo
-                        <ArrowRight size={16} />
+                        <ArrowRight size={14} />
                       </div>
                     </div>
                   </Link>
