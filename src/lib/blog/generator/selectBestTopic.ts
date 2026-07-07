@@ -53,17 +53,7 @@ function selectSupportingItems(lead: TechNewsItem, items: TechNewsItem[]) {
   return selectedItems;
 }
 
-export function selectBestTopic(items: TechNewsItem[]): SelectedTopic {
-  if (items.length === 0) {
-    throw new BlogGeneratorError(
-      "Nenhuma notícia relevante foi recebida para seleção do tema do post.",
-    );
-  }
-
-  const rankedItems = [...items].sort(
-    (left, right) => right.score - left.score || left.title.localeCompare(right.title),
-  );
-  const lead = rankedItems[0];
+function buildSelectedTopic(lead: TechNewsItem, rankedItems: TechNewsItem[]): SelectedTopic {
   const supporting = selectSupportingItems(lead, rankedItems);
   const category = getPrimaryTopicCategory(lead.categoryMatches);
   const keywords = extractTopicKeywords(
@@ -79,4 +69,22 @@ export function selectBestTopic(items: TechNewsItem[]): SelectedTopic {
       .join(" | ")}`,
     supporting,
   };
+}
+
+export function selectTopicCandidates(items: TechNewsItem[], limit = 8): SelectedTopic[] {
+  if (items.length === 0) {
+    throw new BlogGeneratorError(
+      "Nenhuma notícia relevante foi recebida para seleção do tema do post.",
+    );
+  }
+
+  const rankedItems = [...items].sort(
+    (left, right) => right.score - left.score || left.title.localeCompare(right.title),
+  );
+
+  return rankedItems.slice(0, limit).map((lead) => buildSelectedTopic(lead, rankedItems));
+}
+
+export function selectBestTopic(items: TechNewsItem[]): SelectedTopic {
+  return selectTopicCandidates(items, 1)[0];
 }

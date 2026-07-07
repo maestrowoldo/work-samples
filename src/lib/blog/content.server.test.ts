@@ -25,6 +25,17 @@ describe("loadGeneratedBlogPostsFromDirectory", () => {
             category: "Inteligência Artificial",
             date: "2026-05-14",
             description: "Resumo do post de teste.",
+            heroImage: {
+              alt: "Imagem principal do post",
+              source: "Example Tech",
+              sourceUrl: "https://example.com/hn-story",
+              src: "https://cdn.example.com/post.jpg",
+            },
+            keyTakeaways: [
+              "Primeiro ponto prático do artigo gerado.",
+              "Segundo ponto prático do artigo gerado.",
+              "Terceiro ponto prático do artigo gerado.",
+            ],
             readTime: 4,
             slug: "novo-post",
             sourceLinks: [
@@ -36,6 +47,8 @@ describe("loadGeneratedBlogPostsFromDirectory", () => {
             ],
             tags: ["IA", "Dev"],
             title: "Novo post",
+            whyItMatters:
+              "O tema importa porque ajuda times técnicos a entender impactos recentes e transformar notícias em decisões práticas.",
           },
         }),
         "utf8",
@@ -50,7 +63,10 @@ describe("loadGeneratedBlogPostsFromDirectory", () => {
         slug: "novo-post",
         title: "Novo post",
       });
+      expect(posts[0]?.heroImage?.src).toBe("https://cdn.example.com/post.jpg");
+      expect(posts[0]?.keyTakeaways).toHaveLength(3);
       expect(posts[0]?.sourceLinks).toHaveLength(1);
+      expect(posts[0]?.whyItMatters).toContain("times técnicos");
     } finally {
       await fs.rm(temporaryDirectory, { force: true, recursive: true });
     }

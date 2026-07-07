@@ -9,6 +9,46 @@ import { buildBlogReaderPath, getBlogVisualAssets } from "@/lib/blog/presentatio
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/site-content";
 
+type ArticleVisual = ReturnType<typeof getBlogVisualAssets>[number];
+
+function BlogVisualImage({
+  className,
+  priority = false,
+  sizes,
+  visual,
+}: {
+  className?: string;
+  priority?: boolean;
+  sizes: string;
+  visual: ArticleVisual;
+}) {
+  if (visual.kind === "remote") {
+    return (
+      <img
+        src={visual.src}
+        alt={visual.alt}
+        className={`absolute inset-0 h-full w-full object-cover object-center ${className ?? ""}`}
+        decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
+        loading={priority ? "eager" : "lazy"}
+        referrerPolicy="no-referrer"
+        sizes={sizes}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={visual.src}
+      alt={visual.alt}
+      fill
+      className={`object-cover object-center ${className ?? ""}`}
+      priority={priority}
+      sizes={sizes}
+    />
+  );
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -38,6 +78,8 @@ export default async function ArticlesIndexPage({
   const copy = getDictionary(resolvedLocale).blog;
   const posts = await getBlogPosts(resolvedLocale);
   const [featuredPost, ...secondaryPosts] = posts;
+  const categories = new Set(posts.map((post) => post.category).filter(Boolean));
+  const latestPostDate = featuredPost ? formatDate(featuredPost.date, resolvedLocale) : "-";
 
   return (
     <main className="min-h-screen bg-stone-100 px-4 py-8 text-stone-900 md:px-8">
@@ -58,10 +100,10 @@ export default async function ArticlesIndexPage({
                   Wolkendo Journal
                 </p>
                 <h1 className="mt-3 max-w-2xl text-4xl font-semibold leading-tight text-stone-950 md:text-6xl">
-                  {copy.title} com leitura separada do portfólio.
+                  {copy.title} para acompanhar tecnologia com contexto.
                 </h1>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 md:text-lg">
-                  Artigos em uma página editorial clara, com fundo branco, hierarquia melhor e visual mais adequado para leitura longa.
+                  Leituras diretas sobre desenvolvimento, dados, automação, segurança e decisões práticas para produtos digitais.
                 </p>
               </div>
 
@@ -74,9 +116,14 @@ export default async function ArticlesIndexPage({
                 </div>
                 <div className="rounded-[1.75rem] border border-stone-200 bg-stone-50 px-5 py-6">
                   <p className="text-xs uppercase tracking-[0.22em] text-stone-500">
-                    Layout
+                    Última publicação
                   </p>
-                  <p className="mt-3 text-xl font-semibold text-stone-900">Branco e editorial</p>
+                  <p className="mt-3 text-xl font-semibold text-stone-900">{latestPostDate}</p>
+                  {categories.size > 0 ? (
+                    <p className="mt-2 text-sm text-stone-500">
+                      {categories.size} temas em destaque
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -92,19 +139,11 @@ export default async function ArticlesIndexPage({
                   <div className="relative min-h-[360px]">
                     {(() => {
                       const leadVisual = getBlogVisualAssets(featuredPost)[0];
-                      return leadVisual.kind === "remote" ? (
-                        <img
-                          src={leadVisual.src}
-                          alt={leadVisual.alt}
-                          className="absolute inset-0 h-full w-full object-cover"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <Image
-                          src={leadVisual.src}
-                          alt={leadVisual.alt}
-                          fill
-                          className="object-cover"
+                      return (
+                        <BlogVisualImage
+                          priority
+                          sizes="(min-width: 1024px) 560px, 100vw"
+                          visual={leadVisual}
                         />
                       );
                     })()}
@@ -156,21 +195,11 @@ export default async function ArticlesIndexPage({
                     className="group overflow-hidden rounded-[2rem] border border-stone-200 bg-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(28,25,23,0.08)]"
                   >
                     <div className="relative h-56 overflow-hidden bg-stone-100">
-                      {leadVisual.kind === "remote" ? (
-                        <img
-                          src={leadVisual.src}
-                          alt={leadVisual.alt}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <Image
-                          src={leadVisual.src}
-                          alt={leadVisual.alt}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      )}
+                      <BlogVisualImage
+                        className="transition-transform duration-500 group-hover:scale-105"
+                        sizes="(min-width: 1280px) 350px, (min-width: 768px) 50vw, 100vw"
+                        visual={leadVisual}
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/50 via-stone-950/10 to-transparent" />
                       {post.category ? (
                         <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-stone-900">

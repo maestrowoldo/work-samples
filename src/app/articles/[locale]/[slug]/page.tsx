@@ -10,6 +10,80 @@ import { buildBlogReaderPath, extractArticleSections, getBlogVisualAssets } from
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/site-content";
 
+type ArticleVisual = ReturnType<typeof getBlogVisualAssets>[number];
+
+function getSourceHost(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
+function getPracticalContext(category?: string) {
+  const normalizedCategory = category?.toLowerCase() ?? "";
+
+  if (/seguro|seguros/.test(normalizedCategory)) {
+    return "Use esta leitura como ponto de partida para comparar cenários, entender riscos e preparar perguntas melhores antes de contratar ou revisar uma proteção.";
+  }
+
+  if (/seguran/.test(normalizedCategory)) {
+    return "Use esta leitura para revisar riscos, priorizar correções e transformar alertas técnicos em ações objetivas.";
+  }
+
+  if (/dados|data|analytics|power bi/.test(normalizedCategory)) {
+    return "Use esta leitura para conectar dados, indicadores e decisões com mais clareza antes de montar dashboards ou relatórios.";
+  }
+
+  if (/inteligência artificial|ia|ai/.test(normalizedCategory)) {
+    return "Use esta leitura para separar tendência de aplicação real e avaliar onde a IA pode gerar valor sem aumentar riscos desnecessários.";
+  }
+
+  return "Use esta leitura para transformar contexto técnico em decisões práticas de produto, operação ou desenvolvimento.";
+}
+
+function BlogVisualImage({
+  className,
+  fit = "cover",
+  priority = false,
+  sizes,
+  visual,
+}: {
+  className?: string;
+  fit?: "contain" | "cover";
+  priority?: boolean;
+  sizes: string;
+  visual: ArticleVisual;
+}) {
+  const objectClass = fit === "contain" ? "object-contain" : "object-cover";
+
+  if (visual.kind === "remote") {
+    return (
+      <img
+        src={visual.src}
+        alt={visual.alt}
+        className={`absolute inset-0 h-full w-full ${objectClass} object-center ${className ?? ""}`}
+        decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
+        loading={priority ? "eager" : "lazy"}
+        referrerPolicy="no-referrer"
+        sizes={sizes}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={visual.src}
+      alt={visual.alt}
+      fill
+      className={`${objectClass} object-center ${className ?? ""}`}
+      priority={priority}
+      sizes={sizes}
+    />
+  );
+}
+
 function renderArticleContent(content: string) {
   const lines = content.split("\n");
   const elements: React.ReactNode[] = [];
@@ -130,7 +204,7 @@ export default async function ArticleReaderPage({
               <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white">
                 Wolkendo Journal
               </span>
-              <span>Leitura separada do portfólio</span>
+              <span>{post.category ?? "Artigo"}</span>
             </div>
             <Link
               href={`/${resolvedLocale}#blog`}
@@ -173,8 +247,6 @@ export default async function ArticleReaderPage({
                   <Clock3 size={16} />
                   {post.readTime} {copy.readTimeLabel}
                 </span>
-                <span className="text-stone-300">•</span>
-                <span>{copy.byLabel} {post.author}</span>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -191,51 +263,22 @@ export default async function ArticleReaderPage({
 
             <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-stone-100">
               <div className="grid gap-3 md:grid-cols-[1.55fr_1fr]">
-                <div className="relative min-h-[340px]">
-                  {heroVisual.kind === "remote" ? (
-                    <img
-                      src={heroVisual.src}
-                      alt={heroVisual.alt}
-                      className="absolute inset-0 h-full w-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <Image
-                      src={heroVisual.src}
-                      alt={heroVisual.alt}
-                      fill
-                      className="object-cover"
-                    />
-                  )}
-                  {heroVisual.source ? (
-                    <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-stone-900">
-                      {heroVisual.source}
-                    </span>
-                  ) : null}
+                <div className="relative aspect-[16/10] min-h-[260px] bg-stone-950 md:min-h-[380px]">
+                  <BlogVisualImage
+                    fit={heroVisual.kind === "remote" ? "contain" : "cover"}
+                    priority
+                    sizes="(min-width: 1024px) 650px, 100vw"
+                    visual={heroVisual}
+                  />
                 </div>
                 <div className="grid gap-3 p-3">
                   {galleryVisuals.map((visual) => (
-                    <div key={`${visual.kind}-${visual.src}`} className="relative min-h-[164px] overflow-hidden rounded-[1.5rem]">
-                      {visual.kind === "remote" ? (
-                        <img
-                          src={visual.src}
-                          alt={visual.alt}
-                          className="absolute inset-0 h-full w-full object-cover"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : (
-                        <Image
-                          src={visual.src}
-                          alt={visual.alt}
-                          fill
-                          className="object-cover"
-                        />
-                      )}
-                      {visual.source ? (
-                        <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white">
-                          {visual.source}
-                        </span>
-                      ) : null}
+                    <div key={`${visual.kind}-${visual.src}`} className="relative aspect-[16/9] min-h-[150px] overflow-hidden rounded-[1.5rem] bg-stone-900">
+                      <BlogVisualImage
+                        fit={visual.kind === "remote" ? "contain" : "cover"}
+                        sizes="(min-width: 1024px) 280px, 100vw"
+                        visual={visual}
+                      />
                     </div>
                   ))}
                 </div>
@@ -247,9 +290,28 @@ export default async function ArticleReaderPage({
                 Por que este tema importa
               </p>
               <p className="mt-3 text-lg leading-8 text-stone-700">
-                Este artigo resume as fontes consultadas, reorganiza os pontos centrais em linguagem própria e destaca o impacto prático para desenvolvimento, produto e operação técnica.
+                {post.whyItMatters ??
+                  "Este artigo resume as fontes consultadas, reorganiza os pontos centrais em linguagem própria e destaca o impacto prático para desenvolvimento, produto e operação técnica."}
               </p>
             </div>
+
+            {post.keyTakeaways && post.keyTakeaways.length > 0 ? (
+              <section className="mt-6 rounded-[1.75rem] border border-stone-200 bg-white p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                  Pontos principais
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {post.keyTakeaways.map((takeaway) => (
+                    <li
+                      key={takeaway}
+                      className="border-b border-stone-100 pb-3 text-base leading-7 text-stone-700 last:border-none last:pb-0"
+                    >
+                      {takeaway}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
             <div className="mt-12 space-y-6">
               {renderArticleContent(post.content)}
@@ -288,8 +350,8 @@ export default async function ArticleReaderPage({
                           <p className="mt-2 text-lg font-medium text-stone-950">
                             {sourceLink.title}
                           </p>
-                          <p className="mt-2 break-all text-sm text-stone-500">
-                            {sourceLink.url}
+                          <p className="mt-2 text-sm text-stone-500">
+                            {getSourceHost(sourceLink.url)}
                           </p>
                           </div>
                         </div>
@@ -320,24 +382,53 @@ export default async function ArticleReaderPage({
 
             <div className="rounded-[1.75rem] border border-stone-200 bg-stone-50 p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-500">
-                Experiência de leitura
+                Resumo rápido
               </p>
-              <h2 className="mt-3 text-2xl font-semibold text-stone-950">
-                Layout separado do portfólio
-              </h2>
-              <p className="mt-3 text-sm leading-7 text-stone-600">
-                Esta página isola o artigo em fundo branco, sem competir com o visual escuro do portfólio principal.
-              </p>
+              <dl className="mt-4 space-y-4 text-sm">
+                <div>
+                  <dt className="text-stone-500">Publicado em</dt>
+                  <dd className="mt-1 font-medium text-stone-950">
+                    {formatDate(post.date, resolvedLocale)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-stone-500">Tempo de leitura</dt>
+                  <dd className="mt-1 font-medium text-stone-950">
+                    {post.readTime} {copy.readTimeLabel}
+                  </dd>
+                </div>
+                {post.category ? (
+                  <div>
+                    <dt className="text-stone-500">Tema</dt>
+                    <dd className="mt-1 font-medium text-stone-950">{post.category}</dd>
+                  </div>
+                ) : null}
+              </dl>
             </div>
 
             <div className="rounded-[1.75rem] bg-stone-950 p-6 text-white">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300">
-                Visual do tema
+                Aplicação prática
               </p>
               <p className="mt-3 text-sm leading-7 text-stone-300">
-                Quando as fontes do artigo expõem `og:image` ou `twitter:image`, essas imagens são reaproveitadas na própria experiência editorial do post.
+                {getPracticalContext(post.category)}
               </p>
             </div>
+
+            <Link
+              href={`/${resolvedLocale}#contato`}
+              className="flex items-center justify-between rounded-[1.75rem] bg-emerald-700 p-6 text-white transition-colors hover:bg-emerald-800"
+            >
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
+                  Próximo passo
+                </p>
+                <p className="mt-2 text-lg font-semibold">
+                  Conversar sobre uma solução
+                </p>
+              </div>
+              <ArrowUpRight size={18} className="text-emerald-100" />
+            </Link>
 
             <Link
               href={`/${resolvedLocale}#blog`}
