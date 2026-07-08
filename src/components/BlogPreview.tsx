@@ -17,9 +17,9 @@ export default function BlogPreview({
 }) {
   const { dictionary, locale } = useLocaleContext();
   return (
-    <section className="py-16">
+    <section className="py-10 md:py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
-        <div className="text-center mb-12">
+        <div className="mb-8 text-center md:mb-12">
           <h2 className="text-2xl font-semibold text-zinc-50 md:text-3xl">
             {dictionary.blog.previewTitle} <span className="text-emerald-400">{dictionary.blog.previewTitleAccent}</span>
           </h2>
@@ -32,13 +32,13 @@ export default function BlogPreview({
           {posts.map((post, index) => (
             <FadeIn key={post.slug} delay={index * 0.1}>
               <Link href={buildBlogReaderPath(locale, post.slug)}>
-                <Card hover className="blog-card">
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
+                <Card hover className="blog-card p-4 sm:p-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 tag-glow"
+                          className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-400 tag-glow sm:py-1 sm:text-xs"
                         >
                           {tag}
                         </span>
@@ -46,13 +46,13 @@ export default function BlogPreview({
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-zinc-50 hover:text-emerald-400 transition-colors">
+                      <h3 className="text-base font-semibold leading-tight text-zinc-50 transition-colors hover:text-emerald-400 sm:text-lg">
                         {post.title}
                       </h3>
-                      <p className="text-sm text-zinc-400 mt-2">{post.description}</p>
+                      <p className="mt-2 text-sm leading-5 text-zinc-400 sm:leading-6">{post.description}</p>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-zinc-500 pt-4 border-t border-zinc-800">
+                    <div className="flex items-center justify-between border-t border-zinc-800 pt-3 text-xs text-zinc-500 sm:pt-4">
                       <div className="flex items-center gap-1">
                         <Calendar size={14} />
                         <span>{formatDate(post.date, locale)}</span>
@@ -60,9 +60,9 @@ export default function BlogPreview({
                       <span>{post.readTime} {dictionary.blog.readTimeLabel}</span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-emerald-400 hover:translate-x-1 transition-transform">
-                      <span className="text-sm font-medium">{dictionary.blog.previewReadLabel}</span>
-                      <ArrowRight size={16} />
+                    <div className="flex items-center gap-2 text-emerald-400 transition-transform hover:translate-x-1">
+                      <span className="text-xs font-medium sm:text-sm">{dictionary.blog.previewReadLabel}</span>
+                      <ArrowRight size={15} />
                     </div>
                   </div>
                 </Card>
