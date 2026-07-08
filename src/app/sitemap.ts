@@ -1,7 +1,7 @@
-import process from "node:process";
 import { MetadataRoute } from "next";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { locales } from "@/lib/i18n";
+import { buildAbsoluteUrl } from "@/lib/site-url";
 
 function getBaseUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
@@ -13,25 +13,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const localizedPages = locales.flatMap((locale) => [
     {
-      url: `${baseUrl}/${locale}`,
+      url: buildAbsoluteUrl(`/${locale}`),
       lastModified,
       changeFrequency: "weekly" as const,
       priority: locale === "pt" ? 1 : 0.9,
     },
     {
-      url: `${baseUrl}/articles/${locale}`,
+      url: buildAbsoluteUrl(`/articles/${locale}`),
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/${locale}/curriculum`,
+      url: buildAbsoluteUrl(`/${locale}/curriculum`),
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/${locale}/contato`,
+      url: buildAbsoluteUrl(`/${locale}/contato`),
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,

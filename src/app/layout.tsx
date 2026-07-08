@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import FloatingBackground from "@/components/FloatingBackground";
 import MouseGlow from "@/components/MouseGlow";
 import { defaultLocale, getHtmlLang, isLocale } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site-url";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -15,7 +16,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wolkendoarias.com"),
+  metadataBase: new URL(siteUrl),
   title: "Wolkendo Arias",
   description: "Portfolio profissional de Wolkendo Arias.",
   authors: [{ name: "Wolkendo Arias" }],
