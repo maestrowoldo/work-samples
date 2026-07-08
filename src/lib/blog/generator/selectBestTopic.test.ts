@@ -44,4 +44,33 @@ describe("selectBestTopic", () => {
     expect(selectedTopic.supporting).toHaveLength(2);
     expect(new Set(selectedTopic.supporting.map((item) => item.source)).size).toBe(2);
   });
+
+  it("does not backfill supporting sources with unrelated items", () => {
+    const selectedTopic = selectBestTopic([
+      {
+        categoryMatches: ["Inteligência Artificial"],
+        id: "1",
+        publishedAt: "2026-05-14T10:00:00.000Z",
+        publishedAtReliable: true,
+        score: 95,
+        source: "Hacker News",
+        summary: "Novo agente de IA focado em fluxos para desenvolvimento.",
+        title: "AI agents for developer workflows",
+        url: "https://example.com/hn",
+      },
+      {
+        categoryMatches: ["Games"],
+        id: "2",
+        publishedAt: "2026-05-14T09:00:00.000Z",
+        publishedAtReliable: true,
+        score: 90,
+        source: "The Verge",
+        summary: "Notícia sobre lançamento de console e varejo.",
+        title: "A new console game launches this week",
+        url: "https://example.com/game",
+      },
+    ]);
+
+    expect(selectedTopic.supporting).toEqual([]);
+  });
 });

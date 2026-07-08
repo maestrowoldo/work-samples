@@ -2,9 +2,12 @@ import { z } from "zod";
 import { generateTextWithAi } from "./ai-provider";
 import { canonicalizeUrl, sha256 } from "./deduplication";
 import { BlogGeneratorError } from "./errors";
+import { generateBlogHeroImage } from "./image-provider";
 import { getWikimediaImage } from "./image-library";
+import { selectLocalBlogHeroImage } from "./local-image-library";
 import { enrichSourceLinksWithMedia } from "./source-media";
 import { slugifyBlogTitle } from "./saveBlogPost";
+import { stripInitialArticleHeading } from "../presentation";
 import type { BlogHeroImage, BlogPostContent, BlogSourceLink, GeneratedBlogPostDraft, SelectedTopic } from "../types";
 
 const generatedDraftSchema = z.object({
@@ -196,10 +199,27 @@ function extractMeaningfulTokens(values: string[]) {
   return [...tokens];
 }
 
+function isSupportingSourceRelevant(topic: SelectedTopic, itemTitle: string, itemSummary: string, categoryMatches: string[]) {
+  const leadCategory = topic.lead.categoryMatches[0];
+  const sharesCategory = leadCategory ? categoryMatches.includes(leadCategory) : false;
+  const leadTokens = extractMeaningfulTokens([topic.lead.title, topic.lead.summary, ...topic.keywords]);
+  const candidateText = normalizeSearchText(`${itemTitle} ${itemSummary}`);
+  const sharedTokenCount = leadTokens.filter((token) => candidateText.includes(token)).length;
+
+  return sharesCategory || sharedTokenCount >= 2;
+}
+
 function mapSourceLinks(topic: SelectedTopic): BlogSourceLink[] {
   const seenUrls = new Set<string>();
 
-  return [topic.lead, ...topic.supporting]
+  const relevantSources = [
+    topic.lead,
+    ...topic.supporting.filter((item) =>
+      isSupportingSourceRelevant(topic, item.title, item.summary, item.categoryMatches),
+    ),
+  ];
+
+  return relevantSources
     .filter((item) => {
       if (seenUrls.has(item.url)) {
         return false;
@@ -291,7 +311,16 @@ function isPremiumTechnologyImage(image: Awaited<ReturnType<typeof getWikimediaI
   );
 }
 
+function getUsedHeroImageUrls(existingPosts: BlogPostContent[]) {
+  return new Set(
+    existingPosts
+      .map((post) => post.heroImage?.src)
+      .filter((src): src is string => Boolean(src)),
+  );
+}
+
 async function selectHeroImage({
+  existingPosts,
   fetchImpl,
   imageQuery,
   sourceLinks,
@@ -299,6 +328,7 @@ async function selectHeroImage({
   title,
   topic,
 }: {
+  existingPosts: BlogPostContent[];
   fetchImpl?: typeof fetch;
   imageQuery?: string;
   sourceLinks: BlogSourceLink[];
@@ -314,39 +344,16 @@ async function selectHeroImage({
     ...topic.keywords,
     ...tags,
   ]);
-  const wikimediaImage = await getWikimediaImage(
-    {
-      keywords: [...topic.keywords, ...tags, topic.category],
-      title: `${imageQuery || title} ${topic.category} ${tags.slice(0, 3).join(" ")}`,
-    },
-    fetchImpl,
-  );
-
-  if (
-    wikimediaImage &&
-    (scoreWikimediaImageRelevance(wikimediaImage, relevanceTokens) >= 3 ||
-      isPremiumTechnologyImage(wikimediaImage))
-  ) {
-    return {
-      alt: wikimediaImage.description || wikimediaImage.title || title,
-      credit: wikimediaImage.credit,
-      descriptionUrl: wikimediaImage.descriptionUrl,
-      height: wikimediaImage.height,
-      license: wikimediaImage.license,
-      licenseUrl: wikimediaImage.licenseUrl,
-      mime: wikimediaImage.mime,
-      originalUrl: wikimediaImage.originalUrl,
-      source: "Wikimedia Commons",
-      sourceUrl: wikimediaImage.descriptionUrl,
-      src: wikimediaImage.url,
-      width: wikimediaImage.width,
-    };
-  }
+  const usedHeroImageUrls = getUsedHeroImageUrls(existingPosts);
 
   const seenImageUrls = new Set<string>();
   const candidates = sourceLinks
     .filter((sourceLink) => {
-      if (!sourceLink.imageUrl || seenImageUrls.has(sourceLink.imageUrl)) {
+      if (
+        !sourceLink.imageUrl ||
+        seenImageUrls.has(sourceLink.imageUrl) ||
+        usedHeroImageUrls.has(sourceLink.imageUrl)
+      ) {
         return false;
       }
 
@@ -372,6 +379,36 @@ async function selectHeroImage({
     };
   }
 
+  const wikimediaImage = await getWikimediaImage(
+    {
+      keywords: [...topic.keywords, ...tags, topic.category],
+      title: `${imageQuery || title} ${topic.category} ${tags.slice(0, 3).join(" ")}`,
+    },
+    fetchImpl,
+  );
+
+  if (
+    wikimediaImage &&
+    !usedHeroImageUrls.has(wikimediaImage.url) &&
+    (scoreWikimediaImageRelevance(wikimediaImage, relevanceTokens) >= 3 ||
+      isPremiumTechnologyImage(wikimediaImage))
+  ) {
+    return {
+      alt: wikimediaImage.description || wikimediaImage.title || title,
+      credit: wikimediaImage.credit,
+      descriptionUrl: wikimediaImage.descriptionUrl,
+      height: wikimediaImage.height,
+      license: wikimediaImage.license,
+      licenseUrl: wikimediaImage.licenseUrl,
+      mime: wikimediaImage.mime,
+      originalUrl: wikimediaImage.originalUrl,
+      source: "Wikimedia Commons",
+      sourceUrl: wikimediaImage.descriptionUrl,
+      src: wikimediaImage.url,
+      width: wikimediaImage.width,
+    };
+  }
+
   return getFallbackHeroImage(topic.category, tags, title);
 }
 
@@ -389,8 +426,8 @@ function validateGeneratedPostDraft({
     .split(/\s+/)
     .filter(Boolean).length;
 
-  if (!content.startsWith("# ")) {
-    throw new BlogGeneratorError("Post reprovado: o conteúdo precisa começar com um título H1.");
+  if (/^#\s+/m.test(content)) {
+    throw new BlogGeneratorError("Post reprovado: use o título apenas no frontmatter, sem H1 no corpo.");
   }
 
   if (sectionCount < 3) {
@@ -488,7 +525,7 @@ Regras:
 - Faça síntese e análise própria, com ângulo novo, título diferente e exemplos diferentes dos posts existentes.
 - Escreva de 260 a 480 palavras.
 - Use Markdown simples compatível com um renderer baseado em linhas.
-- Comece o conteúdo com "# Título do artigo".
+- Não inclua H1 no campo content; o título deve ficar apenas no campo title.
 - Use exatamente estes subtítulos em ordem: "## O que aconteceu", "## Por que isso importa", "## Impacto prático", "## Riscos e pontos de atenção", "## Próximos passos".
 - Use listas com "-".
 - Não inclua seção de links no corpo.
@@ -508,7 +545,7 @@ Retorne somente JSON com este formato:
   "keyTakeaways": ["ponto prático 1", "ponto prático 2", "ponto prático 3"],
   "keywords": ["tag1", "tag2", "tag3"],
   "imageQuery": "short Wikimedia image search query",
-  "content": "# Título\\n\\nParágrafo...",
+  "content": "Parágrafo de abertura...\\n\\n## O que aconteceu\\n\\nParágrafo...",
   "sourceUrls": ["https://fonte-real.example/post"],
   "publishedAtReference": "2026-07-07T10:00:00.000Z"
 }
@@ -521,6 +558,7 @@ export async function generateBlogPost(
     environment?: Partial<Record<string, string | undefined>>;
     existingPosts?: BlogPostContent[];
     fetchImpl?: typeof fetch;
+    imageOutputDirectory?: string;
     isRecentRequest?: boolean;
     now?: Date;
     userPrompt?: string;
@@ -587,9 +625,7 @@ export async function generateBlogPost(
       }`,
     );
   }
-  const normalizedContent = draft.content.startsWith("# ")
-    ? draft.content.trim()
-    : `# ${draft.title}\n\n${draft.content.trim()}`;
+  const normalizedContent = stripInitialArticleHeading(draft.content.trim());
   const date = (options.now ?? new Date()).toISOString().slice(0, 10);
   const normalizedTags = draft.keywords.map((tag) => tag.trim()).filter(Boolean);
   const allowedSourceUrls = filterAllowedSourceUrls(draft.sourceUrls, sourceLinks);
@@ -606,14 +642,39 @@ export async function generateBlogPost(
     );
   }
 
-  const heroImage = await selectHeroImage({
-    fetchImpl: options.fetchImpl,
-    imageQuery: draft.imageQuery,
-    sourceLinks,
+  const normalizedSlug = slugifyBlogTitle(draft.slug || draft.title);
+  const localHeroImage = await selectLocalBlogHeroImage({
+    category: topic.category,
+    description: draft.summary.trim(),
+    environment: options.environment,
+    existingPosts: options.existingPosts ?? [],
     tags: normalizedTags,
-    title: draft.title,
-    topic,
+    title: draft.title.trim(),
   });
+  const generatedHeroImage =
+    localHeroImage ??
+    (await generateBlogHeroImage({
+      category: topic.category,
+      description: draft.summary.trim(),
+      environment: options.environment,
+      fetchImpl: options.fetchImpl,
+      outputDirectory: options.imageOutputDirectory,
+      slug: normalizedSlug,
+      tags: normalizedTags,
+      title: draft.title.trim(),
+      whyItMatters: draft.whyItMatters.trim(),
+    }));
+  const heroImage =
+    generatedHeroImage ??
+    (await selectHeroImage({
+      existingPosts: options.existingPosts ?? [],
+      fetchImpl: options.fetchImpl,
+      imageQuery: draft.imageQuery,
+      sourceLinks,
+      tags: normalizedTags,
+      title: draft.title,
+      topic,
+    }));
   const contentHash = sha256(`${draft.title}\n${draft.summary}\n${normalizedContent}`);
   const keyTakeaways = draft.keyTakeaways
     .map((takeaway) => takeaway.trim())
@@ -629,7 +690,7 @@ export async function generateBlogPost(
     keyTakeaways,
     publishedAtReference: draft.publishedAtReference,
     readTime: estimateReadTime(normalizedContent),
-    slug: slugifyBlogTitle(draft.slug || draft.title),
+    slug: normalizedSlug,
     sourceUrl: allowedSourceUrls[0],
     sourceUrls: allowedSourceUrls,
     sourceLinks,

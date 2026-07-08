@@ -34,22 +34,6 @@ function selectSupportingItems(lead: TechNewsItem, items: TechNewsItem[]) {
     }
   }
 
-  if (selectedItems.length >= 2) {
-    return selectedItems;
-  }
-
-  for (const item of items) {
-    if (item.id === lead.id || selectedItems.some((selectedItem) => selectedItem.id === item.id)) {
-      continue;
-    }
-
-    selectedItems.push(item);
-
-    if (selectedItems.length === 4) {
-      break;
-    }
-  }
-
   return selectedItems;
 }
 

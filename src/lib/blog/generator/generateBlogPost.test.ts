@@ -1,3 +1,6 @@
+import os from "node:os";
+import path from "node:path";
+import { promises as fs } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { BlogGeneratorError } from "./errors";
 import { generateBlogPost } from "./generateBlogPost";
@@ -235,7 +238,112 @@ function createMalformedJsonFetchImpl(): typeof fetch {
 }
 
 describe("generateBlogPost", () => {
-  it("selects a premium Wikimedia image before using the source page image", async () => {
+  it("uses a matching local image library asset before generating an AI image", async () => {
+    const temporaryDirectory = await fs.mkdtemp(path.join(os.tmpdir(), "blog-library-"));
+
+    try {
+      await fs.writeFile(path.join(temporaryDirectory, "ai-observability-dashboard.jpg"), "image");
+
+      const post = await generateBlogPost(topic, {
+        environment: {
+          AI_API_KEY: "test-key",
+          AI_PROVIDER: "groq",
+          BLOG_IMAGE_LIBRARY_DIR: temporaryDirectory,
+          BLOG_IMAGE_LIBRARY_PUBLIC_PATH: "/blog/library",
+          BLOG_IMAGE_PROVIDER: "cloudflare",
+          CLOUDFLARE_ACCOUNT_ID: "account",
+          CLOUDFLARE_API_TOKEN: "token",
+        },
+        fetchImpl: async (input, init) => {
+          const url = String(input);
+
+          expect(url).not.toContain("api.cloudflare.com/client/v4/accounts/account/ai/run/");
+          return createFetchImpl(buildAiPayload())(input, init);
+        },
+        now: new Date("2026-07-07T12:00:00.000Z"),
+      });
+
+      expect(post.heroImage).toMatchObject({
+        alt: "Imagem de tecnologia sobre ai observability dashboard para o artigo: Observabilidade para a era da inteligência artificial",
+        source: "Biblioteca local",
+        src: "/blog/library/ai-observability-dashboard.jpg",
+      });
+    } finally {
+      await fs.rm(temporaryDirectory, { force: true, recursive: true });
+    }
+  });
+
+  it("generates a local Cloudflare image before using source or Wikimedia fallbacks", async () => {
+    const temporaryDirectory = await fs.mkdtemp(path.join(os.tmpdir(), "blog-image-"));
+    const imageBytes = Buffer.from("fake-jpeg");
+
+    try {
+      const post = await generateBlogPost(topic, {
+        environment: {
+          AI_API_KEY: "test-key",
+          AI_PROVIDER: "groq",
+          BLOG_IMAGE_PROVIDER: "cloudflare",
+          CLOUDFLARE_ACCOUNT_ID: "account",
+          CLOUDFLARE_API_TOKEN: "token",
+        },
+        fetchImpl: async (input, init) => {
+          const url = String(input);
+
+          if (url.includes("api.cloudflare.com/client/v4/accounts/account/ai/run/")) {
+            expect(init?.method).toBe("POST");
+            expect(init?.headers).toMatchObject({
+              Authorization: "Bearer token",
+              "Content-Type": "application/json",
+            });
+            expect(JSON.parse(String(init?.body))).toMatchObject({
+              prompt: expect.stringContaining("server racks"),
+              steps: 4,
+            });
+            expect(JSON.parse(String(init?.body)).prompt).toContain("Do not show mountains");
+            expect(JSON.parse(String(init?.body)).prompt).toContain("No visible words");
+
+            return new Response(
+              JSON.stringify({
+                result: {
+                  image: imageBytes.toString("base64"),
+                },
+                success: true,
+              }),
+              {
+                headers: {
+                  "content-type": "application/json",
+                },
+                status: 200,
+              },
+            );
+          }
+
+          return createFetchImpl(buildAiPayload())(input, init);
+        },
+        imageOutputDirectory: temporaryDirectory,
+        now: new Date("2026-07-07T12:00:00.000Z"),
+      });
+
+      expect(post.heroImage).toMatchObject({
+        alt: "Imagem editorial gerada para o artigo: Observabilidade para a era da inteligência artificial",
+        source: "Cloudflare Workers AI",
+        src: "/blog/generated/observabilidade-para-a-era-da-inteligencia-artificial.jpg",
+      });
+
+      await expect(
+        fs.readFile(
+          path.join(
+            temporaryDirectory,
+            "observabilidade-para-a-era-da-inteligencia-artificial.jpg",
+          ),
+        ),
+      ).resolves.toEqual(imageBytes);
+    } finally {
+      await fs.rm(temporaryDirectory, { force: true, recursive: true });
+    }
+  });
+
+  it("falls back to the source image before using Wikimedia", async () => {
     const post = await generateBlogPost(topic, {
       environment: {
         AI_API_KEY: "test-key",
@@ -246,13 +354,13 @@ describe("generateBlogPost", () => {
     });
 
     expect(post.heroImage).toMatchObject({
-      alt: "Artificial intelligence observability dashboard",
-      license: "CC BY-SA 4.0",
-      source: "Wikimedia Commons",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:AI_dashboard.jpg",
-      src: "https://upload.wikimedia.org/ai-dashboard-1200.jpg",
+      alt: "AI observability dashboard for LLM systems",
+      source: "Example AI",
+      sourceUrl: "https://example.com/lead",
+      src: "https://cdn.example.com/ai-observability.jpg",
     });
     expect(post.contentHash).toHaveLength(64);
+    expect(post.content.startsWith("# ")).toBe(false);
     expect(post.keyTakeaways).toHaveLength(3);
     expect(post.sourceUrl).toBe("https://example.com/lead");
     expect(post.whyItMatters).toContain("aplicações com IA");
@@ -289,21 +397,23 @@ describe("generateBlogPost", () => {
     });
   });
 
-  it("falls back to the source image when Wikimedia does not return a strong visual", async () => {
+  it("falls back to the source image when Cloudflare does not return an image", async () => {
     const post = await generateBlogPost(topic, {
       environment: {
         AI_API_KEY: "test-key",
         AI_PROVIDER: "groq",
+        BLOG_IMAGE_PROVIDER: "cloudflare",
+        CLOUDFLARE_ACCOUNT_ID: "account",
+        CLOUDFLARE_API_TOKEN: "token",
       },
       fetchImpl: async (input, init) => {
         const url = String(input);
 
-        if (url.includes("commons.wikimedia.org/w/api.php")) {
+        if (url.includes("api.cloudflare.com/client/v4/accounts/account/ai/run/")) {
           return new Response(
             JSON.stringify({
-              query: {
-                pages: {},
-              },
+              errors: [{ message: "quota exceeded" }],
+              success: false,
             }),
             {
               headers: {

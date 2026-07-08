@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     locales.map(async (locale) =>
       (await getBlogPosts(locale)).map((post) => ({
         url: `${baseUrl}/articles/${locale}/${post.slug}`,
-        lastModified,
+        lastModified: Number.isNaN(Date.parse(post.date)) ? lastModified : new Date(post.date),
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),
