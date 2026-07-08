@@ -195,16 +195,22 @@
 /* ═══════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
+  .blog-card {
+    animation: none;
+    border-radius: 1.25rem;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+  }
+
   .blog-card::before {
-    opacity: 0.4;
+    opacity: 0.22;
   }
 
   .blog-card::after {
-    opacity: 0.5;
+    opacity: 0.35;
   }
 
   .tag-glow {
-    animation: tagPulse 2.5s ease-in-out infinite;
+    animation: none;
   }
 }
 
