@@ -3,11 +3,8 @@ import process from "node:process";
 import { existsSync, readFileSync } from "node:fs";
 import {
   BlogGeneratorError,
-  fetchTechNews,
-  generateBlogPost,
+  createGeneratedBlogPost,
   resolveAiConfiguration,
-  saveBlogPost,
-  selectBestTopic,
 } from "../src/lib/blog/generator";
 
 function loadEnvironmentFile(fileName: string) {
@@ -47,30 +44,44 @@ loadEnvironmentFile(".env.local");
 
 async function main() {
   resolveAiConfiguration();
+  const userPrompt = process.argv.slice(2).join(" ").trim() || undefined;
 
-  console.log("Buscando notícias recentes de tecnologia...");
-  const newsItems = await fetchTechNews();
+  console.log(
+    userPrompt
+      ? `Gerando blog para o pedido: ${userPrompt}`
+      : "Gerando blog com base nas fontes recentes selecionadas...",
+  );
+  const result = await createGeneratedBlogPost({
+    userPrompt,
+  });
 
-  console.log(`Notícias relevantes encontradas: ${newsItems.length}`);
-  const selectedTopic = selectBestTopic(newsItems);
-  console.log(`Tema selecionado: ${selectedTopic.lead.title}`);
-  console.log(`Categoria: ${selectedTopic.category}`);
+  if (!result.created || !result.savedPost) {
+    console.log("");
+    console.log("Post não publicado:");
+    console.log(`- Motivo: ${result.reason ?? "sem motivo informado"}`);
+    if (result.attempts?.length) {
+      console.log("- Tentativas:");
+      for (const attempt of result.attempts) {
+        console.log(`  * ${attempt.title} - ${attempt.reason}`);
+      }
+    }
+    return;
+  }
 
-  console.log("Gerando rascunho do post com IA...");
-  const generatedPost = await generateBlogPost(selectedTopic);
-
-  console.log("Salvando post na estrutura atual do blog...");
-  const savedPost = await saveBlogPost(generatedPost);
-  const relativeFilePath = path.relative(process.cwd(), savedPost.filePath);
+  const relativeFilePath = path.relative(process.cwd(), result.savedPost.filePath);
 
   console.log("");
   console.log("Post gerado com sucesso:");
-  console.log(`- Título: ${savedPost.post.title}`);
-  console.log(`- Slug: ${savedPost.post.slug}`);
+  console.log(`- Título: ${result.savedPost.post.title}`);
+  console.log(`- Slug: ${result.savedPost.post.slug}`);
   console.log(`- Arquivo: ${relativeFilePath}`);
+  console.log(`- Imagem: ${result.image?.src ?? "sem imagem"}`);
+  if (result.attempts?.length) {
+    console.log(`- Tentativas reprovadas antes desta: ${result.attempts.length}`);
+  }
   console.log("- Fontes:");
 
-  for (const sourceLink of savedPost.post.sourceLinks ?? []) {
+  for (const sourceLink of result.savedPost.post.sourceLinks ?? []) {
     console.log(`  * [${sourceLink.source}] ${sourceLink.title} - ${sourceLink.url}`);
   }
 }

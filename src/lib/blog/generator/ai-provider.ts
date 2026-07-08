@@ -1,4 +1,4 @@
-import { BlogGeneratorError } from "./errors";
+import { AiRateLimitError, BlogGeneratorError } from "./errors";
 
 export type AiProvider = "gemini" | "groq" | "openrouter";
 
@@ -61,6 +61,8 @@ function buildAiErrorMessage(
   }
 
   const providerMessage = parsedPayload?.error?.message?.trim();
+  const retryAfterMatch = responseText.match(/try again in\s+([\d.]+s)/i);
+  const retryAfter = retryAfterMatch?.[1];
   const details = parsedPayload?.error?.details ?? [];
   const retryDelay = details.find((detail) => detail.retryDelay)?.retryDelay;
   const quotaViolations = details.flatMap((detail) => detail.violations ?? []);
@@ -72,6 +74,14 @@ function buildAiErrorMessage(
   );
   const model =
     quotaViolations.find((violation) => violation.quotaDimensions?.model)?.quotaDimensions?.model;
+
+  if (status === 429) {
+    const retryMessage = retryAfter ?? retryDelay;
+
+    return `Falha na IA (${provider}): limite temporário de tokens atingido.${
+      retryMessage ? ` Aguarde ${retryMessage} e execute novamente.` : " Aguarde alguns instantes e execute novamente."
+    }`;
+  }
 
   if (provider === "gemini" && status === 429) {
     const retryMessage = retryDelay ? ` Retry indicado pelo provider: ${retryDelay}.` : "";
@@ -90,6 +100,21 @@ function buildAiErrorMessage(
   }
 
   return `Falha na IA (${provider}): ${status} ${statusText}. ${providerMessage ?? responseText}`;
+}
+
+function buildAiProviderError(
+  provider: AiProvider,
+  status: number,
+  statusText: string,
+  responseText: string,
+) {
+  const message = buildAiErrorMessage(provider, status, statusText, responseText);
+
+  if (status === 429) {
+    return new AiRateLimitError(message);
+  }
+
+  return new BlogGeneratorError(message);
 }
 
 export function resolveAiConfiguration(
@@ -111,10 +136,18 @@ export function resolveAiConfiguration(
     );
   }
 
+  const model = environment.AI_MODEL?.trim() || defaultModels[provider];
+
+  if (provider === "groq" && /safeguard|moderation/i.test(model)) {
+    throw new BlogGeneratorError(
+      `AI_MODEL "${model}" não é indicado para gerar artigos. Use um modelo de geração, por exemplo llama-3.3-70b-versatile, ou remova AI_MODEL para usar o padrão.`,
+    );
+  }
+
   return {
     apiKey,
     baseUrl: environment.AI_BASE_URL?.trim() || defaultBaseUrls[provider],
-    model: environment.AI_MODEL?.trim() || defaultModels[provider],
+    model,
     provider,
   };
 }
@@ -163,35 +196,41 @@ async function generateWithOpenAiCompatibleProvider(
     headers["X-Title"] = "Wolkendo Blog Generator";
   }
 
+  const requestBody: Record<string, unknown> = {
+    max_tokens: 1400,
+    messages: [
+      {
+        content: input.systemPrompt,
+        role: "system",
+      },
+      {
+        content: input.prompt,
+        role: "user",
+      },
+    ],
+    model: configuration.model,
+    temperature: 0.3,
+  };
+
+  if (configuration.provider === "openrouter") {
+    requestBody.response_format = {
+      type: "json_object",
+    };
+  }
+
   const response = await fetchImpl(`${configuration.baseUrl}/chat/completions`, {
-    body: JSON.stringify({
-      max_tokens: 1800,
-      messages: [
-        {
-          content: input.systemPrompt,
-          role: "system",
-        },
-        {
-          content: input.prompt,
-          role: "user",
-        },
-      ],
-      model: configuration.model,
-      temperature: 0.6,
-    }),
+    body: JSON.stringify(requestBody),
     headers,
     method: "POST",
   });
 
   if (!response.ok) {
     const body = await response.text();
-    throw new BlogGeneratorError(
-      buildAiErrorMessage(
-        configuration.provider,
-        response.status,
-        response.statusText,
-        body,
-      ),
+    throw buildAiProviderError(
+      configuration.provider,
+      response.status,
+      response.statusText,
+      body,
     );
   }
 
@@ -247,13 +286,11 @@ async function generateWithGemini(
 
   if (!response.ok) {
     const body = await response.text();
-    throw new BlogGeneratorError(
-      buildAiErrorMessage(
-        configuration.provider,
-        response.status,
-        response.statusText,
-        body,
-      ),
+    throw buildAiProviderError(
+      configuration.provider,
+      response.status,
+      response.statusText,
+      body,
     );
   }
 

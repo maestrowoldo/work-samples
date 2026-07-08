@@ -3,7 +3,12 @@ import { getBlogPosts } from "@/lib/blog/content.server";
 import { locales } from "@/lib/i18n";
 import { buildAbsoluteUrl } from "@/lib/site-url";
 
+function getBaseUrl() {
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://wolkendo.dev";
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = getBaseUrl();
   const lastModified = new Date();
 
   const localizedPages = locales.flatMap((locale) => [
@@ -36,8 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const localizedPostsByLocale = await Promise.all(
     locales.map(async (locale) =>
       (await getBlogPosts(locale)).map((post) => ({
-        url: buildAbsoluteUrl(`/articles/${locale}/${post.slug}`),
-        lastModified: new Date(post.date),
+        url: `${baseUrl}/articles/${locale}/${post.slug}`,
+        lastModified: Number.isNaN(Date.parse(post.date)) ? lastModified : new Date(post.date),
         changeFrequency: "monthly" as const,
         priority: 0.6,
       })),

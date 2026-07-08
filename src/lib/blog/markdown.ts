@@ -12,16 +12,43 @@ export const sourceLinkSchema = z.object({
   url: z.string().url(),
 });
 
+export const heroImageSchema = z.object({
+  alt: z.string().min(1),
+  credit: z.string().min(1).optional(),
+  descriptionUrl: z.string().url().optional(),
+  height: z.number().int().positive().optional(),
+  license: z.string().min(1).optional(),
+  licenseUrl: z.string().url().optional(),
+  mime: z.string().min(1).optional(),
+  originalUrl: z.string().url().optional(),
+  source: z.string().min(1).optional(),
+  sourceUrl: z.string().url().optional(),
+  src: z.string().min(1),
+  width: z.number().int().positive().optional(),
+});
+
 export const storedBlogFrontmatterSchema = z.object({
   author: z.string().min(1),
   category: z.string().min(1).optional(),
   date: z.string().min(1),
   description: z.string().min(1),
+  heroImage: heroImageSchema.optional(),
+  imageCredit: z.string().min(1).optional(),
+  imageDescriptionUrl: z.string().url().optional(),
+  imageLicense: z.string().min(1).optional(),
+  imageLicenseUrl: z.string().url().optional(),
+  imageOriginalUrl: z.string().url().optional(),
+  keyTakeaways: z.array(z.string().min(1)).optional(),
+  contentHash: z.string().min(1).optional(),
+  publishedAtReference: z.string().min(1).optional(),
   readTime: z.number().int().positive(),
   slug: z.string().min(1),
+  sourceUrl: z.string().url().optional(),
+  sourceUrls: z.array(z.string().url()).optional(),
   sourceLinks: z.array(sourceLinkSchema).default([]),
   tags: z.array(z.string().min(1)).min(1),
   title: z.string().min(1),
+  whyItMatters: z.string().min(1).optional(),
 });
 
 export type StoredBlogFrontmatter = z.infer<typeof storedBlogFrontmatterSchema>;

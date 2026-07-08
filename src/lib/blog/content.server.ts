@@ -7,6 +7,12 @@ import { normalizeSourceLinks, parseMarkdownWithFrontmatter } from "./markdown";
 import type { BlogPostContent } from "./types";
 export { blogContentRoot, generatedBlogLocale } from "./constants";
 
+const removedStaticBlogSlugs = new Set([
+  "introducao-nextjs",
+  "power-bi-dashboards",
+  "typescript-avancado",
+]);
+
 function normalizeBlogPost(post: BlogPostContent, origin: BlogPostContent["origin"]) {
   return {
     ...post,
@@ -41,9 +47,9 @@ function dedupeBlogPosts(posts: BlogPostContent[]) {
 }
 
 function getStaticBlogPosts(locale: Locale) {
-  return getDictionary(locale).blog.posts.map((post) =>
-    normalizeBlogPost(post, "static"),
-  );
+  return getDictionary(locale).blog.posts
+    .filter((post) => !removedStaticBlogSlugs.has(post.slug))
+    .map((post) => normalizeBlogPost(post, "static"));
 }
 
 export async function loadGeneratedBlogPostsFromDirectory(
@@ -86,11 +92,23 @@ export async function loadGeneratedBlogPostsFromDirectory(
             content,
             date: frontmatter.date,
             description: frontmatter.description,
+            heroImage: frontmatter.heroImage,
+            imageCredit: frontmatter.imageCredit,
+            imageDescriptionUrl: frontmatter.imageDescriptionUrl,
+            imageLicense: frontmatter.imageLicense,
+            imageLicenseUrl: frontmatter.imageLicenseUrl,
+            imageOriginalUrl: frontmatter.imageOriginalUrl,
+            keyTakeaways: frontmatter.keyTakeaways,
+            contentHash: frontmatter.contentHash,
+            publishedAtReference: frontmatter.publishedAtReference,
             readTime: frontmatter.readTime,
             slug: frontmatter.slug,
+            sourceUrl: frontmatter.sourceUrl,
+            sourceUrls: frontmatter.sourceUrls,
             sourceLinks: frontmatter.sourceLinks,
             tags: frontmatter.tags,
             title: frontmatter.title,
+            whyItMatters: frontmatter.whyItMatters,
           },
           "generated",
         );
