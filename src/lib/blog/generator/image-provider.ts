@@ -40,7 +40,7 @@ function resolveCloudflareConfiguration(environment: ImageEnvironment) {
       "@cf/black-forest-labs/flux-1-schnell",
     steps: Math.max(
       1,
-      Math.min(Number.parseInt(environment.BLOG_IMAGE_STEPS ?? "4", 10) || 4, 8),
+      Math.min(Number.parseInt(environment.BLOG_IMAGE_STEPS ?? "3", 10) || 3, 8),
     ),
   };
 }
@@ -72,30 +72,30 @@ function buildTechnicalSubjectBrief({
   );
 
   if (/(kubernetes|container|conteiner|orchestrat|devops|cluster)/.test(fingerprint)) {
-    return "Show a modern cloud operations scene: server racks, container orchestration nodes, connected deployment pipelines, monitoring panels with abstract charts, and engineers' workstations. Use recognizable infrastructure concepts without logos or readable UI text.";
+    return "Show a premium cloud operations workspace: elegant server racks, container orchestration nodes, deployment pipeline lines, abstract monitoring panels, and a clean engineer workstation. Use recognizable infrastructure concepts without logos or readable UI text.";
   }
 
   if (/(pdf|document|documento|file|arquivo)/.test(fingerprint)) {
-    return "Show a professional document software workflow: a laptop or workstation, layered digital documents, annotation panels, secure file processing, and clean productivity interface shapes with no readable text or brand marks.";
+    return "Show a premium document software workflow: a refined workstation, layered digital document sheets, subtle annotation shapes, secure file processing elements, and clean productivity interface blocks with no readable text or brand marks.";
   }
 
   if (/(serverless|cloud|edge|lambda|infraestrutura|infrastructure)/.test(fingerprint)) {
-    return "Show a cloud architecture scene: distributed server nodes, API gateways, data streams, edge computing modules, and AI processing chips inside a clean technical environment.";
+    return "Show a premium cloud architecture scene: distributed server nodes, API gateways, thin data streams, edge computing modules, and AI processing chips inside a clean technical environment.";
   }
 
   if (/(ia|ai|artificial intelligence|machine learning|llm|agent|agente)/.test(fingerprint)) {
-    return "Show an AI engineering scene: neural network topology, model monitoring dashboards, data pipelines, GPU servers, and a software workstation in a modern lab or data center.";
+    return "Show a premium AI engineering workspace: subtle neural network topology, model monitoring panels, data pipeline lines, GPU server elements, and a software workstation in a modern lab or data center.";
   }
 
   if (/(data|dados|analytics|dashboard|metric|bi|observability|observabilidade)/.test(fingerprint)) {
-    return "Show a data analysis scene: abstract dashboards, charts, database nodes, observability signals, and a focused analytics workstation with no readable labels.";
+    return "Show a premium data analysis workspace: abstract dashboards, refined chart shapes, database nodes, observability signals, and a focused analytics workstation with no readable labels.";
   }
 
   if (/(open source|github|developer|software|web|typescript|react|programa|code)/.test(fingerprint)) {
-    return "Show a software engineering scene: code editor shapes without readable code, repository graph, terminal-like panels, package modules, and developer workstation lighting.";
+    return "Show a premium software engineering workspace: code editor shapes without readable code, repository graph lines, terminal-like panels, package modules, and elegant developer workstation lighting.";
   }
 
-  return "Show a practical software technology scene with computers, infrastructure diagrams, abstract dashboards, data flows, and engineering tools.";
+  return "Show a premium practical software technology workspace with computers, infrastructure diagram shapes, abstract dashboards, data flows, and engineering tools.";
 }
 
 function buildCloudflareImagePrompt({
@@ -129,14 +129,17 @@ function buildCloudflareImagePrompt({
     .join(". ");
 
   return [
-    "Create a professional editorial wide horizontal technical image for a technology blog article.",
+    "Create a premium editorial wide horizontal technical image for a professional technology blog article.",
     subjectBrief,
     topicText,
+    "Visual style: high-end SaaS editorial photography mixed with subtle 3D technical elements, premium product-marketing quality, polished but believable, clean composition, sharp focal point, restrained depth of field.",
+    "Use a sophisticated palette with graphite, white, emerald, cyan, and warm neutral accents; avoid neon cyberpunk, plastic-looking renders, clutter, and cheap stock-photo style.",
     "The scene must clearly look like technology, software, cloud infrastructure, documents, data, or AI engineering depending on the article topic.",
     "The entire scene must be indoors in a modern office, data center, server room, lab, or software engineering workstation.",
+    "Keep the composition simple and lightweight: fewer objects, clean background, large negative space, no noisy textures, no dense particle effects, no excessive reflections.",
     "Do not show mountains, hills, valleys, forests, beaches, sunsets, open sky, outdoor landscapes, nature scenery, travel scenery, people hiking, or generic wallpaper backgrounds.",
     "No visible words, no readable letters, no logos, no brand marks, no watermarks, no fake app names, no UI screenshots with readable text.",
-    "Use realistic lighting, crisp technical details, professional color contrast, and a composition suitable for a blog hero image.",
+    "Use realistic studio lighting, crisp technical details, professional color contrast, and a polished composition suitable for a blog hero image.",
   ].join(" ");
 }
 

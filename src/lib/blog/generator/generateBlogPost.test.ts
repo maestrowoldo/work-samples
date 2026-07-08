@@ -297,10 +297,12 @@ describe("generateBlogPost", () => {
             });
             expect(JSON.parse(String(init?.body))).toMatchObject({
               prompt: expect.stringContaining("server racks"),
-              steps: 4,
+              steps: 3,
             });
             expect(JSON.parse(String(init?.body)).prompt).toContain("Do not show mountains");
             expect(JSON.parse(String(init?.body)).prompt).toContain("No visible words");
+            expect(JSON.parse(String(init?.body)).prompt).toContain("premium product-marketing quality");
+            expect(JSON.parse(String(init?.body)).prompt).toContain("fewer objects");
 
             return new Response(
               JSON.stringify({
