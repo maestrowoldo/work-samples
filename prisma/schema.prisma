@@ -31,6 +31,15 @@ model BlogPost {
   descricao String
   conteudo  String
   imagem    String?
+  sourceUrl String? @unique
+  sourceUrls String[] @default([])
+  contentHash String? @unique
+  imageOriginalUrl String?
+  imageDescriptionUrl String?
+  imageCredit String?
+  imageLicense String?
+  imageLicenseUrl String?
+  publishedAtReference DateTime?
   tags      String[]
   autor     String  @default("Wolkendo Arias")
   published Boolean @default(false)
