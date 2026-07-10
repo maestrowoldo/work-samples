@@ -186,6 +186,8 @@ export interface SiteDictionary {
   };
   projects: {
     description: string;
+    featuredHeading: string;
+    goToProjectSlideLabel: string;
     heading: string;
     highlight: string;
     items: Array<{
@@ -201,6 +203,8 @@ export interface SiteDictionary {
       title: string;
     }>;
     impactLabel: string;
+    nextProjectLabel: string;
+    previousProjectLabel: string;
     problemLabel: string;
     solutionLabel: string;
     viewMoreLabel: string;
@@ -609,24 +613,28 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Projetos que resolvem problemas reais",
       highlight: "problemas reais",
+      featuredHeading: "Projetos em Destaque",
       description:
         "Cases pensados para operação real, com contexto, decisão técnica e execução limpa do começo ao fim.",
       problemLabel: "Problema",
       solutionLabel: "Solução",
       impactLabel: "Impacto",
       viewMoreLabel: "Explorar case",
+      previousProjectLabel: "Projeto anterior",
+      nextProjectLabel: "Próximo projeto",
+      goToProjectSlideLabel: "Ir para a página {number} de projetos",
       items: [
         {
-          title: "Plataforma full stack de captação e contato",
+          title: "NexoChat",
           category: "Aplicação web",
-          description: "Experiência em Next.js com API, persistência relacional e fluxo de contato pronto para produção.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "Era preciso reunir apresentação profissional, captura de leads e confiabilidade operacional em uma base única.",
-          solution: "Estruturei interface, rota de API, validação com Zod e camada Prisma/PostgreSQL em um fluxo consistente de ponta a ponta.",
-          impact: "Entrega pronta para produção, com base escalável para evolução do produto e manutenção mais previsível.",
+          description: "Chat privado 1:1 com autenticação segura, presença online e tradução automática entre idiomas.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "Conversas entre usuários exigiam autenticação confiável, mensagens em tempo real e comunicação clara entre idiomas diferentes.",
+          solution: "Construí um chat privado com JWT em cookies HttpOnly, rotas protegidas, Prisma/PostgreSQL, realtime via Ably e tradução no backend com DeepL.",
+          impact: "Uma experiência responsiva e pronta para uso, com presença online, status de leitura e base técnica preparada para evolução.",
         },
         {
           title: "Aplicativo interno para controle de ponto",
@@ -651,6 +659,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "Os dados existiam, mas faltava uma leitura visual útil para priorização e tomada de decisão.",
           solution: "Modelei dados, revisei indicadores e construí dashboards com foco em contexto de negócio e leitura rápida.",
           impact: "Indicadores mais fáceis de acompanhar, decisões mais rápidas e melhor visibilidade da operação.",
+        },
+        {
+          title: "Mypromo — Automação para Afiliados",
+          category: "Automação e bots",
+          description: "Monorepo com API Express, PostgreSQL e bot Telegram para responder links com mensagens promocionais.",
+          image: "/ia.webp",
+          href: "https://github.com/maestrowoldo/MyPromo-bot",
+          tag: "Telegram Bot",
+          tech: ["Python", "Telegram", "TypeScript", "Express", "PostgreSQL"],
+          problem: "A rotina de afiliados precisava detectar links enviados no Telegram, validar domínios suportados e responder rápido sem expor fluxos inseguros.",
+          solution: "Estruturei uma plataforma em monorepo com TypeScript, Express, Drizzle, Zod, OpenAPI e um bot em Python/Telegram que identifica URLs, bloqueia hosts internos e responde com um template promocional.",
+          impact: "Automação mais consistente para mensagens promocionais, com validação de segurança, base de API documentada e estrutura preparada para evoluir em pacotes independentes.",
         },
       ],
     },
@@ -759,7 +779,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projetos"],
-          response: "Entre os projetos estão aplicações full stack, dashboards em Power BI e automações internas. Você pode ver detalhes na seção de projetos.",
+          response: "Entre os projetos estão o NexoChat, dashboards em Power BI e automações internas. Você pode ver detalhes na seção de projetos.",
         },
         {
           keywords: ["experiência", "trabalho"],
@@ -837,9 +857,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Sistema Full Stack de Cadastro Web",
-          description: "Aplicação web desenvolvida do zero até o deploy, com autenticação de usuários, API REST, modelagem relacional em PostgreSQL e versionamento com Git.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Chat privado 1:1 desenvolvido com autenticação segura, sessões JWT em cookies HttpOnly, rotas protegidas, mensagens em tempo real e tradução automática entre idiomas.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Aplicativo Interno de Controle de Ponto",
@@ -1036,24 +1056,28 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Projects that solve real problems",
       highlight: "real problems",
+      featuredHeading: "Featured Projects",
       description:
         "Selected work built for real operations, where context, technical choices, and delivery quality all matter.",
       problemLabel: "Problem",
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Explore case",
+      previousProjectLabel: "Previous project",
+      nextProjectLabel: "Next project",
+      goToProjectSlideLabel: "Go to project page {number}",
       items: [
         {
-          title: "Full stack lead capture and contact platform",
+          title: "NexoChat",
           category: "Web application",
-          description: "A Next.js experience with API workflows, relational persistence, and a contact flow ready for production.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "The product needed a single foundation for professional presentation, lead capture, and operational reliability.",
-          solution: "I structured the UI, API route, Zod validation, and Prisma/PostgreSQL layer into a consistent end-to-end flow.",
-          impact: "A production-ready delivery with a scalable base for product evolution and more predictable maintenance.",
+          description: "Private 1:1 chat with secure authentication, online presence, and automatic translation between languages.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "User conversations needed reliable authentication, realtime messaging, and clearer communication across different languages.",
+          solution: "I built a private chat with JWT in HttpOnly cookies, protected routes, Prisma/PostgreSQL, Ably realtime, and backend translation with DeepL.",
+          impact: "A responsive, usable experience with online presence, read status, and a technical foundation ready to evolve.",
         },
         {
           title: "Internal time tracking application",
@@ -1078,6 +1102,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "The data already existed, but there was no useful visual layer for prioritization and decision-making.",
           solution: "I modeled the data, reviewed the indicators, and built dashboards designed for business context and fast reading.",
           impact: "Easier KPI follow-up, faster decisions, and stronger visibility into the operation.",
+        },
+        {
+          title: "Mypromo — Affiliate Automation",
+          category: "Automation and bots",
+          description: "Monorepo with an Express API, PostgreSQL, and a Telegram bot for promotional link replies.",
+          image: "/ia.webp",
+          href: "https://github.com/maestrowoldo/MyPromo-bot",
+          tag: "Telegram Bot",
+          tech: ["Python", "Telegram", "TypeScript", "Express", "PostgreSQL"],
+          problem: "The affiliate workflow needed to detect links sent in Telegram, validate supported domains, and reply quickly without unsafe forwarding flows.",
+          solution: "I structured a TypeScript monorepo with Express, Drizzle, Zod, OpenAPI, and a Python/Telegram bot that detects URLs, blocks internal hosts, and replies with a promotional template.",
+          impact: "More consistent promotional messaging, stronger validation, documented API foundations, and a package structure ready to evolve independently.",
         },
       ],
     },
@@ -1186,7 +1222,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projects"],
-          response: "Projects include full stack applications, Power BI dashboards, and internal automation flows. You can see details in the projects section.",
+          response: "Projects include NexoChat, Power BI dashboards, and internal automation flows. You can see details in the projects section.",
         },
         {
           keywords: ["experience", "career"],
@@ -1264,9 +1300,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Full Stack Web Registration System",
-          description: "Web application built from scratch to cloud deployment, including user authentication, REST API, PostgreSQL relational modeling, and Git-based versioning.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Private 1:1 chat built with secure authentication, JWT sessions in HttpOnly cookies, protected routes, realtime messaging, and automatic translation between languages.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Internal Time Tracking Application",
@@ -1463,24 +1499,28 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Des projets qui résolvent des problèmes réels",
       highlight: "problèmes réels",
+      featuredHeading: "Projets en vedette",
       description:
         "Une sélection de réalisations pensée pour l'usage réel, avec du contexte, des choix techniques assumés et une livraison soignée.",
       problemLabel: "Problème",
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Voir l'étude de cas",
+      previousProjectLabel: "Projet précédent",
+      nextProjectLabel: "Projet suivant",
+      goToProjectSlideLabel: "Aller à la page {number} des projets",
       items: [
         {
-          title: "Plateforme full stack de captation et contact",
+          title: "NexoChat",
           category: "Application web",
-          description: "Une expérience Next.js avec API, persistance relationnelle et parcours de contact prêt pour la production.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "Il fallait réunir présentation professionnelle, captation de leads et fiabilité opérationnelle dans une seule base.",
-          solution: "J'ai structuré l'interface, la route API, la validation Zod et la couche Prisma/PostgreSQL dans un flux cohérent de bout en bout.",
-          impact: "Une livraison prête pour la production, avec une base scalable et une maintenance plus prévisible.",
+          description: "Chat privé 1:1 avec authentification sécurisée, présence en ligne et traduction automatique entre langues.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "Les conversations entre utilisateurs demandaient une authentification fiable, des messages en temps réel et une communication claire entre langues différentes.",
+          solution: "J'ai construit un chat privé avec JWT en cookies HttpOnly, routes protégées, Prisma/PostgreSQL, realtime via Ably et traduction backend avec DeepL.",
+          impact: "Une expérience responsive et prête à l'usage, avec présence en ligne, statut de lecture et base technique évolutive.",
         },
         {
           title: "Application interne de suivi des heures",
@@ -1505,6 +1545,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "Les données existaient déjà, mais il manquait une lecture visuelle utile pour prioriser et décider.",
           solution: "J'ai modélisé les données, revu les indicateurs et construit des dashboards pensés pour le contexte métier et une lecture rapide.",
           impact: "Un suivi plus simple des KPI, des décisions plus rapides et une meilleure visibilité sur l'opération.",
+        },
+        {
+          title: "Mypromo — Automatisation pour affiliés",
+          category: "Automatisation et bots",
+          description: "Monorepo avec API Express, PostgreSQL et bot Telegram pour répondre aux liens promotionnels.",
+          image: "/ia.webp",
+          href: "https://github.com/maestrowoldo/MyPromo-bot",
+          tag: "Telegram Bot",
+          tech: ["Python", "Telegram", "TypeScript", "Express", "PostgreSQL"],
+          problem: "Le flux d'affiliation devait détecter les liens envoyés sur Telegram, valider les domaines autorisés et répondre rapidement sans transfert automatique risqué.",
+          solution: "J'ai structuré un monorepo TypeScript avec Express, Drizzle, Zod, OpenAPI et un bot Python/Telegram qui détecte les URL, bloque les hôtes internes et répond avec un modèle promotionnel.",
+          impact: "Des messages promotionnels plus cohérents, une validation renforcée, une base d'API documentée et une structure de packages prête à évoluer.",
         },
       ],
     },
@@ -1613,7 +1665,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projets"],
-          response: "Parmi les projets, on trouve des applications full stack, des dashboards Power BI et des automatisations internes. Les détails sont dans la section projets.",
+          response: "Parmi les projets, on trouve NexoChat, des dashboards Power BI et des automatisations internes. Les détails sont dans la section projets.",
         },
         {
           keywords: ["expérience", "parcours"],
@@ -1691,9 +1743,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Système web full stack d'inscription",
-          description: "Application web développée de zéro jusqu'au déploiement cloud, avec authentification, API REST, modélisation relationnelle PostgreSQL et versioning Git.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Chat privé 1:1 développé avec authentification sécurisée, sessions JWT en cookies HttpOnly, routes protégées, messages en temps réel et traduction automatique entre langues.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Application interne de pointage",
