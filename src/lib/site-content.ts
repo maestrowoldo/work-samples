@@ -186,6 +186,8 @@ export interface SiteDictionary {
   };
   projects: {
     description: string;
+    featuredHeading: string;
+    goToProjectSlideLabel: string;
     heading: string;
     highlight: string;
     items: Array<{
@@ -201,6 +203,8 @@ export interface SiteDictionary {
       title: string;
     }>;
     impactLabel: string;
+    nextProjectLabel: string;
+    previousProjectLabel: string;
     problemLabel: string;
     solutionLabel: string;
     viewMoreLabel: string;
@@ -609,12 +613,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Projetos que resolvem problemas reais",
       highlight: "problemas reais",
+      featuredHeading: "Projetos em Destaque",
       description:
         "Cases pensados para operação real, com contexto, decisão técnica e execução limpa do começo ao fim.",
       problemLabel: "Problema",
       solutionLabel: "Solução",
       impactLabel: "Impacto",
       viewMoreLabel: "Explorar case",
+      previousProjectLabel: "Projeto anterior",
+      nextProjectLabel: "Próximo projeto",
+      goToProjectSlideLabel: "Ir para a página {number} de projetos",
       items: [
         {
           title: "NexoChat",
@@ -1036,12 +1044,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Projects that solve real problems",
       highlight: "real problems",
+      featuredHeading: "Featured Projects",
       description:
         "Selected work built for real operations, where context, technical choices, and delivery quality all matter.",
       problemLabel: "Problem",
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Explore case",
+      previousProjectLabel: "Previous project",
+      nextProjectLabel: "Next project",
+      goToProjectSlideLabel: "Go to project page {number}",
       items: [
         {
           title: "NexoChat",
@@ -1463,12 +1475,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     projects: {
       heading: "Des projets qui résolvent des problèmes réels",
       highlight: "problèmes réels",
+      featuredHeading: "Projets en vedette",
       description:
         "Une sélection de réalisations pensée pour l'usage réel, avec du contexte, des choix techniques assumés et une livraison soignée.",
       problemLabel: "Problème",
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Voir l'étude de cas",
+      previousProjectLabel: "Projet précédent",
+      nextProjectLabel: "Projet suivant",
+      goToProjectSlideLabel: "Aller à la page {number} des projets",
       items: [
         {
           title: "NexoChat",
