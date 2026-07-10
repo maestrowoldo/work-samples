@@ -617,16 +617,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewMoreLabel: "Explorar case",
       items: [
         {
-          title: "Plataforma full stack de captação e contato",
+          title: "NexoChat",
           category: "Aplicação web",
-          description: "Experiência em Next.js com API, persistência relacional e fluxo de contato pronto para produção.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "Era preciso reunir apresentação profissional, captura de leads e confiabilidade operacional em uma base única.",
-          solution: "Estruturei interface, rota de API, validação com Zod e camada Prisma/PostgreSQL em um fluxo consistente de ponta a ponta.",
-          impact: "Entrega pronta para produção, com base escalável para evolução do produto e manutenção mais previsível.",
+          description: "Chat privado 1:1 com autenticação segura, presença online e tradução automática entre idiomas.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "Conversas entre usuários exigiam autenticação confiável, mensagens em tempo real e comunicação clara entre idiomas diferentes.",
+          solution: "Construí um chat privado com JWT em cookies HttpOnly, rotas protegidas, Prisma/PostgreSQL, realtime via Ably e tradução no backend com DeepL.",
+          impact: "Uma experiência responsiva e pronta para uso, com presença online, status de leitura e base técnica preparada para evolução.",
         },
         {
           title: "Aplicativo interno para controle de ponto",
@@ -759,7 +759,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projetos"],
-          response: "Entre os projetos estão aplicações full stack, dashboards em Power BI e automações internas. Você pode ver detalhes na seção de projetos.",
+          response: "Entre os projetos estão o NexoChat, dashboards em Power BI e automações internas. Você pode ver detalhes na seção de projetos.",
         },
         {
           keywords: ["experiência", "trabalho"],
@@ -837,9 +837,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Sistema Full Stack de Cadastro Web",
-          description: "Aplicação web desenvolvida do zero até o deploy, com autenticação de usuários, API REST, modelagem relacional em PostgreSQL e versionamento com Git.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Chat privado 1:1 desenvolvido com autenticação segura, sessões JWT em cookies HttpOnly, rotas protegidas, mensagens em tempo real e tradução automática entre idiomas.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Aplicativo Interno de Controle de Ponto",
@@ -1044,16 +1044,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewMoreLabel: "Explore case",
       items: [
         {
-          title: "Full stack lead capture and contact platform",
+          title: "NexoChat",
           category: "Web application",
-          description: "A Next.js experience with API workflows, relational persistence, and a contact flow ready for production.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "The product needed a single foundation for professional presentation, lead capture, and operational reliability.",
-          solution: "I structured the UI, API route, Zod validation, and Prisma/PostgreSQL layer into a consistent end-to-end flow.",
-          impact: "A production-ready delivery with a scalable base for product evolution and more predictable maintenance.",
+          description: "Private 1:1 chat with secure authentication, online presence, and automatic translation between languages.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "User conversations needed reliable authentication, realtime messaging, and clearer communication across different languages.",
+          solution: "I built a private chat with JWT in HttpOnly cookies, protected routes, Prisma/PostgreSQL, Ably realtime, and backend translation with DeepL.",
+          impact: "A responsive, usable experience with online presence, read status, and a technical foundation ready to evolve.",
         },
         {
           title: "Internal time tracking application",
@@ -1186,7 +1186,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projects"],
-          response: "Projects include full stack applications, Power BI dashboards, and internal automation flows. You can see details in the projects section.",
+          response: "Projects include NexoChat, Power BI dashboards, and internal automation flows. You can see details in the projects section.",
         },
         {
           keywords: ["experience", "career"],
@@ -1264,9 +1264,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Full Stack Web Registration System",
-          description: "Web application built from scratch to cloud deployment, including user authentication, REST API, PostgreSQL relational modeling, and Git-based versioning.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Private 1:1 chat built with secure authentication, JWT sessions in HttpOnly cookies, protected routes, realtime messaging, and automatic translation between languages.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Internal Time Tracking Application",
@@ -1471,16 +1471,16 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       viewMoreLabel: "Voir l'étude de cas",
       items: [
         {
-          title: "Plateforme full stack de captation et contact",
+          title: "NexoChat",
           category: "Application web",
-          description: "Une expérience Next.js avec API, persistance relationnelle et parcours de contact prêt pour la production.",
-          image: "/web_pro.jpg",
-          href: "https://github.com/maestrowoldo",
-          tag: "Full Stack",
-          tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-          problem: "Il fallait réunir présentation professionnelle, captation de leads et fiabilité opérationnelle dans une seule base.",
-          solution: "J'ai structuré l'interface, la route API, la validation Zod et la couche Prisma/PostgreSQL dans un flux cohérent de bout en bout.",
-          impact: "Une livraison prête pour la production, avec une base scalable et une maintenance plus prévisible.",
+          description: "Chat privé 1:1 avec authentification sécurisée, présence en ligne et traduction automatique entre langues.",
+          image: "/nexochat.png",
+          href: "https://nexochat.vercel.app/",
+          tag: "Realtime",
+          tech: ["Next.js", "TypeScript", "Prisma", "Ably", "DeepL"],
+          problem: "Les conversations entre utilisateurs demandaient une authentification fiable, des messages en temps réel et une communication claire entre langues différentes.",
+          solution: "J'ai construit un chat privé avec JWT en cookies HttpOnly, routes protégées, Prisma/PostgreSQL, realtime via Ably et traduction backend avec DeepL.",
+          impact: "Une expérience responsive et prête à l'usage, avec présence en ligne, statut de lecture et base technique évolutive.",
         },
         {
           title: "Application interne de suivi des heures",
@@ -1613,7 +1613,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           keywords: ["projets"],
-          response: "Parmi les projets, on trouve des applications full stack, des dashboards Power BI et des automatisations internes. Les détails sont dans la section projets.",
+          response: "Parmi les projets, on trouve NexoChat, des dashboards Power BI et des automatisations internes. Les détails sont dans la section projets.",
         },
         {
           keywords: ["expérience", "parcours"],
@@ -1691,9 +1691,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       ],
       projects: [
         {
-          title: "Système web full stack d'inscription",
-          description: "Application web développée de zéro jusqu'au déploiement cloud, avec authentification, API REST, modélisation relationnelle PostgreSQL et versioning Git.",
-          technologies: ["Node.js", "Express", "PostgreSQL", "JavaScript", "HTML", "CSS", "AWS EC2", "GitHub"],
+          title: "NexoChat",
+          description: "Chat privé 1:1 développé avec authentification sécurisée, sessions JWT en cookies HttpOnly, routes protégées, messages en temps réel et traduction automatique entre langues.",
+          technologies: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Ably", "DeepL", "Tailwind"],
         },
         {
           title: "Application interne de pointage",
