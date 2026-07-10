@@ -17,24 +17,18 @@ function ProjectCaseCardBody({
 }: {
   project: ProjectItem;
 }) {
-  const isLogoImage = project.image === "/nexochat.png";
-
   return (
-    <article className="flex h-[330px] flex-col overflow-hidden rounded-[12px] border border-zinc-800 bg-zinc-900/55 shadow-[0_14px_36px_rgba(0,0,0,0.28)] backdrop-blur-xl transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-emerald-400/30 group-hover:bg-zinc-900/70 group-focus-visible:border-emerald-400/40">
-      <div className="relative h-[145px] shrink-0 overflow-hidden border-b border-zinc-800 bg-zinc-950">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(52,211,153,0.16),transparent_34%),linear-gradient(180deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0.24)_100%)]" />
+    <article className="flex h-[345px] flex-col overflow-hidden rounded-[12px] border border-zinc-800 bg-zinc-900/55 shadow-[0_14px_36px_rgba(0,0,0,0.28)] backdrop-blur-xl transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-emerald-400/30 group-hover:bg-zinc-900/70 group-focus-visible:border-emerald-400/40">
+      <div className="relative h-[160px] shrink-0 overflow-hidden border-b border-zinc-800 bg-zinc-950">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(52,211,153,0.1),transparent_34%)]" />
         <Image
           src={project.image}
           alt={project.title}
           fill
           sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
-          className={`transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-[1.03] ${
-            isLogoImage
-              ? "object-contain p-5 opacity-95"
-              : "object-cover opacity-90"
-          }`}
+          className="object-cover object-center transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-[1.03]"
         />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,11,0.02)_0%,rgba(9,9,11,0.2)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0.1)_100%)]" />
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col px-4.5 py-4 sm:px-5">

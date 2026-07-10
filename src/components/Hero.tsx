@@ -3,8 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Briefcase, Code2, Download, MessageSquareText } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  Code2,
+  Download,
+  MessageSquareText,
+  Rocket,
+  ShieldCheck,
+  Target,
+} from "lucide-react";
 import { useLocaleContext } from "@/components/LocaleProvider";
+
+const proofIcons = [Code2, Target, ShieldCheck];
 
 export default function Hero() {
   const { dictionary, locale } = useLocaleContext();
@@ -72,15 +83,32 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="grid gap-3 rounded-3xl border border-zinc-800/80 bg-zinc-900/40 p-4 sm:grid-cols-3">
-            {dictionary.hero.proofItems.map((item) => (
-              <div key={item.label} className="space-y-1">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-400/90">
-                  {item.label}
-                </p>
-                <p className="text-sm text-zinc-200">{item.value}</p>
-              </div>
-            ))}
+          <motion.div variants={itemVariants} className="grid gap-3 sm:grid-cols-3">
+            {dictionary.hero.proofItems.map((item, index) => {
+              const Icon = proofIcons[index] ?? Rocket;
+
+              return (
+                <div
+                  key={item.label}
+                  className="group relative min-h-[138px] overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/55 p-4 shadow-[0_14px_34px_rgba(0,0,0,0.22)] transition-colors duration-300 hover:border-emerald-400/40 hover:bg-zinc-900/75"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_38%),linear-gradient(180deg,rgba(6,182,212,0.06)_0%,transparent_52%)] opacity-80" />
+                  <div className="relative flex h-full flex-col">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-400">
+                        {item.label}
+                      </span>
+                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/50 group-hover:bg-emerald-500/15">
+                        <Icon size={17} aria-hidden="true" />
+                      </span>
+                    </div>
+                    <p className="mt-auto text-sm leading-5 text-zinc-200">
+                      {item.value}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </motion.div>
 
           <motion.div variants={itemVariants} className="flex gap-4">

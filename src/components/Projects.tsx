@@ -108,7 +108,7 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        <div className="mx-auto max-w-[940px]">
+        <div className="mx-auto max-w-[980px] rounded-2xl border border-zinc-800 bg-zinc-900/35 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:p-5 lg:p-6">
           <div className="mb-4 flex justify-end">
             <div className="flex items-center gap-2">
             <button
