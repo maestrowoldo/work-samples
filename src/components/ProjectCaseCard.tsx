@@ -17,31 +17,39 @@ function ProjectCaseCardBody({
 }: {
   project: ProjectItem;
 }) {
+  const isLogoImage = project.image === "/nexochat.png";
+
   return (
-    <article className="flex h-[305px] flex-col overflow-hidden rounded-[10px] border border-white/[0.08] bg-[#2a2d40] transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-violet-300/25 group-focus-visible:border-violet-300/35">
-      <div className="relative h-[132px] shrink-0 overflow-hidden bg-zinc-900">
+    <article className="flex h-[330px] flex-col overflow-hidden rounded-[12px] border border-zinc-800 bg-zinc-900/55 shadow-[0_14px_36px_rgba(0,0,0,0.28)] backdrop-blur-xl transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-emerald-400/30 group-hover:bg-zinc-900/70 group-focus-visible:border-emerald-400/40">
+      <div className="relative h-[145px] shrink-0 overflow-hidden border-b border-zinc-800 bg-zinc-950">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(52,211,153,0.16),transparent_34%),linear-gradient(180deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0.24)_100%)]" />
         <Image
           src={project.image}
           alt={project.title}
           fill
-          sizes="(min-width: 1024px) 260px, (min-width: 640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-[1.03]"
+          sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
+          className={`transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-[1.03] ${
+            isLogoImage
+              ? "object-contain p-5 opacity-95"
+              : "object-cover opacity-90"
+          }`}
         />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,11,0.02)_0%,rgba(9,9,11,0.2)_100%)]" />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col px-4 py-4">
-        <h3 className="line-clamp-2 text-[17px] font-semibold leading-[1.18] text-[#f4f4f7]">
+      <div className="flex min-h-0 flex-1 flex-col px-4.5 py-4 sm:px-5">
+        <h3 className="line-clamp-2 text-[18px] font-semibold leading-[1.16] text-zinc-50">
           {project.title}
         </h3>
-        <p className="mt-2 line-clamp-2 text-[13.5px] leading-5 text-[#c5c6d0]">
+        <p className="mt-2.5 line-clamp-2 text-sm leading-5 text-zinc-400">
           {project.description}
         </p>
 
-        <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
+        <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
           {project.tech.slice(0, 3).map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-violet-200/10 bg-[rgba(139,92,246,0.35)] px-2.5 py-1 text-[10px] font-medium leading-none text-[#d8c7ff]"
+              className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium leading-none text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
             >
               {tech}
             </span>
@@ -68,7 +76,7 @@ export default function ProjectCaseCard({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${copy.viewMoreLabel}: ${project.title}`}
-        className="group block h-full rounded-[10px] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#111426] motion-reduce:transition-none"
+        className="group block h-full rounded-[12px] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-950 motion-reduce:transition-none"
       >
         {body}
       </a>
@@ -79,7 +87,7 @@ export default function ProjectCaseCard({
     <Link
       href={href}
       aria-label={`${copy.viewMoreLabel}: ${project.title}`}
-      className="group block h-full rounded-[10px] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#111426] motion-reduce:transition-none"
+      className="group block h-full rounded-[12px] transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-zinc-950 motion-reduce:transition-none"
     >
       {body}
     </Link>
