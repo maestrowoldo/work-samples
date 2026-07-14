@@ -124,8 +124,8 @@ npx prisma studio
 ## Contato
 
 - **Email**: maestrowoldo97@hotmail.com
-- **LinkedIn**: linkedin.com/in/wolkendo
-- **GitHub**: github.com/wolkendo
+- **LinkedIn**: https://www.linkedin.com/in/wolkendo
+- **GitHub**: https://github.com/wolkendo
 
 ## Licença
 
