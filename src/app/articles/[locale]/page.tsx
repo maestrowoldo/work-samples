@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { BlogFooter } from "@/components/blog/BlogFooter";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { buildBlogReaderPath, getBlogVisualAssets } from "@/lib/blog/presentation";
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
@@ -243,6 +244,8 @@ export default async function ArticlesIndexPage({
               })}
             </div>
           </section>
+
+          <BlogFooter locale={resolvedLocale} />
         </div>
       </div>
     </main>

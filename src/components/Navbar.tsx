@@ -135,7 +135,7 @@ export default function Navbar() {
           </div>
           <a
             href={`${homePath}#contato`}
-            className="rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"
+            className="relative -top-0.5 rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
           >
             {dictionary.navbar.contactCta}
           </a>
@@ -237,7 +237,7 @@ export default function Navbar() {
               </div>
               <a
                 href={`${homePath}#contato`}
-                className="mt-2 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-zinc-950 hover:bg-emerald-400 transition-colors"
+                className="mt-1 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
                 onClick={() => setOpen(false)}
               >
                 {dictionary.navbar.contactCta}

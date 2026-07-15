@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleCTA } from "@/components/blog/ArticleCTA";
+import { BlogFooter } from "@/components/blog/BlogFooter";
 import { ArticleHero } from "@/components/blog/ArticleHero";
 import { ArticleSidebar } from "@/components/blog/ArticleSidebar";
 import { ArticleSources } from "@/components/blog/ArticleSources";
@@ -185,6 +186,8 @@ export default async function ArticleReaderPage({
             />
           </div>
         </div>
+
+        <BlogFooter locale={resolvedLocale} />
       </div>
     </main>
   );
