@@ -19,12 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: locale === "pt" ? 1 : 0.9,
     },
     {
-      url: buildAbsoluteUrl(`/articles/${locale}`),
-      lastModified,
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    },
-    {
       url: buildAbsoluteUrl(`/${locale}/curriculum`),
       lastModified,
       changeFrequency: "monthly" as const,
@@ -38,16 +32,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]);
 
-  const localizedPostsByLocale = await Promise.all(
-    locales.map(async (locale) =>
-      (await getBlogPosts(locale)).map((post) => ({
-        url: `${baseUrl}/articles/${locale}/${post.slug}`,
-        lastModified: Number.isNaN(Date.parse(post.date)) ? lastModified : new Date(post.date),
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      })),
-    ),
-  );
+  const blogIndexPage = {
+    url: buildAbsoluteUrl("/articles/pt"),
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  };
 
-  return [...localizedPages, ...localizedPostsByLocale.flat()];
+  const privacyPage = {
+    url: buildAbsoluteUrl("/politica-de-privacidade"),
+    lastModified,
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  };
+
+  const blogPosts = (await getBlogPosts("pt")).map((post) => ({
+    url: `${baseUrl}/articles/pt/${post.slug}`,
+    lastModified: Number.isNaN(Date.parse(post.date)) ? lastModified : new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...localizedPages, blogIndexPage, privacyPage, ...blogPosts];
 }

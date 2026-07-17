@@ -6,6 +6,17 @@ const PUBLIC_FILE = /\.[^/]+$/;
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const articleSegments = pathname.split("/").filter(Boolean);
+
+  if (
+    articleSegments[0] === "articles" &&
+    (articleSegments[1] === "en" || articleSegments[1] === "fr")
+  ) {
+    const redirectUrl = request.nextUrl.clone();
+    const [, , ...restSegments] = articleSegments;
+    redirectUrl.pathname = `/articles/pt${restSegments.length > 0 ? `/${restSegments.join("/")}` : ""}`;
+    return NextResponse.redirect(redirectUrl);
+  }
 
   if (
     pathname.startsWith("/_next") ||

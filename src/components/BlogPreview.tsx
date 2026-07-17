@@ -31,7 +31,11 @@ export default function BlogPreview({
         <div className="grid gap-6 md:grid-cols-3">
           {posts.map((post, index) => (
             <FadeIn key={post.slug} delay={index * 0.1}>
-              <Link href={buildBlogReaderPath(locale, post.slug)}>
+              <Link
+                href={buildBlogReaderPath(locale, post.slug)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Card hover className="blog-card p-4 sm:p-6">
                   <div className="space-y-3 sm:space-y-4">
                     <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -74,6 +78,8 @@ export default function BlogPreview({
         <div className="text-center mt-10">
           <Link
             href={buildBlogReaderPath(locale)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
           >
             <span>{dictionary.blog.viewAllLabel}</span>

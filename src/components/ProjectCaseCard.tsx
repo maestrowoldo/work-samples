@@ -18,28 +18,28 @@ function ProjectCaseCardBody({
   project: ProjectItem;
 }) {
   return (
-    <article className="flex h-[345px] flex-col overflow-hidden rounded-[12px] border border-zinc-800 bg-zinc-900/55 shadow-[0_14px_36px_rgba(0,0,0,0.28)] backdrop-blur-xl transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-emerald-400/30 group-hover:bg-zinc-900/70 group-focus-visible:border-emerald-400/40">
-      <div className="relative h-[160px] shrink-0 overflow-hidden border-b border-zinc-800 bg-zinc-950">
+    <article className="flex h-[315px] flex-col overflow-hidden rounded-[12px] border border-zinc-800 bg-zinc-900/55 shadow-[0_14px_36px_rgba(0,0,0,0.28)] backdrop-blur-xl transition duration-300 motion-reduce:transition-none motion-safe:group-hover:-translate-y-1 group-hover:border-emerald-400/30 group-hover:bg-zinc-900/70 group-focus-visible:border-emerald-400/40">
+      <div className="relative h-[136px] shrink-0 overflow-hidden border-b border-zinc-800 bg-zinc-950">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(52,211,153,0.1),transparent_34%)]" />
         <Image
           src={project.image}
           alt={project.title}
           fill
-          sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 260px, (min-width: 640px) 50vw, 100vw"
           className="object-cover object-center transition-transform duration-300 motion-reduce:transition-none motion-safe:group-hover:scale-[1.03]"
         />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(9,9,11,0)_0%,rgba(9,9,11,0.1)_100%)]" />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col px-4.5 py-4 sm:px-5">
-        <h3 className="line-clamp-2 text-[18px] font-semibold leading-[1.16] text-zinc-50">
+      <div className="flex min-h-0 flex-1 flex-col px-4 py-3.5">
+        <h3 className="line-clamp-2 text-[16.5px] font-semibold leading-[1.18] text-zinc-50">
           {project.title}
         </h3>
-        <p className="mt-2.5 line-clamp-2 text-sm leading-5 text-zinc-400">
+        <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-zinc-400">
           {project.description}
         </p>
 
-        <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
+        <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
           {project.tech.slice(0, 3).map((tech) => (
             <span
               key={tech}

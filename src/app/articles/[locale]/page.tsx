@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { BlogAdSenseScript } from "@/components/blog/BlogAdSenseScript";
+import { BlogFooter } from "@/components/blog/BlogFooter";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { buildBlogReaderPath, getBlogVisualAssets } from "@/lib/blog/presentation";
 import { formatDate, isLocale, type Locale } from "@/lib/i18n";
@@ -81,9 +83,11 @@ export default async function ArticlesIndexPage({
   const latestPostDate = featuredPost ? formatDate(featuredPost.date, resolvedLocale) : "-";
 
   return (
-    <main className="min-h-screen bg-stone-100 px-3 py-5 text-stone-900 sm:px-4 sm:py-8 md:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="rounded-[1.35rem] border border-stone-200 bg-white shadow-[0_18px_55px_rgba(28,25,23,0.07)] sm:rounded-[2rem] md:shadow-[0_25px_80px_rgba(28,25,23,0.08)]">
+    <>
+      <BlogAdSenseScript />
+      <main className="min-h-screen bg-stone-100 px-3 py-5 text-stone-900 sm:px-4 sm:py-8 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="rounded-[1.35rem] border border-stone-200 bg-white shadow-[0_18px_55px_rgba(28,25,23,0.07)] sm:rounded-[2rem] md:shadow-[0_25px_80px_rgba(28,25,23,0.08)]">
           <section className="border-b border-stone-200 px-4 py-5 sm:px-6 sm:py-8 md:px-10 md:py-12">
             <Link
               href={`/${resolvedLocale}#blog`}
@@ -243,8 +247,11 @@ export default async function ArticlesIndexPage({
               })}
             </div>
           </section>
+
+          <BlogFooter locale={resolvedLocale} />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
