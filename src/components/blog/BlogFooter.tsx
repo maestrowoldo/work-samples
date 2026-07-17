@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Briefcase, Code2, Share2 } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 
@@ -42,6 +43,13 @@ export function BlogFooter({ locale }: { locale: Locale }) {
           </p>
           <p className="mt-2 text-xs text-stone-500">
             {footerCopy.copyright}
+            <span className="mx-2 text-stone-700">/</span>
+            <Link
+              href="/politica-de-privacidade"
+              className="transition-colors hover:text-emerald-300"
+            >
+              Privacidade
+            </Link>
           </p>
         </div>
 
