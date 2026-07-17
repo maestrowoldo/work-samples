@@ -12,10 +12,10 @@ const getCarouselConfig = (width: number) => {
   }
 
   if (width < 1024) {
-    return { gap: 24, perView: 2 };
+    return { gap: 20, perView: 2 };
   }
 
-  return { gap: 30, perView: 3 };
+  return { gap: 20, perView: 3 };
 };
 
 export default function Projects() {
@@ -108,7 +108,7 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        <div className="mx-auto max-w-[980px] rounded-2xl border border-zinc-800 bg-zinc-900/35 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:p-5 lg:p-6">
+        <div className="mx-auto max-w-[860px] rounded-2xl border border-zinc-800 bg-zinc-900/35 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:p-5">
           <div className="mb-4 flex justify-end">
             <div className="flex items-center gap-2">
             <button

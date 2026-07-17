@@ -2,7 +2,9 @@ import process from "node:process";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/blog/ArticleBody";
+import { BlogAdSenseScript } from "@/components/blog/BlogAdSenseScript";
 import { ArticleCTA } from "@/components/blog/ArticleCTA";
+import { BlogFooter } from "@/components/blog/BlogFooter";
 import { ArticleHero } from "@/components/blog/ArticleHero";
 import { ArticleSidebar } from "@/components/blog/ArticleSidebar";
 import { ArticleSources } from "@/components/blog/ArticleSources";
@@ -152,13 +154,15 @@ export default async function ArticleReaderPage({
   };
 
   return (
-    <main className="min-h-screen bg-stone-100 px-4 py-6 text-stone-900 md:px-8 md:py-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-      <div className="mx-auto max-w-7xl rounded-[1.75rem] border border-stone-200 bg-stone-50 shadow-[0_24px_80px_rgba(28,25,23,0.08)]">
-        <div className="px-5 py-7 md:px-8 md:py-9 lg:px-10">
+    <>
+      <BlogAdSenseScript />
+      <main className="min-h-screen bg-stone-100 px-4 py-6 text-stone-900 md:px-8 md:py-10">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <div className="mx-auto max-w-7xl rounded-[1.75rem] border border-stone-200 bg-stone-50 shadow-[0_24px_80px_rgba(28,25,23,0.08)]">
+          <div className="px-5 py-7 md:px-8 md:py-9 lg:px-10">
           <ArticleHero copy={copy} locale={resolvedLocale} post={post} visual={heroVisual} />
 
           <div className="grid gap-10 pt-10 lg:grid-cols-[minmax(0,760px)_320px] lg:items-start lg:justify-between">
@@ -184,8 +188,11 @@ export default async function ArticleReaderPage({
               sections={sections}
             />
           </div>
+          </div>
+
+          <BlogFooter locale={resolvedLocale} />
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

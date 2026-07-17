@@ -143,15 +143,10 @@ export async function getBlogPost(locale: Locale, slug: string) {
 }
 
 export async function getStaticBlogParams() {
-  const localizedParams = await Promise.all(
-    (["pt", "en", "fr"] as const).map(async (locale) => {
-      const posts = await getBlogPosts(locale);
-      return posts.map((post) => ({
-        locale,
-        slug: post.slug,
-      }));
-    }),
-  );
+  const posts = await getBlogPosts(generatedBlogLocale);
 
-  return localizedParams.flat();
+  return posts.map((post) => ({
+    locale: generatedBlogLocale,
+    slug: post.slug,
+  }));
 }
