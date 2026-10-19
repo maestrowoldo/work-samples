@@ -1,0 +1,11 @@
+.root { position: relative; height: 100%; min-width: 0; border-radius: 20px; perspective: 1200px; }
+.surface { position: relative; height: 100%; border-radius: inherit; transform-style: preserve-3d; }
+.reflection { position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none; mix-blend-mode: screen; }
+.root:focus-within { z-index: 1; }
+@media (hover: hover) and (pointer: fine) { .root:hover { z-index: 1; } }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .surface { transform: none !important; }
+  .reflection { display: none; }
+}
+.root[data-disabled="true"] .surface { transform: none !important; }
+.root[data-disabled="true"] .reflection { display: none; }
