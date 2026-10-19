@@ -63,12 +63,14 @@ describe("expandable projects", () => {
     const { copy } = renderProjects();
     expect(screen.getAllByRole("button", { name: /^Ver detalhes:/ })).toHaveLength(4);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    const project = copy.items[3];
+    const project = copy.items[1];
     fireEvent.click(screen.getByRole("button", { name: `${copy.detailsLabel}: ${project.title}` }));
     const dialog = await screen.findByRole("dialog", { name: project.title });
-    for (const value of [project.problem, project.solution, project.impact, ...project.tech]) {
-      expect(within(dialog).getByText(value)).toBeVisible();
-    }
+    await waitFor(() => {
+      for (const value of [project.problem, project.solution, project.impact, ...project.tech]) {
+        expect(within(dialog).getByText(value)).toBeVisible();
+      }
+    });
     expect(within(dialog).getByRole("link", { name: copy.visitLabel })).toHaveAttribute("href", project.href);
     expect(within(dialog).getByRole("link", { name: copy.visitLabel })).toHaveAttribute("rel", "noopener noreferrer");
   });
@@ -108,8 +110,12 @@ describe("expandable projects", () => {
   });
 
   it("keeps local destinations localized and closes with the close control", async () => {
-    const { copy } = renderProjects("en");
-    fireEvent.click(screen.getByRole("button", { name: `${copy.detailsLabel}: ${copy.items[2].title}` }));
+    const source = getDictionary("en");
+    const project = { ...source.projects.items[0], href: "/curriculum" };
+    const dictionary = { ...source, projects: { ...source.projects, items: [project] } };
+    const copy = dictionary.projects;
+    render(<LocaleProvider locale="en" dictionary={dictionary}><Projects /></LocaleProvider>);
+    fireEvent.click(screen.getByRole("button", { name: `${copy.detailsLabel}: ${project.title}` }));
     const dialog = await screen.findByRole("dialog");
     expect(within(dialog).getByRole("link", { name: copy.visitLabel })).toHaveAttribute("href", "/en/curriculum");
     fireEvent.click(within(dialog).getByRole("button", { name: copy.closeLabel }));
