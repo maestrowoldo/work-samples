@@ -1,9 +1,16 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { stripLocaleFromPathname } from '@/lib/i18n';
 
 export default function MouseGlow() {
+  const pathname = usePathname();
+  const isHomePage = stripLocaleFromPathname(pathname) === '/';
+
   useEffect(() => {
+    if (isHomePage) return;
+
     const glow = document.createElement('div');
     glow.id = 'mouse-glow';
     document.body.appendChild(glow);
@@ -18,7 +25,7 @@ export default function MouseGlow() {
       window.removeEventListener('mousemove', move);
       glow.remove();
     };
-  }, []);
+  }, [isHomePage]);
 
   return null;
 }

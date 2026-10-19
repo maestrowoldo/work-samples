@@ -1,0 +1,131 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  contain: strict;
+  pointer-events: none;
+}
+
+.cursorAura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgb(103 232 249 / 20%);
+  border-radius: 50%;
+  opacity: 0;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 85%) 0 1px, transparent 2px),
+    radial-gradient(circle, rgb(52 211 153 / 24%) 0, rgb(34 211 238 / 10%) 34%, transparent 68%);
+  box-shadow:
+    0 0 24px rgb(34 211 238 / 14%),
+    inset 0 0 22px rgb(167 139 250 / 10%);
+  transform: translate3d(-100px, -100px, 0);
+  transition: opacity 240ms ease;
+  will-change: transform, opacity;
+}
+
+.cursorAura[data-visible="true"] {
+  opacity: 0.9;
+}
+
+.cursorAura::before,
+.cursorAura::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.cursorAura::before {
+  inset: 8px;
+  border: 1px dashed rgb(52 211 153 / 28%);
+  border-radius: inherit;
+  animation: cursor-orbit 7s linear infinite;
+}
+
+.cursorAura::after {
+  top: 8px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgb(167 139 250);
+  box-shadow:
+    0 0 6px rgb(167 139 250 / 90%),
+    0 0 14px rgb(34 211 238 / 55%);
+  transform: translateX(-50%);
+}
+
+.particle {
+  position: absolute;
+  width: var(--cursor-trail-size);
+  height: var(--cursor-trail-size);
+  border-radius: 50%;
+  background: rgb(var(--cursor-trail-color) / 96%);
+  box-shadow:
+    0 0 6px rgb(255 255 255 / 75%),
+    0 0 12px rgb(var(--cursor-trail-color) / 72%),
+    0 0 24px rgb(var(--cursor-trail-color) / 34%);
+  animation: cursor-trail-drift var(--cursor-trail-duration) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform, filter;
+}
+
+.particle::before,
+.particle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgb(var(--cursor-trail-color) / 82%), transparent);
+  transform: translate(-50%, -50%);
+}
+
+.particle::before {
+  width: calc(var(--cursor-trail-size) * 3.2);
+  height: 1px;
+}
+
+.particle::after {
+  width: 1px;
+  height: calc(var(--cursor-trail-size) * 3.2);
+  background: linear-gradient(180deg, transparent, rgb(255 255 255 / 88%), transparent);
+}
+
+@keyframes cursor-trail-drift {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--cursor-trail-rotation)) scale(0.25);
+    filter: blur(0);
+  }
+
+  18% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) rotate(var(--cursor-trail-rotation)) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--cursor-trail-drift-x)),
+        calc(-50% + var(--cursor-trail-drift-y))
+      )
+      rotate(calc(var(--cursor-trail-rotation) + 55deg))
+      scale(0.08);
+    filter: blur(1.5px);
+  }
+}
+
+@keyframes cursor-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .overlay {
+    display: none;
+  }
+}
