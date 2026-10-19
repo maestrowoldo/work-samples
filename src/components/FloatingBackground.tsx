@@ -13,6 +13,11 @@ interface Star {
   color: string;
 }
 
+function wrapStarPosition(position: number, size: number) {
+  const span = size + 16;
+  return ((position + 8) % span + span) % span - 8;
+}
+
 export default function FloatingBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,8 +41,15 @@ export default function FloatingBackground() {
       for (const star of stars) {
         const motion = motionPreference.matches ? 0 : elapsed;
         const angle = motion / 120 + star.phase;
-        const x = star.x * width + Math.sin(angle) * star.depth * 8;
-        const y = star.y * height + Math.cos(angle * 0.7) * star.depth * 4;
+        // Drift slowly to the left; nearby layers move a little faster.
+        const x = wrapStarPosition(
+          star.x * width - motion * star.depth * 0.6 + Math.sin(angle) * star.depth * 3,
+          width,
+        );
+        const y = wrapStarPosition(
+          star.y * height + motion * star.depth * 0.15 + Math.cos(angle * 0.7) * star.depth * 2,
+          height,
+        );
         const opacity = star.opacity + Math.sin(motion / 7 + star.phase) * 0.06;
 
         // Nearer stars have a faint halo; distant points stay crisp.

@@ -118,6 +118,16 @@ describe("FloatingBackground", () => {
     const second = render(<FloatingBackground />);
     [0, 60].forEach(tick);
     expect(ctx.arc.mock.calls.at(-1)).toEqual(position);
+
+    // The nearest stars should drift visibly but only a few pixels per second.
+    for (let timestamp = 160; timestamp <= 1060; timestamp += 100) tick(timestamp);
+    const movedPosition = ctx.arc.mock.calls.at(-1)!;
+    const distance = Math.hypot(
+      movedPosition[0] - position![0],
+      movedPosition[1] - position![1],
+    );
+    expect(distance).toBeGreaterThan(0.5);
+    expect(distance).toBeLessThan(3);
     second.unmount();
   });
 
