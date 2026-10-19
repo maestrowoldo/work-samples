@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Expand } from "lucide-react";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import type { SiteDictionary } from "@/lib/site-content";
 import styles from "./Projects.module.css";
 
@@ -23,6 +24,7 @@ export default function ProjectCaseCard({ project, copy, index, expanded, reduce
   return (
     <motion.article className={styles.card} layoutId={shared("card")}
       transition={{ type: "spring", stiffness: 340, damping: 32 }}>
+      <GlowingEffect spread={40} glow alwaysOn disabled={expanded} proximity={64} inactiveZone={0.01} />
       <motion.div className={styles.preview} layoutId={shared("image")}>
         <div className={styles.previewBadges}>
           <span className={styles.projectTag}>{project.tag}</span>
