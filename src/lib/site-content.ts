@@ -556,7 +556,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           skills: ["Suporte", "Infraestrutura", "Processos", "Atendimento"],
         },
         {
-          title: "Estagiário de TI",
+          title: "Estagiário em Dados e Automação",
           company: "Tribunal de Justiça de São Paulo",
           period: "Setembro 2024 - Setembro 2025",
           description:
@@ -844,7 +844,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           ],
         },
         {
-          role: "Estagiário em Ciência da Computação",
+          role: "Estagiário em Dados e Automação",
           company: "Tribunal de Justiça de São Paulo",
           period: "Setembro 2024 - Setembro 2025",
           descriptions: [
