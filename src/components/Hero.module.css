@@ -1,0 +1,89 @@
+.section { position: relative; padding: 130px 0 64px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.topGrid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr); align-items: center; gap: 64px; }
+.introduction { min-width: 0; }
+.eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 22px; color: #6ee7b7; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; line-height: 1.7; text-transform: uppercase; }
+.eyebrow > span { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #6ee7b7; box-shadow: 0 0 12px rgb(110 231 183 / 45%); }
+.heading { margin: 0; color: #f5f7fa; font-size: clamp(36px, 3.65vw, 52px); font-weight: 650; letter-spacing: -0.045em; line-height: 1.12; text-wrap: balance; }
+.heading > span { color: #6ee7b7; background: linear-gradient(110deg, #6ee7b7, #37d7c2); background-clip: text; -webkit-text-fill-color: transparent; }
+.description { max-width: 590px; margin: 24px 0 0; color: #b3bdc7; font-size: 15px; line-height: 1.8; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.primaryAction, .secondaryAction { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 12px 18px; border: 1px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 600; line-height: 1.4; text-decoration: none; transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.primaryAction { color: #06251d; background: #6ee7b7; border-color: #6ee7b7; box-shadow: 0 6px 22px rgb(52 211 153 / 10%); }
+.primaryAction:hover { background: #a7f3d0; border-color: #a7f3d0; box-shadow: 0 6px 26px rgb(52 211 153 / 18%); }
+.secondaryAction { color: #d1dedf; border-color: rgb(174 209 218 / 24%); background: rgb(8 17 25 / 40%); }
+.secondaryAction:hover { border-color: #6ee7b7; background: rgb(110 231 183 / 6%); }
+.badges { display: flex; flex-wrap: wrap; gap: 12px 18px; margin: 22px 0 0; padding: 0; list-style: none; }
+.badges > li { display: inline-flex; align-items: center; gap: 7px; color: #91a4af; font-size: 11px; line-height: 1.6; }
+.badges svg { flex-shrink: 0; color: #7f9a9f; }
+.availabilityDot { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: #6ee7b7; }
+
+.profile { min-width: 0; padding: 10px; border: 1px solid rgb(177 211 220 / 18%); border-radius: 26px; background: linear-gradient(155deg, rgb(15 29 35 / 88%), rgb(7 13 20 / 92%)); box-shadow: 0 20px 70px rgb(0 0 0 / 25%), inset 0 1px 0 rgb(255 255 255 / 4%); }
+.portrait { position: relative; width: 100%; aspect-ratio: 1.08; overflow: hidden; border: 1px solid rgb(110 231 183 / 12%); border-radius: 18px; background: radial-gradient(ellipse at 50% 20%, rgb(33 106 104 / 28%), transparent 70%), #091217; }
+.portraitOrbit { position: absolute; inset: 20% -20%; border: 1px solid rgb(103 232 249 / 16%); border-radius: 50%; transform: rotate(-28deg); }
+.portraitOrbit::after { content: ""; position: absolute; inset: -22px 30px; border: 1px solid rgb(110 231 183 / 9%); border-radius: 50%; transform: rotate(45deg); }
+.profileImage { z-index: 1; object-fit: cover; object-position: 50% 35%; }
+.portraitShade { position: absolute; z-index: 2; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 70%, rgb(9 18 23 / 45%)); }
+.profileInfo { padding: 19px 12px 10px; }
+.name { display: flex; align-items: center; gap: 9px; margin: 0; color: #edf5f7; font-size: 18px; font-weight: 600; letter-spacing: -0.025em; }
+.name > span { width: 6px; height: 6px; border-radius: 50%; background: #6ee7b7; box-shadow: 0 0 10px rgb(110 231 183 / 25%); }
+.role { margin: 5px 0 0; color: #8faaaF; font-size: 12px; line-height: 1.6; }
+.profileLinks { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; }
+.profileLinks > a { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; color: #a9bfca; font-size: 11px; font-weight: 500; text-decoration: none; }
+.profileLinks > a:hover { color: #a7f3d0; }
+.profileLinks > .resumeLink { color: #b2f1dc; }
+
+.proofGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 32px 0 0; padding: 0; list-style: none; }
+.proofItem { display: flex; align-items: center; gap: 15px; min-width: 0; min-height: 104px; padding: 18px; border: 1px solid rgb(177 211 220 / 13%); border-radius: 16px; background: linear-gradient(135deg, rgb(18 34 40 / 70%), rgb(9 16 23 / 85%)); transition: border-color 180ms ease; }
+.proofItem:hover { border-color: rgb(110 231 183 / 35%); }
+.proofIcon { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border: 1px solid rgb(110 231 183 / 20%); border-radius: 12px; background: rgb(110 231 183 / 6%); color: #6ee7b7; }
+.proofLabel { margin: 0 0 7px; color: #6ee7b7; font-size: 9px; font-weight: 600; letter-spacing: 0.15em; line-height: 1.5; text-transform: uppercase; }
+.proofValue { margin: 0; color: #c1ced6; font-size: 13px; line-height: 1.6; }
+.primaryAction:focus-visible, .secondaryAction:focus-visible, .profileLinks > a:focus-visible { outline: 2px solid #6ee7b7; outline-offset: 4px; }
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .topGrid { gap: 40px; }
+  .profileLinks { gap: 6px 12px; }
+  .profileLinks > .resumeLink { width: 100%; }
+}
+@media (max-width: 999px) {
+  .section { padding: 112px 0 56px; }
+  .topGrid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .introduction { max-width: 760px; margin: 0 auto; }
+  .heading { font-size: clamp(36px, 5.5vw, 48px); }
+  .description { max-width: none; }
+  .profile { display: grid; grid-template-columns: 160px minmax(0, 1fr); align-items: center; gap: 24px; width: 100%; max-width: 620px; margin: 0 auto; padding: 12px; border-radius: 20px; }
+  .portrait { aspect-ratio: 1; border-radius: 12px; }
+  .profileInfo { padding: 8px 12px 8px 0; }
+  .proofItem { align-items: flex-start; gap: 12px; padding: 16px; }
+  .proofIcon { width: 32px; height: 32px; border-radius: 10px; }
+  .proofIcon svg { width: 17px; height: 17px; }
+}
+@media (max-width: 599px) {
+  .section { padding: 104px 0 44px; }
+  .container { padding: 0 20px; }
+  .eyebrow { align-items: flex-start; margin-bottom: 18px; font-size: 9px; letter-spacing: 0.12em; }
+  .eyebrow > span { margin-top: 5px; }
+  .heading { font-size: clamp(32px, 8.8vw, 42px); line-height: 1.15; }
+  .description { margin-top: 20px; font-size: 14px; line-height: 1.8; }
+  .actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 22px; }
+  .badges { gap: 10px 14px; margin-top: 20px; }
+  .badges > li { font-size: 10px; }
+  .profile { grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 12px; border-radius: 18px; }
+  .profileInfo { padding: 0; }
+  .name { gap: 6px; font-size: 15px; }
+  .name > span { width: 4px; height: 4px; }
+  .role { font-size: 10px; }
+  .profileLinks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 8px; margin-top: 8px; }
+  .profileLinks > a { gap: 5px; font-size: 10px; }
+  .profileLinks > .resumeLink { grid-column: 1 / -1; }
+  .profileLinks svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .proofGrid { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 22px; }
+  .proofItem { align-items: center; min-height: 82px; gap: 14px; padding: 15px 16px; }
+  .proofValue { font-size: 12px; }
+}
+@media (max-width: 359px) {
+  .container { padding: 0 16px; }
+  .profile { grid-template-columns: 88px minmax(0, 1fr); gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .primaryAction, .secondaryAction, .proofItem { transition: none; } }

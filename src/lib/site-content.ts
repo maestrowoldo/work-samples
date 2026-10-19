@@ -145,6 +145,7 @@ export interface SiteDictionary {
     description: string;
     eyebrow: string;
     profileAlt: string;
+    profileRole: string;
     proofItems: Array<{
       label: string;
       value: string;
@@ -518,6 +519,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Foto de perfil de Wolkendo Arias",
+      profileRole: "Desenvolvedor Full Stack",
     },
     about: {
       heading: "Muito prazer, sou Wolkendo Arias.",
@@ -969,6 +971,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Profile photo of Wolkendo Arias",
+      profileRole: "Full Stack Developer",
     },
     about: {
       heading: "Nice to meet you, I'm Wolkendo Arias.",
@@ -1420,6 +1423,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Photo de profil de Wolkendo Arias",
+      profileRole: "Développeur Full Stack",
     },
     about: {
       heading: "Enchanté, je suis Wolkendo Arias.",
