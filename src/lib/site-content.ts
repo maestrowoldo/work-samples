@@ -175,6 +175,9 @@ export interface SiteDictionary {
     }>;
   };
   navbar: {
+    openMenuLabel: string;
+    closeMenuLabel: string;
+    navigationLabel: string;
     contactCta: string;
     cvLabel: string;
     localeSwitcherLabel: string;
@@ -489,6 +492,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "Ver CV",
       contactCta: "Vamos conversar",
       localeSwitcherLabel: "Idioma",
+      openMenuLabel: "Abrir menu de navegação",
+      closeMenuLabel: "Fechar menu de navegação",
+      navigationLabel: "Navegação principal",
     },
     hero: {
       eyebrow: "Desenvolvimento web, automação e integração",
@@ -937,6 +943,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "View resume",
       contactCta: "Let's talk",
       localeSwitcherLabel: "Language",
+      openMenuLabel: "Open navigation menu",
+      closeMenuLabel: "Close navigation menu",
+      navigationLabel: "Main navigation",
     },
     hero: {
       eyebrow: "Web development, automation, and integration",
@@ -1385,6 +1394,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "Voir le CV",
       contactCta: "Parlons",
       localeSwitcherLabel: "Langue",
+      openMenuLabel: "Ouvrir le menu de navigation",
+      closeMenuLabel: "Fermer le menu de navigation",
+      navigationLabel: "Navigation principale",
     },
     hero: {
       eyebrow: "Développement web, automatisation et intégration",
