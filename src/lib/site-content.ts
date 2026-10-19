@@ -185,7 +185,12 @@ export interface SiteDictionary {
     mobileCvLabel: string;
   };
   projects: {
+    closeLabel: string;
+    detailsLabel: string;
+    technologiesLabel: string;
+    visitLabel: string;
     description: string;
+    eyebrow: string;
     featuredHeading: string;
     goToProjectSlideLabel: string;
     heading: string;
@@ -612,6 +617,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Projetos que resolvem problemas reais",
+      eyebrow: "Seleção de trabalhos",
       highlight: "problemas reais",
       featuredHeading: "Projetos em Destaque",
       description:
@@ -620,6 +626,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solução",
       impactLabel: "Impacto",
       viewMoreLabel: "Explorar case",
+      closeLabel: "Fechar detalhes do projeto",
+      detailsLabel: "Ver detalhes",
+      technologiesLabel: "Tecnologias",
+      visitLabel: "Abrir projeto",
       previousProjectLabel: "Projeto anterior",
       nextProjectLabel: "Próximo projeto",
       goToProjectSlideLabel: "Ir para a página {number} de projetos",
@@ -1055,6 +1065,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Projects that solve real problems",
+      eyebrow: "Selected work",
       highlight: "real problems",
       featuredHeading: "Featured Projects",
       description:
@@ -1063,6 +1074,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Explore case",
+      closeLabel: "Close project details",
+      detailsLabel: "View details",
+      technologiesLabel: "Technologies",
+      visitLabel: "Open project",
       previousProjectLabel: "Previous project",
       nextProjectLabel: "Next project",
       goToProjectSlideLabel: "Go to project page {number}",
@@ -1498,6 +1513,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Des projets qui résolvent des problèmes réels",
+      eyebrow: "Réalisations sélectionnées",
       highlight: "problèmes réels",
       featuredHeading: "Projets en vedette",
       description:
@@ -1506,6 +1522,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Voir l'étude de cas",
+      closeLabel: "Fermer les détails du projet",
+      detailsLabel: "Voir les détails",
+      technologiesLabel: "Technologies",
+      visitLabel: "Ouvrir le projet",
       previousProjectLabel: "Projet précédent",
       nextProjectLabel: "Projet suivant",
       goToProjectSlideLabel: "Aller à la page {number} des projets",
