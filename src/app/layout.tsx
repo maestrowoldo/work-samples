@@ -40,7 +40,7 @@ export default async function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className="bg-zinc-950 text-zinc-50 antialiased">
+      <body className="isolate bg-zinc-950 text-zinc-50 antialiased">
         <FloatingBackground />
         <MouseGlow />
         <Providers>{children}</Providers>

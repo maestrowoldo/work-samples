@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs>
+ <linearGradient id="cover-sky" x2="1" y2="1"><stop stop-color="#142b43"/><stop offset="1" stop-color="#091423"/></linearGradient>
+ <radialGradient id="cover-glow"><stop stop-color="#3fbea9" stop-opacity=".18"/><stop offset="1" stop-color="#3fbea9" stop-opacity="0"/></radialGradient>
+ <pattern id="cover-grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#8dd7dc" stroke-opacity=".04"/></pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#cover-sky)"/>
+<rect width="1200" height="675" fill="url(#cover-grid)"/>
+<ellipse cx="970" cy="330" rx="400" ry="380" fill="url(#cover-glow)"/>
+<circle cx="1010" cy="334" r="236" fill="none" stroke="#65d6c2" stroke-opacity=".1"/>
+<circle cx="1010" cy="334" r="182" fill="none" stroke="#8c9ef7" stroke-opacity=".12"/>
+<svg x="74" y="100" width="78" height="78" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="crest" x1="14" y1="216" x2="463" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6344c9"/>
+      <stop offset=".48" stop-color="#3659b8"/>
+      <stop offset="1" stop-color="#007e8a"/>
+    </linearGradient>
+    <linearGradient id="hook" x1="183" y1="392" x2="463" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#007f92"/>
+      <stop offset="1" stop-color="#007582"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="99" y1="270" x2="238" y2="345" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#007f92"/>
+      <stop offset="1" stop-color="#006b83"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="56" fill="#e1e8eb"/>
+  <g transform="translate(46 12) scale(.88)">
+    <path d="M14 14 238 216 463 14V74L238 278 60 117V392H14Z" fill="url(#crest)"/>
+    <path d="M99 202 238 329V392L145 305V392H99Z" fill="url(#inner)"/>
+    <path d="M238 329 378 201V382L332 427V305L238 392Z" fill="#005670"/>
+    <path d="M417 167 463 125V417L333 541 183 392H248L333 477 417 395Z" fill="url(#hook)"/>
+    <path d="M241 37H376L224 176 286 69Z" fill="#007f92"/>
+  </g>
+</svg>
+<text x="74" y="260" fill="#f1f7fa" font-family="Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-3">Maestro<tspan fill="#65e1c8">Jobs</tspan></text>
+<text x="78" y="313" fill="#b2c9db" font-family="Arial,sans-serif" font-size="24">Seu currículo. Novas oportunidades.</text>
+<path d="M79 358H568" stroke="#8fded0" stroke-opacity=".2"/>
+<g font-family="Arial,sans-serif" font-size="16" fill="#a6efdc">
+ <rect x="78" y="392" width="136" height="40" rx="20" fill="#153c42" stroke="#5dd9bf" stroke-opacity=".22"/><text x="101" y="417">CV em PDF</text>
+ <rect x="224" y="392" width="103" height="40" rx="20" fill="#153c42" stroke="#5dd9bf" stroke-opacity=".22"/><text x="251" y="417">Vagas</text>
+ <rect x="337" y="392" width="192" height="40" rx="20" fill="#153c42" stroke="#5dd9bf" stroke-opacity=".22"/><text x="356" y="417">Compatibilidade</text>
+</g>
+<path d="M665 440C665 350 850 430 850 350M1010 350C1100 350 1080 445 1080 480" stroke="#67dbc8" stroke-opacity=".65" stroke-width="2" fill="none" stroke-dasharray="6 8"/>
+<g transform="translate(815 135)">
+ <rect x="0" y="0" width="230" height="290" rx="22" fill="#122d40" stroke="#6bcdbf" stroke-opacity=".5"/>
+ <rect x="26" y="28" width="58" height="58" rx="15" fill="#64dfc1" fill-opacity=".12"/>
+ <path d="M41 48h28v24H41zM49 48v-7h12v7" fill="none" stroke="#8cf0d5" stroke-width="3" stroke-linejoin="round"/>
+ <path d="M27 118h176M27 141h142M27 194h175M27 216h156M27 238h112" stroke="#7897ad" stroke-opacity=".45" stroke-width="7" stroke-linecap="round"/>
+ <path d="M27 167h98" stroke="#71d8c3" stroke-width="8" stroke-linecap="round"/>
+</g>
+<g transform="translate(654 425)">
+ <rect width="224" height="102" rx="17" fill="#152c42" stroke="#6aaab5" stroke-opacity=".5"/>
+ <circle cx="35" cy="35" r="13" fill="#67dfbf" fill-opacity=".18"/><path d="m29 35 4 4 8-8" fill="none" stroke="#7eeacb" stroke-width="2.5"/>
+ <path d="M65 29h112M65 46h83M25 76h155" stroke="#7f9bb5" stroke-opacity=".6" stroke-width="6" stroke-linecap="round"/>
+</g>
+<g transform="translate(959 483)">
+ <rect width="174" height="76" rx="15" fill="#153d42" stroke="#67dbc0" stroke-opacity=".45"/>
+ <path d="M22 26h110M22 47h79" stroke="#89dbc9" stroke-opacity=".7" stroke-width="6" stroke-linecap="round"/>
+</g>
+</svg>

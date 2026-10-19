@@ -145,6 +145,7 @@ export interface SiteDictionary {
     description: string;
     eyebrow: string;
     profileAlt: string;
+    profileRole: string;
     proofItems: Array<{
       label: string;
       value: string;
@@ -175,6 +176,9 @@ export interface SiteDictionary {
     }>;
   };
   navbar: {
+    openMenuLabel: string;
+    closeMenuLabel: string;
+    navigationLabel: string;
     contactCta: string;
     cvLabel: string;
     localeSwitcherLabel: string;
@@ -185,7 +189,12 @@ export interface SiteDictionary {
     mobileCvLabel: string;
   };
   projects: {
+    closeLabel: string;
+    detailsLabel: string;
+    technologiesLabel: string;
+    visitLabel: string;
     description: string;
+    eyebrow: string;
     featuredHeading: string;
     goToProjectSlideLabel: string;
     heading: string;
@@ -484,6 +493,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "Ver CV",
       contactCta: "Vamos conversar",
       localeSwitcherLabel: "Idioma",
+      openMenuLabel: "Abrir menu de navegação",
+      closeMenuLabel: "Fechar menu de navegação",
+      navigationLabel: "Navegação principal",
     },
     hero: {
       eyebrow: "Desenvolvimento web, automação e integração",
@@ -507,6 +519,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Foto de perfil de Wolkendo Arias",
+      profileRole: "Desenvolvedor Full Stack",
     },
     about: {
       heading: "Muito prazer, sou Wolkendo Arias.",
@@ -556,7 +569,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           skills: ["Suporte", "Infraestrutura", "Processos", "Atendimento"],
         },
         {
-          title: "Estagiário de TI",
+          title: "Estagiário em Dados e Automação",
           company: "Tribunal de Justiça de São Paulo",
           period: "Setembro 2024 - Setembro 2025",
           description:
@@ -612,6 +625,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Projetos que resolvem problemas reais",
+      eyebrow: "Seleção de trabalhos",
       highlight: "problemas reais",
       featuredHeading: "Projetos em Destaque",
       description:
@@ -620,6 +634,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solução",
       impactLabel: "Impacto",
       viewMoreLabel: "Explorar case",
+      closeLabel: "Fechar detalhes do projeto",
+      detailsLabel: "Ver detalhes",
+      technologiesLabel: "Tecnologias",
+      visitLabel: "Abrir projeto",
       previousProjectLabel: "Projeto anterior",
       nextProjectLabel: "Próximo projeto",
       goToProjectSlideLabel: "Ir para a página {number} de projetos",
@@ -637,6 +655,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           impact: "Uma experiência responsiva e pronta para uso, com presença online, status de leitura e base técnica preparada para evolução.",
         },
         {
+          title: "MaestroJobs",
+          category: "Carreira e inteligência artificial",
+          description: "Busca de vagas com IA, compatibilidade por perfil e currículos em PDF adaptados às oportunidades.",
+          image: "/maestrojobs-capa.svg",
+          href: "https://github.com/maestrowoldo/OrbitJobs-AI",
+          tag: "AI Job Matching",
+          tech: ["Next.js","TypeScript","Gemini","Supabase","Zod"],
+          problem: "Encontrar vagas compatíveis e adaptar currículos manualmente exige tempo, critérios consistentes e cuidado com os dados pessoais do candidato.",
+          solution: "Desenvolvi um fluxo com importação ou criação de currículo, revisão do perfil, busca de vagas e versões de PDF direcionadas. Gemini extrai informações estruturadas validadas com Zod; TypeScript calcula a compatibilidade, e Supabase mantém os dados separados por sessão.",
+          impact: "Reúne perfil, oportunidades, análise de compatibilidade e currículos direcionados em uma experiência. O candidato revisa o conteúdo, controla suas candidaturas e pode excluir os dados da sessão.",
+        },
+        {
           title: "Aplicativo interno para controle de ponto",
           category: "Automação de processo",
           description: "Ferramenta operacional low-code com registros padronizados, integrações M365 e automações.",
@@ -647,18 +677,6 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "O processo exigia esforço manual alto e pouco controle sobre registros e acompanhamento.",
           solution: "Desenhei um aplicativo no Power Apps integrado a SharePoint e Power Automate para organizar o fluxo e eliminar gargalos repetitivos.",
           impact: "Mais clareza operacional, menos retrabalho e uma rotina interna mais confiável para o time.",
-        },
-        {
-          title: "Dashboards operacionais para leitura gerencial",
-          category: "Dados e visualização",
-          description: "Painéis em Power BI para transformar dados dispersos em acompanhamento acionável.",
-          image: "/BI.jpg",
-          href: "/curriculum",
-          tag: "Power BI",
-          tech: ["Power BI", "SQL", "DAX"],
-          problem: "Os dados existiam, mas faltava uma leitura visual útil para priorização e tomada de decisão.",
-          solution: "Modelei dados, revisei indicadores e construí dashboards com foco em contexto de negócio e leitura rápida.",
-          impact: "Indicadores mais fáceis de acompanhar, decisões mais rápidas e melhor visibilidade da operação.",
         },
         {
           title: "Mypromo — Automação para Afiliados",
@@ -844,7 +862,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           ],
         },
         {
-          role: "Estagiário em Ciência da Computação",
+          role: "Estagiário em Dados e Automação",
           company: "Tribunal de Justiça de São Paulo",
           period: "Setembro 2024 - Setembro 2025",
           descriptions: [
@@ -927,6 +945,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "View resume",
       contactCta: "Let's talk",
       localeSwitcherLabel: "Language",
+      openMenuLabel: "Open navigation menu",
+      closeMenuLabel: "Close navigation menu",
+      navigationLabel: "Main navigation",
     },
     hero: {
       eyebrow: "Web development, automation, and integration",
@@ -950,6 +971,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Profile photo of Wolkendo Arias",
+      profileRole: "Full Stack Developer",
     },
     about: {
       heading: "Nice to meet you, I'm Wolkendo Arias.",
@@ -1055,6 +1077,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Projects that solve real problems",
+      eyebrow: "Selected work",
       highlight: "real problems",
       featuredHeading: "Featured Projects",
       description:
@@ -1063,6 +1086,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Explore case",
+      closeLabel: "Close project details",
+      detailsLabel: "View details",
+      technologiesLabel: "Technologies",
+      visitLabel: "Open project",
       previousProjectLabel: "Previous project",
       nextProjectLabel: "Next project",
       goToProjectSlideLabel: "Go to project page {number}",
@@ -1080,6 +1107,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           impact: "A responsive, usable experience with online presence, read status, and a technical foundation ready to evolve.",
         },
         {
+          title: "MaestroJobs",
+          category: "Careers and artificial intelligence",
+          description: "AI-assisted job discovery, profile compatibility and PDF resumes tailored to selected opportunities.",
+          image: "/maestrojobs-capa.svg",
+          href: "https://github.com/maestrowoldo/OrbitJobs-AI",
+          tag: "AI Job Matching",
+          tech: ["Next.js","TypeScript","Gemini","Supabase","Zod"],
+          problem: "Finding suitable jobs and manually tailoring resumes takes time, consistent criteria and care with candidates’ personal data.",
+          solution: "I built a workflow for importing or creating a resume, reviewing the profile, finding jobs and producing tailored PDFs. Gemini extracts structured information validated with Zod; TypeScript calculates compatibility, while Supabase keeps data scoped to each session.",
+          impact: "Brings profiles, opportunities, compatibility analysis and tailored resumes into one experience. Candidates review the content, control their applications and can delete their session data.",
+        },
+        {
           title: "Internal time tracking application",
           category: "Process automation",
           description: "An operational low-code tool with standardized records, Microsoft 365 integrations, and automation.",
@@ -1090,18 +1129,6 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "The workflow relied on too much manual effort and lacked clear control over records and follow-up.",
           solution: "I designed a Power Apps experience connected to SharePoint and Power Automate to organize the flow and remove repetitive bottlenecks.",
           impact: "Better operational clarity, less rework, and a more reliable routine for the internal team.",
-        },
-        {
-          title: "Operational dashboards for management visibility",
-          category: "Data and visualization",
-          description: "Power BI dashboards that turn scattered data into actionable monitoring for real decisions.",
-          image: "/BI.jpg",
-          href: "/curriculum",
-          tag: "Power BI",
-          tech: ["Power BI", "SQL", "DAX"],
-          problem: "The data already existed, but there was no useful visual layer for prioritization and decision-making.",
-          solution: "I modeled the data, reviewed the indicators, and built dashboards designed for business context and fast reading.",
-          impact: "Easier KPI follow-up, faster decisions, and stronger visibility into the operation.",
         },
         {
           title: "Mypromo — Affiliate Automation",
@@ -1370,6 +1397,9 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       mobileCvLabel: "Voir le CV",
       contactCta: "Parlons",
       localeSwitcherLabel: "Langue",
+      openMenuLabel: "Ouvrir le menu de navigation",
+      closeMenuLabel: "Fermer le menu de navigation",
+      navigationLabel: "Navigation principale",
     },
     hero: {
       eyebrow: "Développement web, automatisation et intégration",
@@ -1393,6 +1423,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       socialLinkedIn: "LinkedIn",
       socialGitHub: "GitHub",
       profileAlt: "Photo de profil de Wolkendo Arias",
+      profileRole: "Développeur Full Stack",
     },
     about: {
       heading: "Enchanté, je suis Wolkendo Arias.",
@@ -1498,6 +1529,7 @@ const dictionaries: Record<Locale, SiteDictionary> = {
     },
     projects: {
       heading: "Des projets qui résolvent des problèmes réels",
+      eyebrow: "Réalisations sélectionnées",
       highlight: "problèmes réels",
       featuredHeading: "Projets en vedette",
       description:
@@ -1506,6 +1538,10 @@ const dictionaries: Record<Locale, SiteDictionary> = {
       solutionLabel: "Solution",
       impactLabel: "Impact",
       viewMoreLabel: "Voir l'étude de cas",
+      closeLabel: "Fermer les détails du projet",
+      detailsLabel: "Voir les détails",
+      technologiesLabel: "Technologies",
+      visitLabel: "Ouvrir le projet",
       previousProjectLabel: "Projet précédent",
       nextProjectLabel: "Projet suivant",
       goToProjectSlideLabel: "Aller à la page {number} des projets",
@@ -1523,6 +1559,18 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           impact: "Une expérience responsive et prête à l'usage, avec présence en ligne, statut de lecture et base technique évolutive.",
         },
         {
+          title: "MaestroJobs",
+          category: "Carrière et intelligence artificielle",
+          description: "Recherche de postes avec IA, compatibilité du profil et CV PDF adaptés aux opportunités sélectionnées.",
+          image: "/maestrojobs-capa.svg",
+          href: "https://github.com/maestrowoldo/OrbitJobs-AI",
+          tag: "AI Job Matching",
+          tech: ["Next.js","TypeScript","Gemini","Supabase","Zod"],
+          problem: "Trouver des postes adaptés et personnaliser les CV manuellement demande du temps, des critères cohérents et une attention aux données personnelles du candidat.",
+          solution: "J’ai développé un parcours pour importer ou créer un CV, réviser le profil, rechercher des postes et produire des PDF ciblés. Gemini extrait des informations structurées validées avec Zod ; TypeScript calcule la compatibilité, et Supabase isole les données par session.",
+          impact: "Réunit profil, opportunités, analyse de compatibilité et CV ciblés dans une même expérience. Le candidat révise le contenu, garde le contrôle de ses candidatures et peut supprimer les données de sa session.",
+        },
+        {
           title: "Application interne de suivi des heures",
           category: "Automatisation de processus",
           description: "Un outil opérationnel low-code avec enregistrements standardisés, intégrations Microsoft 365 et automatisations.",
@@ -1533,18 +1581,6 @@ const dictionaries: Record<Locale, SiteDictionary> = {
           problem: "Le processus demandait trop d'effort manuel et offrait peu de contrôle sur les enregistrements et le suivi.",
           solution: "J'ai conçu une expérience Power Apps reliée à SharePoint et Power Automate pour structurer le flux et supprimer les frictions répétitives.",
           impact: "Plus de clarté opérationnelle, moins de reprises et une routine interne plus fiable pour l'équipe.",
-        },
-        {
-          title: "Dashboards opérationnels pour pilotage",
-          category: "Données et visualisation",
-          description: "Des dashboards Power BI qui transforment des données dispersées en suivi exploitable pour la décision.",
-          image: "/BI.jpg",
-          href: "/curriculum",
-          tag: "Power BI",
-          tech: ["Power BI", "SQL", "DAX"],
-          problem: "Les données existaient déjà, mais il manquait une lecture visuelle utile pour prioriser et décider.",
-          solution: "J'ai modélisé les données, revu les indicateurs et construit des dashboards pensés pour le contexte métier et une lecture rapide.",
-          impact: "Un suivi plus simple des KPI, des décisions plus rapides et une meilleure visibilité sur l'opération.",
         },
         {
           title: "Mypromo — Automatisation pour affiliés",

@@ -1,13 +1,23 @@
-// src/components/Navbar.tsx
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Menu, X, Download, Languages, ChevronDown } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { ChevronDown, Download, Languages } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { buildLocalePath, type Locale } from "@/lib/i18n";
 import { useLocaleContext } from "@/components/LocaleProvider";
+import {
+  Navbar as ResizableNavbar, NavBody, NavItems, MobileNav, NavbarLogo,
+  NavbarButton, MobileNavHeader, MobileNavToggle, MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import styles from "./Navbar.module.css";
+
+const languageOptions = [
+  { locale: "pt" as Locale, label: "PT", name: "Português", flagSrc: "/flags/br.svg" },
+  { locale: "en" as Locale, label: "EN", name: "English", flagSrc: "/flags/us.svg" },
+  { locale: "fr" as Locale, label: "FR", name: "Français", flagSrc: "/flags/fr.svg" },
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,237 +25,123 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { dictionary, locale } = useLocaleContext();
+  const copy = dictionary.navbar;
   const homePath = `/${locale}`;
+  const menuId = useId();
+  const languageMenuId = useId();
   const languageMenuRef = useRef<HTMLDivElement>(null);
-  const languageOptions = useMemo(
-    () => [
-      { locale: "pt" as Locale, label: "PT", name: "Português", flagSrc: "/flags/br.svg", flagAlt: "Bandeira do Brasil" },
-      { locale: "en" as Locale, label: "EN", name: "English", flagSrc: "/flags/us.svg", flagAlt: "United States flag" },
-      { locale: "fr" as Locale, label: "FR", name: "Français", flagSrc: "/flags/fr.svg", flagAlt: "Drapeau de la France" },
-    ],
-    [],
-  );
+  const languageButtonRef = useRef<HTMLButtonElement>(null);
   const currentLanguage = languageOptions.find((item) => item.locale === locale) ?? languageOptions[0];
+  const closeMobileMenu = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        languageMenuRef.current &&
-        !languageMenuRef.current.contains(event.target as Node)
-      ) {
-        setIsLanguageMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const breakpoint = window.matchMedia("(min-width: 1024px)");
+    const closeMenus = () => { setOpen(false); setIsLanguageMenuOpen(false); };
+    breakpoint.addEventListener("change", closeMenus);
+    return () => breakpoint.removeEventListener("change", closeMenus);
   }, []);
 
+  useEffect(() => {
+    if (!isLanguageMenuOpen) return;
+    const dismiss = (event: PointerEvent) => {
+      if (event.target instanceof Node && !languageMenuRef.current?.contains(event.target)) setIsLanguageMenuOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setIsLanguageMenuOpen(false);
+      languageButtonRef.current?.focus();
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+    };
+  }, [isLanguageMenuOpen]);
+
   const changeLocale = (nextLocale: Locale) => {
-    const hash = globalThis.location.hash || "";
-    router.push(`${buildLocalePath(nextLocale, pathname)}${hash}`);
     setOpen(false);
     setIsLanguageMenuOpen(false);
+    if (nextLocale !== locale) {
+      router.push(`${buildLocalePath(nextLocale, pathname)}${window.location.search}${window.location.hash}`);
+    }
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 lg:px-6">
-        <Link href={`${homePath}#inicio`} className="flex items-center gap-2 group">
-          <div className="h-10 w-10 rounded-xl bg-emerald-500 flex items-center justify-center text-zinc-950 font-bold group-hover:bg-emerald-400 transition-colors">
-            WA
-          </div>
-          <span className="text-sm font-semibold text-zinc-100">
-            Wolkendo Arias
-          </span>
-        </Link>
-
-        <div className="hidden gap-6 text-sm font-medium text-zinc-300 md:flex items-center">
-          {dictionary.navbar.links.map((link) => (
-            <a
-              key={link.href}
-              href={`${homePath}${link.href}`}
-              className="hover:text-emerald-400 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-          <Link
-            href={`${homePath}/curriculum`}
-            className="flex items-center gap-2 hover:text-emerald-400 transition-colors"
-          >
-            <Download size={14} />
-            {dictionary.navbar.cvLabel}
-          </Link>
-          <div className="relative" ref={languageMenuRef}>
-            <button
-              type="button"
-              onClick={() => setIsLanguageMenuOpen((value) => !value)}
-              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-sm text-zinc-100 transition-colors hover:border-emerald-500"
-            >
-              <Languages size={16} className="text-emerald-400" />
-              <span className="inline-flex h-6 w-8 overflow-hidden rounded-md border border-white/10">
-                <Image
-                  src={currentLanguage.flagSrc}
-                  alt={currentLanguage.flagAlt}
-                  width={32}
-                  height={24}
-                  className="h-full w-full object-cover"
-                />
-              </span>
-              <span className="font-semibold">{currentLanguage.label}</span>
-              <ChevronDown
-                size={16}
-                className={`transition-transform ${isLanguageMenuOpen ? "rotate-180" : ""}`}
-              />
+    <ResizableNavbar onBlur={(event) => {
+      if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) {
+        setOpen(false);
+        setIsLanguageMenuOpen(false);
+      }
+    }}>
+      <NavBody aria-label={copy.navigationLabel}>
+        <NavbarLogo href={`${homePath}#inicio`} />
+        <NavItems items={copy.links.map((link) => ({ name: link.label, link: `${homePath}${link.href}` }))} />
+        <div className={styles.actions}>
+          <NavbarButton as={Link} href={`${homePath}/curriculum`} variant="secondary">
+            <Download size={14} aria-hidden="true" />{copy.cvLabel}
+          </NavbarButton>
+          <div className={styles.languageControl} ref={languageMenuRef}>
+            <button ref={languageButtonRef} type="button" className={styles.languageTrigger}
+              aria-label={`${copy.localeSwitcherLabel}: ${currentLanguage.name}`}
+              aria-expanded={isLanguageMenuOpen} aria-controls={languageMenuId}
+              onClick={() => setIsLanguageMenuOpen((value) => !value)}>
+              <Languages size={15} aria-hidden="true" />
+              <Image src={currentLanguage.flagSrc} alt="" width={22} height={16} className={styles.flag} />
+              <span>{currentLanguage.label}</span>
+              <ChevronDown size={14} aria-hidden="true" className={isLanguageMenuOpen ? styles.chevronOpen : undefined} />
             </button>
-
             {isLanguageMenuOpen && (
-              <div className="absolute right-0 top-[calc(100%+0.75rem)] w-52 rounded-[1.75rem] border border-zinc-200/80 bg-zinc-100 p-2 shadow-2xl">
+              <div id={languageMenuId} className={styles.languageDropdown} role="group" aria-label={copy.localeSwitcherLabel}>
                 {languageOptions.map((item) => (
-                  <button
-                    key={item.locale}
-                    type="button"
-                    onClick={() => changeLocale(item.locale)}
-                    className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition-colors ${
-                      item.locale === locale
-                        ? "bg-zinc-900 text-white"
-                        : "text-zinc-900 hover:bg-white"
-                    }`}
-                  >
-                    <span className="inline-flex h-9 w-11 items-center justify-center rounded-xl bg-white shadow-sm">
-                      <Image
-                        src={item.flagSrc}
-                        alt={item.flagAlt}
-                        width={32}
-                        height={24}
-                        className="h-6 w-8 rounded-[4px] object-cover"
-                      />
-                    </span>
-                    <span className="flex flex-col">
-                      <span className="text-sm font-semibold">{item.name}</span>
-                      <span className={`text-xs ${item.locale === locale ? "text-zinc-300" : "text-zinc-500"}`}>
-                        {item.label}
-                      </span>
-                    </span>
+                  <button key={item.locale} type="button" className={styles.languageOption}
+                    aria-pressed={item.locale === locale} onClick={() => changeLocale(item.locale)}>
+                    <Image src={item.flagSrc} alt="" width={26} height={19} className={styles.flag} />
+                    <span>{item.name}</span><span className={styles.languageCode} aria-hidden="true">{item.label}</span>
                   </button>
                 ))}
               </div>
             )}
           </div>
-          <a
-            href={`${homePath}#contato`}
-            className="relative -top-0.5 rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
-          >
-            {dictionary.navbar.contactCta}
-          </a>
+          <NavbarButton href={`${homePath}#contato`}>{copy.contactCta}</NavbarButton>
         </div>
+      </NavBody>
 
-        <button
-          className="inline-flex items-center justify-center rounded-md border border-zinc-700 p-2 text-zinc-200 md:hidden hover:border-emerald-500 transition-colors"
-          onClick={() => {
-            setOpen((value) => !value);
-            setIsLanguageMenuOpen(false);
-          }}
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
-
-        {open && (
-          <div className="absolute inset-x-0 top-full border-b border-zinc-800 bg-zinc-950 px-4 pb-4 pt-2 md:hidden">
-            <div className="flex flex-col gap-2 text-sm">
-              {dictionary.navbar.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={`${homePath}${link.href}`}
-                  className="rounded-md px-2 py-1 text-zinc-200 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Link
-                href={`${homePath}/curriculum`}
-                className="rounded-md px-2 py-1 text-zinc-200 hover:bg-zinc-900 hover:text-emerald-400 transition-colors flex items-center gap-2"
-                onClick={() => setOpen(false)}
-              >
-                <Download size={14} />
-                {dictionary.navbar.mobileCvLabel}
-              </Link>
-              <div className="mt-2 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => setIsLanguageMenuOpen((value) => !value)}
-                  className="flex w-full items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-zinc-100"
-                >
-                  <span className="flex items-center gap-2">
-                    <Languages size={16} className="text-emerald-400" />
-                    <span className="text-sm font-medium">
-                      {dictionary.navbar.localeSwitcherLabel}
-                    </span>
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="inline-flex h-6 w-8 overflow-hidden rounded-md border border-white/10">
-                      <Image
-                        src={currentLanguage.flagSrc}
-                        alt={currentLanguage.flagAlt}
-                        width={32}
-                        height={24}
-                        className="h-full w-full object-cover"
-                      />
-                    </span>
-                    <span className="text-sm font-semibold">{currentLanguage.label}</span>
-                    <ChevronDown
-                      size={16}
-                      className={`transition-transform ${isLanguageMenuOpen ? "rotate-180" : ""}`}
-                    />
-                  </span>
+      <MobileNav aria-label={copy.navigationLabel}>
+        <MobileNavHeader>
+          <NavbarLogo href={`${homePath}#inicio`} />
+          <MobileNavToggle isOpen={open} aria-label={open ? copy.closeMenuLabel : copy.openMenuLabel}
+            aria-controls={menuId} onClick={() => {
+              setOpen((value) => !value);
+              setIsLanguageMenuOpen(false);
+            }} />
+        </MobileNavHeader>
+        <MobileNavMenu id={menuId} isOpen={open} onClose={closeMobileMenu}>
+          <div className={styles.mobileLinks}>
+            {copy.links.map((link) => (
+              <a key={link.href} href={`${homePath}${link.href}`} onClick={closeMobileMenu}>{link.label}</a>
+            ))}
+          </div>
+          <div className={styles.mobileLanguageSection}>
+            <p><Languages size={15} aria-hidden="true" />{copy.localeSwitcherLabel}</p>
+            <div className={styles.mobileLanguages} role="group" aria-label={copy.localeSwitcherLabel}>
+              {languageOptions.map((item) => (
+                <button key={item.locale} type="button" aria-label={item.name}
+                  aria-pressed={item.locale === locale} onClick={() => changeLocale(item.locale)}>
+                  <Image src={item.flagSrc} alt="" width={23} height={17} className={styles.flag} />
+                  <span aria-hidden="true">{item.label}</span>
                 </button>
-
-                {isLanguageMenuOpen && (
-                  <div className="rounded-[1.75rem] border border-zinc-200/80 bg-zinc-100 p-2 shadow-xl">
-                    {languageOptions.map((item) => (
-                      <button
-                        key={item.locale}
-                        type="button"
-                        onClick={() => changeLocale(item.locale)}
-                        className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition-colors ${
-                          item.locale === locale
-                            ? "bg-zinc-900 text-white"
-                            : "text-zinc-900 hover:bg-white"
-                        }`}
-                      >
-                        <span className="inline-flex h-9 w-11 items-center justify-center rounded-xl bg-white shadow-sm">
-                          <Image
-                            src={item.flagSrc}
-                            alt={item.flagAlt}
-                            width={32}
-                            height={24}
-                            className="h-6 w-8 rounded-[4px] object-cover"
-                          />
-                        </span>
-                        <span className="flex flex-col">
-                          <span className="text-sm font-semibold">{item.name}</span>
-                          <span className={`text-xs ${item.locale === locale ? "text-zinc-300" : "text-zinc-500"}`}>
-                            {item.label}
-                          </span>
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <a
-                href={`${homePath}#contato`}
-                className="mt-1 rounded-full bg-emerald-500 px-4 py-2 text-center text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
-                onClick={() => setOpen(false)}
-              >
-                {dictionary.navbar.contactCta}
-              </a>
+              ))}
             </div>
           </div>
-        )}
-      </nav>
-    </header>
+          <div className={styles.mobileActions}>
+            <NavbarButton as={Link} href={`${homePath}/curriculum`} variant="secondary" onClick={closeMobileMenu}>
+              <Download size={15} aria-hidden="true" />{copy.mobileCvLabel}
+            </NavbarButton>
+            <NavbarButton href={`${homePath}#contato`} onClick={closeMobileMenu}>{copy.contactCta}</NavbarButton>
+          </div>
+        </MobileNavMenu>
+      </MobileNav>
+    </ResizableNavbar>
   );
 }

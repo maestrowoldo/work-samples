@@ -2,181 +2,88 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Briefcase,
-  Code2,
-  Download,
-  MessageSquareText,
-  Rocket,
-  ShieldCheck,
-  Target,
-} from "lucide-react";
+import { ArrowRight, Briefcase, Code2, Download, GraduationCap, Languages, MessageSquareText, Rocket, ShieldCheck, Target } from "lucide-react";
 import { useLocaleContext } from "@/components/LocaleProvider";
+import styles from "./Hero.module.css";
 
 const proofIcons = [Code2, Target, ShieldCheck];
+const badgeIcons = [Languages, GraduationCap];
 
 export default function Hero() {
   const { dictionary, locale } = useLocaleContext();
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const copy = dictionary.hero;
 
   return (
-    <section className="pt-24 pb-16 md:pt-28 md:pb-20">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-4 md:flex-row md:justify-between lg:px-6">
-        <motion.div
-          className="max-w-xl space-y-6"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.p variants={itemVariants} className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-400">
-            {dictionary.hero.eyebrow}
-          </motion.p>
-          <motion.h1 variants={itemVariants} className="text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl lg:text-5xl">
-            {dictionary.hero.title}{" "}
-            <span className="text-emerald-400">{dictionary.hero.titleHighlight}</span>.
-          </motion.h1>
-          <motion.p variants={itemVariants} className="text-sm text-zinc-300 sm:text-base">
-            {dictionary.hero.description}
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
-            <a
-              href="#contato"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
-            >
-              <MessageSquareText size={16} />
-              {dictionary.hero.ctaPrimary}
-            </a>
-            <a
-              href="#projeto"
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-emerald-500 hover:text-emerald-400"
-            >
-              {dictionary.hero.ctaSecondary}
-              <ArrowRight size={16} />
-            </a>
-            <Link
-              href={`/${locale}/curriculum`}
-              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
-            >
-              <Download size={16} />
-              {dictionary.hero.resumeLabel}
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="grid gap-3 sm:grid-cols-3">
-            {dictionary.hero.proofItems.map((item, index) => {
-              const Icon = proofIcons[index] ?? Rocket;
-
-              return (
-                <div
-                  key={item.label}
-                  className="group relative min-h-[138px] overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/55 p-4 shadow-[0_14px_34px_rgba(0,0,0,0.22)] transition-colors duration-300 hover:border-emerald-400/40 hover:bg-zinc-900/75"
-                >
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.14),transparent_38%),linear-gradient(180deg,rgba(6,182,212,0.06)_0%,transparent_52%)] opacity-80" />
-                  <div className="relative flex h-full flex-col">
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-400">
-                        {item.label}
-                      </span>
-                      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/50 group-hover:bg-emerald-500/15">
-                        <Icon size={17} aria-hidden="true" />
-                      </span>
-                    </div>
-                    <p className="mt-auto text-sm leading-5 text-zinc-200">
-                      {item.value}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="flex gap-4">
-            <a
-              href="https://www.linkedin.com/in/wolkendo-arias/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
-            >
-              <Briefcase size={18} />
-              {dictionary.hero.socialLinkedIn}
-            </a>
-            <a
-              href="https://github.com/maestrowoldo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900 hover:text-emerald-400 transition-colors"
-            >
-              <Code2 size={18} />
-              {dictionary.hero.socialGitHub}
-            </a>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-400">
-            {dictionary.hero.badges.map((badge) => (
-              <span key={badge} className="rounded-full border border-zinc-700/80 px-3 py-1">
-                {badge}
-              </span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72"
-        >
-          {/* Brilho ao redor */}
-          <motion.div
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="absolute inset-0 bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-emerald-500/30 rounded-3xl blur-xl"
-            style={{ zIndex: 0 }}
-          />
-
-          {/* Círculo animado ao redor */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 rounded-3xl"
-            style={{ padding: "2px", zIndex: 1 }}
-          >
-            <div className="absolute inset-[2px] bg-zinc-950 rounded-3xl" />
-          </motion.div>
-
-          {/* Imagem dentro */}
-          <div className="absolute inset-[2px] rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/40 shadow-2xl z-10">
-            <Image
-              src="/foto-perfil.png"
-              alt={dictionary.hero.profileAlt}
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent" />
+    <section className={styles.section} aria-labelledby="hero-heading">
+      <div className={styles.container}>
+        <div className={styles.topGrid}>
+          <div className={styles.introduction}>
+            <p className={styles.eyebrow}><span aria-hidden="true" />{copy.eyebrow}</p>
+            <h1 id="hero-heading" className={styles.heading}>
+              {copy.title} <span>{copy.titleHighlight}</span>.
+            </h1>
+            <p className={styles.description}>{copy.description}</p>
+            <div className={styles.actions}>
+              <a href="#contato" className={styles.primaryAction}>
+                <MessageSquareText size={17} aria-hidden="true" />{copy.ctaPrimary}
+              </a>
+              <a href="#projeto" className={styles.secondaryAction}>
+                {copy.ctaSecondary}<ArrowRight size={17} aria-hidden="true" />
+              </a>
+            </div>
+            <ul className={styles.badges}>
+              {copy.badges.map((badge, index) => {
+                const Icon = badgeIcons[index];
+                return (
+                  <li key={badge}>
+                    {Icon ? <Icon size={14} aria-hidden="true" /> : <span className={styles.availabilityDot} aria-hidden="true" />}
+                    {badge}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </motion.div>
+
+          <aside className={styles.profile} aria-label="Wolkendo Arias">
+            <div className={styles.portrait}>
+              <span className={styles.portraitOrbit} aria-hidden="true" />
+              <Image src="/foto-perfil.png" alt={copy.profileAlt} fill priority
+                sizes="(min-width: 1200px) 380px, (min-width: 1000px) 340px, (min-width: 600px) 160px, 112px"
+                className={styles.profileImage} />
+              <div className={styles.portraitShade} aria-hidden="true" />
+            </div>
+            <div className={styles.profileInfo}>
+              <p className={styles.name}>Wolkendo Arias<span aria-hidden="true" /></p>
+              <p className={styles.role}>{copy.profileRole}</p>
+              <div className={styles.profileLinks}>
+                <Link href={`/${locale}/curriculum`} className={styles.resumeLink}>
+                  <Download size={14} aria-hidden="true" />{copy.resumeLabel}
+                </Link>
+                <a href="https://www.linkedin.com/in/wolkendo-arias/" target="_blank" rel="noopener noreferrer">
+                  <Briefcase size={14} aria-hidden="true" />{copy.socialLinkedIn}
+                </a>
+                <a href="https://github.com/maestrowoldo" target="_blank" rel="noopener noreferrer">
+                  <Code2 size={14} aria-hidden="true" />{copy.socialGitHub}
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <ul className={styles.proofGrid}>
+          {copy.proofItems.map((item, index) => {
+            const Icon = proofIcons[index] ?? Rocket;
+            return (
+              <li key={item.label} className={styles.proofItem}>
+                <span className={styles.proofIcon}><Icon size={20} aria-hidden="true" /></span>
+                <div>
+                  <p className={styles.proofLabel}>{item.label}</p>
+                  <p className={styles.proofValue}>{item.value}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

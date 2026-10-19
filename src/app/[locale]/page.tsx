@@ -9,6 +9,7 @@ import BlogPreview from "@/components/BlogPreview";
 import TechMarquee from "@/components/TechMarquee";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import CursorTrail from "@/components/CursorTrail";
 import { getBlogPosts } from "@/lib/blog/content.server";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getDictionary } from "@/lib/site-content";
@@ -42,6 +43,7 @@ export default async function LocalizedHomePage({
 
   return (
     <div className="min-h-screen flex flex-col">
+      <CursorTrail />
       <Navbar />
 
       <main className="flex-1">
